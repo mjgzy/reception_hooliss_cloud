@@ -1,0 +1,8 @@
+server:
+  port: 7001
+spring:
+  application:
+    name: hooliss-zookeeper
+  cloud:
+    zookeeper:
+      connect-string:

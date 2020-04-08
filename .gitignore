@@ -1,0 +1,9 @@
+# Project exclude paths
+/hooliss-api/target/
+/hooliss-commodity/target/
+/hooliss-consumer-one/target/
+/hooliss-consumer-two/target/
+/hooliss-eureka/target/
+/hooliss-order/target/
+/hooliss-user/target/
+/out/

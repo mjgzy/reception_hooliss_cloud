@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<div class="sa_bot w930 pageDiv" th:fragment="pageer"   style=" text-align: center;" >
+
+					<!-- 2019/9/27 -->
+					<!-- 翻页 Begin -->
+					<div id="page_nav" class="page_nav">
+ 						<a id="pre" class="pre" >上一页</a>&nbsp;
+ 						<div style=" display: inline;" class="page_size">
+ 						<span class="cur">1</span>&nbsp;
+ 							<a href="">2</a>&nbsp;
+ 						<span>&hellip;</span>&nbsp;
+ 						<a href="" ></a>&nbsp;<span>&hellip;</span>&nbsp;&nbsp;
+						</div>
+ 						<a id="next"  class="next" >下一页</a>&nbsp;
+					</div>
+					<!-- 翻页 End -->
+
+					<div class="record">
+						共有&nbsp;<span class="pageTotal"></span>&nbsp;页，跳到第&nbsp;
+						<input id="jtp" type="text"
+							class="txt" maxlength="4" maxpage="774" value="" />&nbsp;页&nbsp;<a
+							class="btnJtp btn" href="javascript:void(0);">确定</a>
+					</div>
+	<!-- 当前页 -->
+	<input type="hidden" class="CurrentPage" value="0">
+	<input type="hidden" class="Share" value="">
+	<script src="/js/page.js"></script>
+</div>
+</html>
+

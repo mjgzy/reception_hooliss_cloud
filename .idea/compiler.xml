@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="hooliss-order" />
+        <module name="hooliss-zookeeper" />
+        <module name="hooliss-user" />
+        <module name="hooliss-commodity" />
+        <module name="hooliss-consumer-two" />
+        <module name="hooliss-consumer-one" />
+        <module name="hooliss-eureka" />
+        <module name="hooliss-api" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="hooliss-provider-user" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

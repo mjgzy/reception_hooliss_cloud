@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="hooliss-provider-user:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/hooliss_provider_user_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="hooliss-provider-user/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="hooliss-provider-user" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

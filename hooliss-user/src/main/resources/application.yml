@@ -1,0 +1,50 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://49.232.36.244:7001/eureka
+  instance:
+    instance-id: user-provider-one
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.43.52:8066/hooliss?useUnicode=true&characterEncoding=utf-8
+    username: mycat
+    password: 123456
+  rabbitmq:
+    virtual-host: /
+    host: 49.232.36.244
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      direct:
+        acknowledge-mode: manual    #配置该交换机类型的消息确认机制为手动
+      simple:
+        concurrency: 10
+        max-concurrency: 20
+        prefetch: 5
+  redis:
+    database: 0
+    host: 49.232.36.244
+    port: 9736
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+      shutdown-timeout: 100ms
+    password: myRedispd,.1218
+  application:
+    name: hooliss-user-provider
+server:
+  port: 8020
+mybatis:
+  mapper-locations:
+  - classpath:mybatis/mapper/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml

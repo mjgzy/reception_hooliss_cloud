@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base href="<%=basePath%>">
+    <title>好利时手表网【官网】：中国最大的正品名表商城！买手表，上好利时手表！</title>
+    <meta name="keywords" content="手表,买手表,好利时手表网,好利时手表网官网,名表商城,正品手表，瑞士手表"/>
+    <meta name="description" content="【好利时手表网官网】：买原装正品世界名表：浪琴、天梭、欧米茄、劳力士等瑞士手表品牌，信用卡分期付款，正品保证，全国联保，终身售后保障！"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+    <link rel="stylesheet" type="text/css" href="/css/hot.css"/>
+    <!--[if lte IE 6]>
+    <script src="/Script/DD_belatedPNG.js"></script>
+    <script>
+    </script>
+    <![endif]-->
+    <link rel="stylesheet" href="/css/sxg.css">
+    <!--引入头部css样式等文件-->
+    <head th:insert="~{common/header :: header-head}"></head>
+</head>
+<body>
+<!-- 导入头部 内容-->
+<body th:insert="~{common/header :: header-body}"></body>
+
+<div id="main">
+
+    <div class="hot_goods_list">
+        <div class="context">
+            <ul id="tejia_info">
+
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="fr">
+
+        <div id="page_nav"><span>一共有&nbsp;1433&nbsp;条记录&nbsp;&nbsp;</span>
+            <span class="pre"><span></span>上一页</span>&nbsp;<span class="cur">1</span>&nbsp;<a
+                    href="/hot.html?page=2">2</a>&nbsp;<a href="/hot.html?page=3">3</a>&nbsp;<a href="/hot.html?page=4">4</a>&nbsp;<a
+                    href="/hot.html?page=5">5</a>&nbsp;<a href="/hot.html?page=6">6</a>&nbsp;<a href="/hot.html?page=7">7</a>&nbsp;<a
+                    href="/hot.html?page=8">8</a>&nbsp;<span>&hellip;</span>&nbsp;<a href="/hot.html?page=48">48</a>&nbsp;<a
+                    href="/hot.html?page=2" class="next">下一页<span></span></a>&nbsp;
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+<!-- 导入底部 -->
+<div th:insert="~{common/footer :: foot}"></div>
+<div id="floatBox">
+    <div id="return">
+        <a href="javascript:void(0);" class="c__gotop" title="返回顶部" style="display:none;" rel="nofollow"></a>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/js/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="/js/tejia.js"></script>
+</html>

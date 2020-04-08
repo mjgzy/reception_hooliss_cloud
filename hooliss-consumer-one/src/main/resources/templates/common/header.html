@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" >
+<head th:fragment="header-head">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link  rel="stylesheet"  href="/css/toastr.css">
+	<link rel="stylesheet" href="/css/sxg.css">
+<link  rel="stylesheet"  href="/css/common/header.css">
+</head>
+<body th:fragment="header-body">
+<!-- Begin header -->
+<div id="member_info2"></div>
+<div class="head">
+	<div class="r1 w1225">
+		<div class="ri">
+			<span class="tLnk2">
+				<a href="/shopcart/doCart.xf">购物车</a>
+				<input type="hidden" value="${sessionScope.Joy_User.u_Name}" id="u_name">
+				<input type="hidden" id="ParentPath" value="">
+			</span>
+			<span class="tLnk1">
+				<span th:if="${session.Joy_User!=null}" th:name="${session.Joy_User.u_id}"  id="loginInfo">[[${session.Joy_User.u_name}]],欢迎你 &nbsp;&nbsp; &nbsp;</span>
+	            <a  th:if="${session.Joy_User!=null}" href="/user/logout.xf" class="f12">退出</a>
+				<a th:if="${session.Joy_User==null}" href="/user/login.xf" class="f12"> 请登录 </a>
+				<a href="/user/forRegister.xf" class="f12">注册</a>
+			</span>
+		</div>
+	</div>
+	<div class="r2 w1225">
+		<h1 class="logo w440">
+			<img
+				src="/Images/logo/shop_logo2.png" />
+		</h1>
+		<div class="srh">
+			<form id="searchForm" name="searchForm" method="get"
+				action="/shoubiao.html" onsubmit="return checkSearchForm()">
+				<input type="hidden" value="1" name="dow" id="dow">
+				<input  name="w" id="w" type="text" class="tIptTxt c999 f14"
+					value="搜索 品牌/系列/型号" title="搜索 品牌/系列/型号" /> <a class="c__search">搜索</b></a>
+			</form>
+		</div>
+		<div class="wbPt">
+			<span class="tTel" style="font-size: 16px;">服务热线：400-888-8888</span>
+		</div>
+	</div>
+
+	<!-- 模块修改：腕表弹出层，修改内容：从展开修改为收起。修改2014-5-19 15:17:34 修改员：huang-->
+	<div class="r3 w1225" style="position: relative">
+		<div class="pt_nav_left fl">
+			<a target="_blank" href="" class="all_wb_txt">全部商品<i class="icon-a-all"></i></a>
+			<div class="nav_left_menu">
+
+
+
+			</div>
+		</div>
+		<!-- end pop_menu-->
+		<!--end gMune 修改2019-12-19 15:15:00 修改员——敌敌畏-->
+
+		<ul class="gNav">
+
+			<li><a title="首页" class="cur"
+				href="/index/doIndex.xf">首页</a></li>
+			<li><a href="/brand/doBrand.xf" title="品牌馆">品牌馆</a></li>
+			<li><a href="/discount/time.xf/0/7" title="限时抢购">限时抢购</a></li>
+			<li><a href="/commodity/doOs.xf/0/1/0/1/20/0/0" title="男士腕表">男士腕表</a></li>
+			<li><a href="/commodity/doOs.xf/0/2/0/1/20/0/0" title="女士腕表">女士腕表</a></li>
+			<li><a href="/user/doVip.xf" title="点击进入个人中心">会员中心</a></li>
+			<li><a href="返回到个人中心的请求"
+				style="font-size: 15px; color: #ce1739;" title="寻表专区/采购清单"><strong>寻表专区/采购清单</strong></a></li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript"  src="/js/jquery-3.4.1.js"></script>
+<script type="text/javascript"   src="/js/toastr.js"></script>
+<script type="text/javascript" src="/js/header.js"></script>
+</body>

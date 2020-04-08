@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>品牌馆</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my common/page">
+    <link rel="stylesheet" href="/css/sxg.css">
+    <link rel="stylesheet" type="text/css" href="/css/haolishi/search.css">
+    <link rel="stylesheet" type="text/css" href="/css/haolishi/common-min.css">
+    <link rel="stylesheet" type="text/css" href="/css/haolishi/brand.css">
+    <!--引入头部css样式等文件-->
+    <head th:insert="~{common/header :: header-head}"></head>
+</head>
+
+<body>
+<!-- 导入头部 内容-->
+<body th:insert="~{common/header :: header-body}"></body>
+<div class="banner" id="banner">
+    <a class="d1"
+       style="background:url(/Images/1a7300bbbb8d459a8e7b62eae9e6e733.jpg) center no-repeat;"></a> <a
+        class="d1"
+        style="background:url(/Images/f86466e9be2d47ee8fcc57694fb2ec5b.jpg) center no-repeat;"></a> <a
+        class="d1"
+        style="background:url(/Images/1a7300bbbb8d459a8e7b62eae9e6e733.jpg) center no-repeat;"></a> <a
+        class="d1"
+        style="background:url(/Images/f86466e9be2d47ee8fcc57694fb2ec5b.jpg) center no-repeat;"></a>
+    <div class="d2" id="banner_id">
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</div>
+<!--index banner end----------------------------------------------------------------------------------------------------->
+<!--品牌显示-->
+<div class="idxBnd">
+    <div class="tCnt w1225">
+        <!--<a href="http:"  style="margin-right: 1px;_margin-right: 0px;">-->
+        <!--</a>-->
+        <!--<a href=""  style="margin-right: 1px;_margin-right: 0px;">-->
+        <!--</a>-->
+        <!--<a href=""  style="margin-right: 1px;_margin-right: 0px;">-->
+        <!--</a>-->
+        <!--<a href="http:"  style="margin-right: 1px;_margin-right: 0px;">-->
+        <!--<img src="/Images/1a7300bbbb8d459a8e7b62eae9e6e733.jpg" alt="" width="296" height="175" />-->
+        <!--</a>-->
+        <!--<a href="" style="margin-right: 1px;_margin-right: 0px;">-->
+        <!--<img width=298 height="175" src="/Images/f86466e9be2d47ee8fcc57694fb2ec5b.jpg" alt="" />-->
+        <!--</a>-->
+        <!--<a href="" style="margin-right: 1px;_margin-right: 0px;">-->
+        <!--<img width=300 height="175" src="/Images/f86466e9be2d47ee8fcc57694fb2ec5b.jpg" alt="" />-->
+        <!--</a>-->
+        <!--<a href="">-->
+        <!--<img width=300 height="175" src="/Images/1a7300bbbb8d459a8e7b62eae9e6e733.jpg" alt="" />-->
+        <!--</a>-->
+        <div class="flickity-slider" style="left: 0px; transform: translateX(13%);">
+        <div class="gallery-cell swiper-wrapper" style="position: absolute; left: 1.80%;" ><!--class="swiper-wrapper"-->
+            <a class="swiper-slide swiper-no-swiping" th:each="watchBrandName : ${watchBrandName.get('list')}" th:href="'/brand/doShop.xf/'+${watchBrandName.brand_id}+''"  target="_blank" >
+                <img th:src="@{${watchBrandName.b_logo}}" alt="">
+                <div class="brand_hover" th:text="${watchBrandName.brand_name}"></div>
+            </a>
+        </div>
+        </div>
+        <button class="flickity-prev-next-button next" type="button"><svg viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path></svg></button>
+    </div>
+</div>
+<!--热销 start-->
+<div id="hot_display_position"></div>
+<div class="idxSet hotSet">
+    <div class="tTit w1225">
+        <span class="tNm">[精选店铺]</span>
+    </div>
+    <ul id="hotTit" class="tGud">
+        <li th:each="wbn : ${watchBrandName.list}">
+            <div class="logo">
+                <img th:src="${wbn.b_logo}" th:alt="${wbn.brand_name}">
+            </div>
+            <a th:href="@{'/brand/doShop.xf/'+${wbn.brand_id}}" target="_blank" class="img">
+                <img  th:src="${wbn.b_logo}"  alt="">
+            </a>
+            <a th:href="@{'/brand/doShop.xf/'+${wbn.brand_id}}" target="_blank" class="title">[[${wbn.brand_name+wbn.brand_code}]]</a>
+            <div class="tag clearfix h">
+                <div class="tag_a fl"><a href="/shop/product/23/?kc=sc:23&amp;spc=1027" target="_blank"
+                                         class="fl">绅士专区</a> <a href="/shop/product/23/?kc=sc:23&amp;spc=1030"
+                                                                target="_blank" class="fl">名媛专区</a>
+                    <a href="/shop/product/23/?kc=sc:23&amp;spc=1032" target="_blank" class="fl">功能分类</a> <a
+                        href="/shop/product/23/?kc=sc:23&amp;spc=1034" target="_blank" class="fl">尺寸规格</a> <a
+                        href="/shop/product/23/?kc=sc:23&amp;spc=1035" target="_blank" class="fl">价格专区</a> <a
+                        href="/shop/product/23/?kc=sc:23&amp;spc=1708" target="_blank" class="fl">系列分类</a> <a
+                        href="/shop/product/23/?kc=sc:23&amp;spc=1709" target="_blank" class="fl">场景搭配</a> <a
+                        href="/shop/product/23/?kc=sc:23&amp;spc=2174" target="_blank" class="fl">特卖专区</a> <a
+                        href="/shop/product/23/?kc=sc:23&amp;spc=3258" target="_blank" class="fl">热销推荐</a> <a
+                        href="/shop/product/23/?kc=sc:23&amp;spc=3259" target="_blank" class="fl">情侣表</a> <a
+                        href="/shop/product/23/?kc=sc:23&amp;spc=3267" target="_blank" class="fl">新品推荐</a> <a
+                        href="/shop/product/23/?kc=sc:23&amp;spc=3353" target="_blank" class="fl">中性表款</a></div>
+                <div class="tag_b fr"><a href="/shop/23" target="_blank">进店&gt;</a></div>
+            </div>
+            <div class="text">
+                <p>[[${wbn.b_dect}]]</p>
+            </div>
+        </li>
+        <li>
+            <div class="logo"><img src="//image8.wbiao.co/shop/6262e49a44d64cf4aa92eb70b9c9b0af.jpg" alt=""></div>
+            <a href="/shop/29" target="_blank" class="img"><img
+                    src="//image8.wbiao.co/shop/afc2b95cf30344869b59ea0918a7530a.jpg?x-oss-process=image/resize,w_366,h_142"
+                    alt=""></a> <a href="/shop/29" target="_blank" class="title">万国IWC</a>
+            <div class="tag clearfix h">
+                <div class="tag_a fl"><a href="/shop/product/29/?kc=sc:29&amp;spc=699" target="_blank"
+                                         class="fl">人群划分</a> <a href="/shop/product/29/?kc=sc:29&amp;spc=706"
+                                                                target="_blank" class="fl">功能选择</a> <a
+                        href="/shop/product/29/?kc=sc:29&amp;spc=709" target="_blank" class="fl">系列精选</a> <a
+                        href="/shop/product/29/?kc=sc:29&amp;spc=809" target="_blank" class="fl">精品分类</a> <a
+                        href="/shop/product/29/?kc=sc:29&amp;spc=2763" target="_blank" class="fl">新品上市</a></div>
+                <div class="tag_b fr"><a href="/shop/29" target="_blank">进店&gt;</a></div>
+            </div>
+            <div class="text"><p>沙夫豪森万国表IWC
+                的制表厂设于瑞士东北部沙夫豪森，拥有毋庸置疑的专业制表技术，是生产计时钟表的鼻祖：闻名于世、配备万年历的「达文西腕表系列」是源出于此的计时腕表先驱之一。当然还有首枚「超卓复杂型腕表系列」、超级防磁的「工程师腕表系列」、无惧2000
+                米水深压力和配备机械水深测量仪的潜水表、专业的IWC 万国表代表作「飞行员腕表系列」，以及同样无可比拟、于1868 年IWC 万国表创立时已经面世的怀表。</p>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<!-- 导入底部 -->
+<div th:insert="~{common/footer :: foot}"></div>
+<!--back top ---------------------------------------------------------------------------------------------->
+<div id="top_item">
+    <a id="back_top" onclick="return false;" title="回到顶部"></a>
+</div>
+</body>
+<script type="text/javascript" src="/Script/banner.js"></script>
+<script type="text/javascript" src="/js/brand.js"></script>
+<script type="text/javascript" src="/js/flickity.pkgd.js"></script>
+<script type="text/javascript" src="/js/flickity-docs.min.js"></script>
+<script type="text/javascript" src="/js/flickity.pkgd.min.js"></script>
+</html>

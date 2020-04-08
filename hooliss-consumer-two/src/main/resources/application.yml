@@ -1,0 +1,20 @@
+spring:
+  resources:
+    static-locations:
+    - classpath:/mystatic/
+  thymeleaf:
+    cache: false
+    mode: HTML5
+    encoding: UTF-8
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+server:
+  port: 5120
+eureka:
+  instance:
+    instance-id: hooliss_consumer
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka

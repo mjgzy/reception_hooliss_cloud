@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xfkj.mapper.user.WuserMapper">
+
+    <sql id="currency_sql">
+        SELECT `u_id`,`u_name`,`u_pwd`,`u_phone`,`vip_id`,`browsevolume`,`integral`,`head_image`,`create_date`,`vip_name`,`vip_discount`
+        FROM `wuser` LEFT JOIN `watch_vip` ON watch_vip.`id`=wuser.`vip_id` where 1=1
+    </sql>
+    <select id="validateLogin" resultMap="currency">
+        <include refid="currency_sql"></include>
+          AND `u_name`=#{u_name} AND `u_pwd`=#{u_pwd}
+    </select>
+    <!--增加用户积分-->
+    <update id="addUserIntegral">
+        UPDATE wuser SET integral = integral+#{integral} WHERE u_id=#{u_id}
+    </update>
+    <insert id="register" >
+        INSERT INTO`wuser`(`u_name`,`u_pwd`,`u_email`,`u_phone`,`vip_id`,`browsevolume`,`integral`,`head_image`,`create_date`)
+        VALUE (#{u_name},#{u_pwd},#{u_email},#{u_phone},#{vip_id},#{browsevolume},#{integral},#{head_image},NOW())
+    </insert>
+    <select id="findIdByName" resultType="java.lang.Integer">
+        SELECT `u_id` FROM `wuser` WHERE `u_name`=#{u_name}
+    </select>
+    <select id="contains" resultType="java.lang.Integer">
+         SELECT COUNT(`u_name`) FROM `wuser` WHERE `u_name`=#{u_name}
+    </select>
+    <update id="modify">
+        UPDATE `wuser` SET `u_name`=#{u_name},`u_pwd`=#{u_pwd},`u_email`=#{u_email},`u_phone`=#{u_phone},`vip_id`=#{vip_id},`browsevolume`=#{browsevolume},`integral`=#{integral},`head_image`=#{head_image},`create_date`=#{create_date} WHERE `u_id`=#{u_id}
+    </update>
+
+    <select id="findUserByPhone" resultMap="currency">
+        <include refid="currency_sql"></include>
+          AND u_phone = #{phone};
+    </select>
+
+    <select id="findById" resultType="WUser">
+        <include refid="currency_sql"/>
+        AND u_id=#{u_id}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT COUNT(u_name) FROM `wuser` WHERE `u_name`=#{u_name}
+    </select>
+    <select id="phoneOnlyVa" resultType="java.lang.Integer">
+        SELECT COUNT(u_phone) FROM `wuser` WHERE `u_phone` = #{phone}
+    </select>
+    <resultMap id="currency" type="WUser">
+        <id property="u_id" column="u_id"/>
+        <result property="u_name" column="u_name"/>
+        <result property="u_pwd" column="u_pwd"/>
+        <result property="u_phone" column="u_phone"/>
+        <result property="vip_id" column="vip_id"/>
+        <result property="browsevolume" column="browsevolume"/>
+        <result property="integral" column="integral"/>
+        <result property="head_image" column="head_image"/>
+        <result property="create_date" column="create_date"/>
+        <association property="watch_vip" javaType="Watch_vip">
+            <id property="id" column="vip_id"/>
+            <result property="vip_name" column="vip_name"/>
+            <result property="vip_discount" column="vip_discount"/>
+        </association>
+    </resultMap>
+</mapper>

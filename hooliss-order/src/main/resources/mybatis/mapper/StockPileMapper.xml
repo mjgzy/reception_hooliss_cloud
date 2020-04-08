@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xfkj.mapper.order.StockPileMapper">
+
+
+    <sql id="currency_sql">
+         SELECT sk.`id` sid,`seckill_id`,`number`,`start_time`,`end_time`,`create_time`,`discount`,`present_price`
+        `watch_id`,`watch_name`,`series_id`,`SpecialOffer`,`watch_grade_id`,`watch_descript`,`watch_price`,
+        `so_price`,`watch_image`,`watch_date`,`watch_sellCount`,`brand_id`,`watch_type_id`,`wp_Id`,`examine_status`,`status`
+        FROM seckill sk LEFT JOIN tb_watchs ON seckill_id = watch_id
+    </sql>
+    <!--查询库存为加入的信息-->
+    <select id="findWatchIdByTbWatchs" resultType="Integer">
+        SELECT t.watch_id FROM tb_watchs t WHERE t.watch_id NOT IN(SELECT watch_id FROM stock_pile)
+    </select>
+
+    <!--插入库存信息-->
+    <insert id="stockGante">
+        INSERT stock_pile(`watch_id`,`quantity`,`first_date`) VALUES(#{watch_id},(SELECT RAND() * 1000),NOW())
+    </insert>
+    <!--更新库存-->
+   <update id="update">
+      <if test="watch_id!=null and watch_id!=0">
+          UPDATE `stock_pile` SET `quantity` = quantity-#{count} where watch_id = #{watch_id}
+      </if>
+
+
+   </update>
+
+
+
+
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xfkj.mapper.order.OrderReserveMapper" >
+
+    <!--新增记录-->
+    <insert id="addReservce">
+      INSERT INTO order_reserve(`order_id`,`user_integral`,`spike_num`) VALUES(#{order_id},#{user_integral},#{spike_num})
+    </insert>
+
+    <!--删除记录-->
+    <delete id="delReservce">
+        DELETE FROM order_reserve WHERE order_id = #{order_id}
+    </delete>
+</mapper>

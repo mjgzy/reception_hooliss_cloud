@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xfkj.mapper.commodity.WatchSeriesMapper">
+
+    <select id="findSeriesByBrand_brandId" resultType="WatchSeries">
+        SELECT `id`,`watch_id`,`series_name`,`series_brand_id` FROM `watch_series` WHERE `series_brand_id` = #{series_brand_id}
+    </select>
+
+    <!-- 根据品牌id查询所有系列手表 -->
+    <select id="findSeriesByBrand_Id" resultType="WatchSeries" >
+	  SELECT `id`,`watch_id`,`series_name`,`series_brand_id` from watch_series WHERE series_brand_id = #{series_brand_id}
+    </select>
+    <!--<resultMap type="WatchSeries" id="sbpojo">-->
+        <!--<id column="id" property="id"/>-->
+        <!--<result column="series_name" property="series_name"/>-->
+        <!--<result column="series_brand_id" property="series_brand_id"/>-->
+        <!--<association property="tbWatchs" javaType="TbWatchsEs" >-->
+            <!--<id column="watch_id" property="watch_id"/>-->
+            <!--<result column="watch_name" property="watch_name"/>-->
+            <!--<result column="watch_descript" property="watch_descript"/>-->
+            <!--<result column="watch_price" property="watch_price"/>-->
+            <!--<result column="watch_image" property="watch_image"/>-->
+            <!--<result column="watch_date" property="watch_date"/>-->
+            <!--<result column="watch_sellcount" property="watch_sellcount"/>-->
+            <!--<result column="specialoffer" property="specialoffer"/>-->
+            <!--<result column="so_price" property="so_price"/>-->
+            <!--<result column="examine_status" property="examine_status"/>-->
+            <!--<result column="status" property="status"/>-->
+            <!--<result column="wp_Id" property="wp_Id"/>-->
+            <!--<result column="series_id" property="series_id"/>-->
+            <!--<result column="brand_id" property="brand_id"/>-->
+            <!--<result column="watch_grade_id" property="watch_grade_id"/>-->
+            <!--<result column="watch_type_id" property="watch_type_id"/>-->
+        <!--</association>-->
+    <!--</resultMap>-->
+
+    <!--根据系列名模糊查询系列-->
+    <select id="findSeriesByName" resultType="WatchSeries" >
+        SELECT `id`,`watch_id`,`series_name`,`series_brand_id` FROM `watch_series` WHERE `series_name` LIKE CONCAT('%',#{series_name},'%')
+    </select>
+
+    <!--根据id查询款式-->
+    <select id="findStyleById" resultType="Style">
+      SELECT ws.id series_id,tb.watch_id watch_id,tb.watch_image watch_image,wp.parameter_name watch_style
+        FROM watch_series ws
+        LEFT JOIN tb_watchs tb ON ws.id = tb.series_id
+        LEFT JOIN watch_parameter wp ON tb.wp_Id = wp.parameter_id
+        WHERE ws.id=#{_parameter}
+    </select>
+
+    <!--通过系列id查询系列-->
+    <select id="findSeriesById" resultType="WatchSeries">
+        SELECT `id`,`watch_id`,`series_name`,`series_brand_id` FROM watch_series WHERE id = #{series_id}
+    </select>
+</mapper>

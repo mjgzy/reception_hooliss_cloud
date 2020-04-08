@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xfkj.mapper.user.WReceinfoMapper" >
+    <select id="findAddressById" parameterType="Integer" resultType="WatchReceinfo">
+		SELECT `info_id`,`race_name`,`city`,`province`,`area`,`street`,`zipCode`,`user_id`,`phone` FROM `w_receinfo`
+		WHERE `user_id`=#{user_id}
+	 </select>
+
+    <!--通过地址主键id查询地址信息-->
+    <select id="queryAddressById" resultType="WatchReceinfo">
+        SELECT `info_id`,`race_name`,`city`,`province`,`area`,`street`,`zipCode`,`user_id`,`phone`  FROM `w_receinfo`
+        WHERE `info_id`=#{address_id}
+    </select>
+    <insert id="add">
+        INSERT INTO `w_receinfo`(`race_name`,`province`,`city`,`area`,`street`,`zipCode`,`user_id`,`phone`)
+        VALUE(#{race_name},#{province},#{city},#{area},#{street},#{zipCode},#{user_id},#{phone})
+    </insert>
+    <update id="update">
+        UPDATE `w_receinfo` SET `province`=#{province},`city`=#{city},`area`=#{area},`street`=#{street} WHERE `info_id`=#{info_id}
+    </update>
+    <delete id="del" >
+        DELETE FROM `w_receinfo` WHERE `info_id`=#{i_id}
+    </delete>
+
+
+</mapper>

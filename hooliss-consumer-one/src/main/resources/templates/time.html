@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" conltent="text/html; charset=utf-8"/>
+    <meta http-equiv="Cache-Control" content="no-transform"/>
+    <title>好利时手表网【官网】：中国最大的正品名表商城！买手表，上好利时手表！</title>
+    <meta name="keywords" content="手表,买手表,好利时手表网,名表商城,正品手表，瑞士手表"/>
+    <meta name="description" content="【好利时手表网】：买原装正品世界名表：浪琴、天梭、欧米茄、劳力士等瑞士手表品牌，信用卡分期付款，正品保证，全国联保，终身售后保障！"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+    <link rel="stylesheet" type="text/css" href="/css/hot.css"/>
+    <link rel="stylesheet" href="/css/sxg.css">
+    <!--引入头部css样式等文件-->
+    <head th:insert="~{common/header :: header-head}"></head>
+    <!--[if lte IE 6]>
+    <script src="/Script/DD_belatedPNG.js"></script>
+    <script>
+    </script>
+    <![endif]-->
+</head>
+<body>
+
+<!-- 导入头部 内容-->
+<body th:insert="~{common/header :: header-body}"></body>
+
+<div id="main">
+    <div class="hot_goods_list">
+        <div class="context">
+            <ul id="tejia_info">
+                <li th:each="secWatch : ${secKill.getList()}">
+                    <span class=""></span>
+                    <a th:href="@{'/seckill/doSecKill.xf/'+${secWatch.id}}" target="_blank" class="img">
+                        <img th:src="${secWatch.tbWatchs.watch_image}" th:alt="${secWatch.tbWatchs.watch_name}"  width="300"
+                        height="300"/>
+                    </a>
+                    <p><b>[[${secWatch.tbWatchs.watch_name}]]</b><br>
+                        <u></u>
+                        <ins>￥[[${secWatch.tbWatchs.so_price}]]</ins>
+                        <del>原价：￥[[${secWatch.tbWatchs.watch_price}]]</del>
+                        <br>
+                        <span class="cmt">已被抢购<i>[[${secWatch.salesVolume}]]</i>次</span></p>
+                    <a th:href="@{'/seckill/doSecKill.xf/'+${secWatch.id}}" target="_blank" class="btn">立即秒杀</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <form  method="post" class="fr">
+        <div th:insert="~{common/page :: pageer}"></div>
+    </form>
+
+</div>
+
+
+<!-- 导入底部 -->
+<div th:insert="~{common/footer :: foot}"></div>
+<div id="floatBox">
+    <div id="return">
+        <a href="javascript:void(0);" class="c__gotop" title="返回顶部" style="display:none;" rel="nofollow"></a>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/js/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="/js/time.js"></script>
+</html>

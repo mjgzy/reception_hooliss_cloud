@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xfkj.mapper.user.UserMessageMapper">
+    <select id="findMessagesById" resultType="UserMessage">
+        SELECT * FROM `user_message` WHERE `user_id`=#{user_id}
+
+    </select>
+    <select id="count" resultType="int">
+        SELECT COUNT(1) FROM `user_message`
+    </select>
+    <select id="findMessagesByInfo" resultType="UserMessage">
+        SELECT * FROM  `user_message` WHERE 1=1
+        <if test="info_date!='' and info_date!=null">
+            AND `create_date`=#{info_date}
+        </if>
+        <if test="info!='' and info !=null">
+            AND `content` LIKE CONCAT('%',#{info},'%')
+        </if>
+    </select>
+    <delete id="deleteMessage">
+        DELETE FROM `user_message` WHERE id=#{user_message_id}
+    </delete>
+</mapper>

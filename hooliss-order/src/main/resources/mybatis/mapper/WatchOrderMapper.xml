@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xfkj.mapper.order.WatchOrderMapper" >
+        <select id="findWatchByCondition"  resultMap="ddpojo">
+            SELECT * FROM `watch_order` wo LEFT JOIN `order_status` os ON os.`status_id`=wo.`order_status_id`
+            WHERE o_uid=#{user_id}
+            <!--
+             LEFT JOIN `tb_watchs` tw ON tw.`watch_id`=wo.`watch_id`
+             LEFT JOIN `order_status` os ON os.`status_id`=wo.`order_status_id`
+             LEFT JOIN `wuser` wu ON wu.`u_id` =wo.`o_uid`
+             LEFT JOIN `w_receinfo` wr ON wr.`info_id`=wo.`w_receinfo_id`
+             WHERE wu.`u_id` = #{u_id}
+            -->
+            <if test="order_status_id !=null and order_status_id!=0">
+                    AND wo.`order_status_id` =#{order_status_id}
+                </if>
+                <if test="order_id !=null and order_id!=0">
+                    AND wo.`order_id` like  CONCAT('%',#{order_id},'%')
+                </if>
+                <if test="date_type==1">
+                    AND `order_date`>DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                </if>
+                <if test="date_type==2">
+                    AND `order_date`>DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+                </if>
+                <if test="date_type==3">
+                    AND `order_date`>DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                </if>
+            ORDER BY  wo.`order_date` DESC
+        </select>
+        <resultMap id="ddpojo" type="WatchOrder">
+        <id column="id" property="id"/>
+        <result column="order_id" property="order_id"/>
+        <result column="o_uid" property="o_uid"/>
+        <result column="order_price" property="order_price"/>
+        <result column="watch_id" property="watch_id"/>
+        <result column="order_date" property="order_date"/>
+        <result column="watch_count" property="watch_count"/>
+<!--        <association property="lt" javaType="TbWatchs">-->
+<!--            <id column="watch_id" property="watch_id"/>-->
+<!--            <result column="watch_name" property="watch_name"/>-->
+<!--            <result column="watch_descript" property="watch_descript"/>-->
+<!--            <result column="watch_price" property="watch_price"/>-->
+<!--            <result column="watch_image" property="watch_image"/>-->
+<!--            <result column="watch_date" property="watch_date"/>-->
+<!--            <result column="watch_sellcount" property="watch_sellcount"/>-->
+<!--            <result column="specialoffer" property="specialoffer"/>-->
+<!--            <result column="so_price" property="so_price"/>-->
+<!--            <result column="examine_status" property="examine_status"/>-->
+<!--            <result column="status" property="status"/>-->
+<!--            <result column="wp_Id" property="wp_Id"/>-->
+<!--            <result column="series_id" property="series_id"/>-->
+<!--            <result column="brand_id" property="brand_id"/>-->
+<!--        </association>-->
+<!--        <association property="watch_receinfo" javaType="WatchReceinfo">-->
+<!--            <id column="info_id" property="info_id"/>-->
+<!--            <result column="race_name" property="race_name"/>-->
+<!--            <result column="province" property="province"/>-->
+<!--            <result column="city" property="city"/>-->
+<!--            <result column="area" property="area"/>-->
+<!--            <result column="street" property="street"/>-->
+<!--            <result column="zipCode" property="zipCode"/>-->
+<!--            <result column="user_id" property="user_id"/>-->
+<!--            <result column="phone" property="phone"/>-->
+<!--        </association>-->
+        <association property="order_status" javaType="OrderStatus">
+            <id column="status_id" property="statusId"/>
+            <result column="statud_name" property="statudName"/>
+        </association>
+    </resultMap>
+
+            <select id="findById"  resultType="WatchOrder">
+                    SELECT * FROM `watch_order` WHERE `order_id` =#{order_id}
+            </select>
+
+    <delete id="delOrderById">
+        delete from watch_order where order_id=#{order_id}
+    </delete>
+    <!--生成订单,自增主键返回-->
+    <insert id="generateOrder" >
+        <selectKey keyProperty="id" order="AFTER" resultType="Integer">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+        INSERT watch_order(`order_id`,`order_status_id`,`o_uid`,`order_price`,`w_receinfo_id`,`order_date`,
+        `watch_count`,`discount`,watch_id) VALUES(#{order_id},#{order_status.statusId},#{o_uid},#{order_price},
+        #{w_receinfo_id},#{order_date},#{watch_count},#{discount},#{watch_id})
+    </insert>
+
+    <update id="updateOrderStatus">
+        UPDATE watch_order SET order_status_id=#{status_id} WHERE order_id =#{order_id}
+    </update>
+</mapper>

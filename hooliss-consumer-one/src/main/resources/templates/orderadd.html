@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="css/new.css" />
+		<link href="layui/css/layui.css" rel="stylesheet" />
+		<script src="layui/layui.js" type="text/javascript"></script>
+		<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+	</head>
+
+	<body>
+		<div class="layui-layer layui-layer-dialog Wb_confirm_780 W_add_address layer-anim" id="layui-layer2" type="dialog" times="2" showtime="0" contype="string" style="z-index: 19891016; width: 360px; top: -13.5px; left: 561.5px;">
+			<div class="layui-layer-title" style="cursor: move;">添加收货地址<i class="icon-a-o-close05"></i>
+
+			</div>
+			<div id="" class="layui-layer-content">
+				<div class="add_address_con">
+					<div class="add_info clearfix">
+						<p class="address_msg p_basic add_name fl">
+							<span class="p_txt">(收货人)</span>
+							<input type="text" class="p_msg" id="p_name" placeholder="必填">
+							<em class="error_tips h"><i class="icon-a-error-arrow"></i> 请填写收货人姓名</em>
+							<i class="icon-a-o-delete h"></i>
+						</p>
+						<p class="address_msg p_basic add_phone fl">
+							<span class="p_txt">(手机号)</span>
+							<input type="text" class="p_msg" id="p_phone" placeholder="必填" onchange="wb.consignee.testPhone(this);">
+							<em class="error_tips p_err01 h"><i class="icon-a-error-arrow"></i> 请填写手机号</em>
+							<em class="error_tips p_err02 h"><i class="icon-a-error-arrow"></i> 手机号格式不正确</em>
+							<i class="icon-a-o-delete h"></i>
+						</p>
+					</div>
+					<div class="layui-main" class="address_msg">
+						<form class="layui-form" action="javascript:jg()" method="post">
+							<span class="p_txt">(所在地区)</span>
+							<div class="layui-form-item">
+
+								<div class="layui-inline">
+									<select name="province" class="province" lay-verify="required" lay-search lay-filter="province"  name="city_id" id="city_id" class="add_area">
+										<option value="">省份</option>
+									</select>
+								</div>
+								<div class="layui-inline">
+									<select name="city" class="city" lay-verify="required" lay-search lay-filter="city">
+										<option value="">地级市</option>
+									</select>
+								</div>
+								<div class="layui-inline">
+									<select name="district" class="district" lay-verify="required" lay-search>
+										<option value="">县/区</option>
+									</select>
+								</div>
+							</div>
+							<p class="address_msg p_basic add_street">
+								<span class="p_txt">(详细地址)</span>
+								<input type="text" class="p_msg" id="p_street" placeholder="街道门牌">
+								<em class="error_tips h"><i class="icon-a-error-arrow"></i> 请填写详细地址</em>
+							</p>
+	<p class="address_msg set_default"><span class="default_btn" isdefault="false" onclick="wbiao.consignee.setDefaultAdd(this);"><i></i></span> 设为默认</p>
+						</form>
+
+					</div>
+
+				</div>
+			</div><span class="layui-layer-setwin"><a class="layui-layer-ico layui-layer-close layui-layer-close1" href="javascript:;"></a></span>
+			<div class="layui-layer-btn">
+				<a class="layui-layer-btn0">保存并使用</a>
+				<a class="layui-layer-btn1">取消</a>
+			</div><span class="layui-layer-resize"></span></div>
+	</body>
+	<script src="js/area.js" type="text/javascript"></script>
+	<script src="js/selectMore.js" type="text/javascript"></script>
+
+</html>

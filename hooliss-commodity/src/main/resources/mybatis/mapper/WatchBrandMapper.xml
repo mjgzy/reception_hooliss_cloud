@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xfkj.mapper.commodity.WatchBrandMapper">
+
+    <select id="findWatchBrand" resultType="WatchBrand">
+        SELECT `brand_id`,`brand_name`,brand_code,`b_dect`,`b_logo` from watch_brand
+    </select>
+
+    <!--通过品牌id查找品牌名-->
+    <select id="findNameById" resultType="java.lang.String">
+        SELECT `brand_name` FROM watch_brand WHERE brand_id = #{brand_id}
+    </select>
+
+    <!-- 通过档次寻找品牌 -->
+    <select id="findWatchBrandByTid" resultType="WatchBrand">
+ 	    SELECT `brand_id`,`brand_name`,brand_code,`b_dect`,`b_logo` from watch_brand where t_id=#{t_id}
+    </select>
+
+    <!--查询该品牌下的所有手表的销量总数-->
+    <select id="countSalesVolume" resultType="Integer">
+        SELECT SUM(`watch_sellCount`) FROM  `watch_series` AS w LEFT JOIN `tb_watchs` AS t ON t.`series_id`=w.`id` WHERE `series_brand_id` =88
+    </select>
+
+    <!--通过品牌id查找品牌-->
+    <select id="findBrandById" resultMap="findBrandByIdMap">
+        SELECT brand_id,brand_name,country_id,t_id,b_logo,b_dect,b_date,brand_code ,c.c_id cid,c.c_name cname,c.c_code ccode
+        FROM watch_brand LEFT JOIN country c ON country_id = c.c_id
+        WHERE brand_id = #{brand_id}
+    </select>
+
+    <resultMap id="findBrandByIdMap" type="WatchBrand">
+        <id column="brand_id" property="brand_id"/>
+        <result column="brand_name" property="brand_name" />
+        <result column="country_id" property="country_id" />
+        <result column="t_id" property="t_id" />
+        <result column="b_logo" property="b_logo" />
+        <result column="b_dect" property="b_dect" />
+        <result column="b_date" property="b_date" />
+        <result column="brand_code" property="brand_code" />
+        <association  property="country" javaType="Country" >
+            <id column="cid" property="c_id"/>
+            <result property="c_name" column="cname"/>
+            <result property="c_code" column="ccode"/>
+        </association>
+    </resultMap>
+</mapper>

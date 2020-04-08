@@ -1,0 +1,69 @@
+server:
+  port: 8010
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: order-provider-one
+  client:
+    service-url:
+      defaultZone: http://49.232.36.244:7001/eureka
+spring:
+  application:
+    name: hooliss-order-provider
+  datasource:
+    url: jdbc:mysql://192.168.43.52:8066/hooliss?useUnicode=true&characterEncoding=utf-8
+    username: mycat
+    password: 123456
+  redis:
+    database: 0
+    host: 49.232.36.244
+    port: 9736
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+      shutdown-timeout: 100ms
+    password: myRedispd,.1218
+  rabbitmq:
+    virtual-host: /
+    host: 49.232.36.244
+    port: 5672
+    username: guest
+    password: guest
+#    listener:
+#      simple:
+#        retry:                    #抛异常会按retry策略重发（建议不在程序内抛异常，记录失败消息，然后确认）
+#          enabled: true           #允许重发
+#          max-attempts: 5         #重发次数
+#          initial-interval: 30000 #重发间隔时间
+#        acknowledge-mode: manual  #不确认宕机重启时会重新消费，确认失败会一直重发
+#      publisher-confirms: true      # 如果消息没有到exchange,则confirm回调,ack=false，
+#      # 如果消息到达exchange,则confirm回调,ack=true
+#      publisher-returns: true       #exchange到queue成功,则不回调return
+#      #exchange到queue失败,则回调return(需设置mandatory=true,否则不回回调,消息就丢了)
+    listener:
+      direct:
+        acknowledge-mode: manual    #配置该交换机类型的消息确认机制为手动
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 5
+          initial-interval: 30000
+        concurrency: 10
+        max-concurrency: 20
+        prefetch: 5
+        acknowledge-mode: manual
+      publisher-confirms: true      # 如果消息没有到exchange,则confirm回调,ack=false，
+      publisher-returns: true       #exchange到queue成功,则不回调return
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations:
+  - classpath:mybatis/mapper/*.xml

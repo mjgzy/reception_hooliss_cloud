@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xfkj.mapper.commodity.TbWatchsMapper">
+    <sql id="Tb_Watchs_list_2">
+           SELECT w.`watch_id`,w.`watch_name`,w.series_id,w.`SpecialOffer`,w.`so_price`,w.watch_grade_id,
+		g.`grade_name`,w.`watch_descript`,w.`watch_price`,w.`watch_image`,date_format(w.`watch_date`,'%Y-%m-%d %H:%i:%s') watch_date,wp.`parameter_id` wp_Id,
+		w.`watch_sellCount`,w.brand_id wbrandId,w.watch_type_id,b.`brand_name`,t.`type_name`,ct.`c_name` ctname
+		FROM `tb_watchs` w
+		LEFT JOIN `watch_brand` b ON b.`brand_id` = w.`brand_id`
+		LEFT JOIN `watch_grade` g ON w.`watch_grade_id` = g.`grade_id`
+		LEFT JOIN `watch_type` t ON w.`watch_type_id` = t.`type_id`
+		LEFT JOIN `country` ct ON ct.`c_id` = b.`country_id`
+		LEFT JOIN watch_parameter wp ON wp.`watch_id`=w.`watch_id`
+		WHERE w.status = 1
+    </sql>
+    <resultMap id="tbwatchs" type="TbWatchs" >
+        <id column="watch_id" property="watch_id"/>
+        <result column="watch_name" property="watch_name"/>
+        <result column="watch_descript" property="watch_descript"/>
+        <result column="watch_price" property="watch_price"/>
+        <result column="watch_image" property="watch_image"/>
+        <result column="watch_date" property="watch_date"/>
+        <result column="watch_sellcount" property="watch_sellcount"/>
+        <result column="Specialoffer" property="specialoffer"/>
+        <result column="so_price" property="so_price"/>
+        <result column="examine_status" property="examine_status"/>
+        <result column="status" property="status"/>
+        <result column="wp_Id" property="wp_Id"/>
+        <result column="series_id" property="series_id"/>
+        <result column="wbrandId" property="brand_id"/>
+        <!--映射品牌表-->
+        <association property="watchBrand" javaType="WatchBrand">
+            <id column="wbrandId" property="brand_id"/>
+            <result column="brand_name" property="brand_name" />
+            <result column="brand_name" property="b_logo" />
+            <result column="brand_name" property="brand_name" />
+            <!--映射城市表-->
+            <association property="country" javaType="Country">
+                <result column="ctname" property="c_name"/>
+            </association>
+
+        </association>
+        <!--映射性别分类表-->
+        <association property="watchGrade" javaType="WatchGrade">
+            <id column="watch_grade_id" property="grade_id"/>
+            <result column="grade_name" property="grade_name"/>
+        </association>
+        <!--映射档次表-->
+        <association property="watchType" javaType="WatchType">
+            <id column="watch_type_id" property="type_id"/>
+            <result column="type_name" property="type_name"/>
+        </association>
+
+    </resultMap>
+    <!-- _parameter代替 brand_id 参数 -->
+    <select id="findWatchByDate" parameterType="java.lang.Integer" resultMap="tbwatchs">
+        <include refid="Tb_Watchs_list_2"></include>
+        <if test="_parameter != null">
+             and w.`brand_id` = #{_parameter}
+        </if>
+        order by w.`watch_date` asc
+    </select>
+    <!--通过品牌id查询该品牌热销手表信息-->
+    <select id="findSellWellTbWatchsByBrandId" resultMap="tbwatchs">
+      <include refid="Tb_Watchs_list_2"></include>
+          AND w.brand_id = #{brand_id}
+          ORDER BY w.`watch_sellCount` DESC  LIMIT 0,5
+    </select>
+    <!-- _parameter代替 brand_name 参数  parameterType="java.lang.String"-->
+    <select id="findWatchByBrandId" parameterType="java.lang.String" resultMap="tbwatchs">
+        <include refid="Tb_Watchs_list_2"></include>
+        <if test="_parameter != null and _parameter!=0">
+            AND w.`brand_id`= #{_parameter}
+        </if>
+        ORDER BY w.`watch_sellCount` DESC
+    </select>
+
+    <select id="findWatchIdByParameterId" resultType="Integer">
+        select watch_id from tb_watchs where wp_Id=#{parameter_id}
+    </select>
+    <select id="findWatchByGradeAndType" resultMap="tbwatchs">
+        <include refid="Tb_Watchs_list_2"></include>
+        <if test="grade_id != null and grade_id!=0">
+             and w.`watch_grade_id` = #{grade_id}
+        </if>
+        <if test="type_id != null and type_id!=0">
+             and w.`watch_type_id` = #{type_id}
+        </if>
+        order by w.`watch_sellCount` DESC
+    </select>
+
+    <select id="findWatchByKeyWord" resultMap="tbwatchs">
+        <include refid="Tb_Watchs_list_2"></include>
+        <if test="key_word!=null and key_word!=''">
+            and watch_name like concat('%',#{key_word},'%')
+        </if>
+        <if test="grade_id != null and grade_id!=0">
+            and w.`watch_grade_id` = #{grade_id}
+        </if>
+        <if test="price_range_min!=0 and price_range_max!=0">
+            and w.`so_price` BETWEEN #{price_range_min} and #{price_range_max}
+        </if>
+        <if test="brand_id != 0">
+            and w.`brand_id` = #{brand_id}
+        </if>
+        <if test="condition==1">
+            order by w.`so_price` DESC
+        </if>
+        <if test="condition==2">
+            order by w.`so_price` ASC
+        </if>
+        <if test="condition==3">
+            order by w.watch_sellCount DESC
+        </if>
+        <if test="condition==4">
+            order by w.watch_date DESC
+        </if>
+    </select>
+
+
+    <select id="findWatchById" resultMap="tbwatchs">
+        <include refid="Tb_Watchs_list_2"></include>
+        <if test="w_id != null">
+            AND w.`watch_id` = #{w_id}
+        </if>
+    </select>
+
+    <select id="findWatchByinfo" resultMap="tbwatchs">
+        <include refid="Tb_Watchs_list_2"></include>
+        <if test="grade_id != null and grade_id != 0">
+             and w.`watch_grade_id` = #{grade_id}
+        </if>
+        <if test="brand_id != null and brand_id != 0">
+             and b.`brand_id` = #{brand_id}
+        </if>
+        <if test="series_id != null and series_id != 0">
+             and w.`series_id` = #{series_id}
+        </if>
+        <if test="watch_name != null and watch_name!=''">
+             and w.`watch_name` LIKE CONCAT ('%',#{watch_name},'%')
+        </if>
+        <if test="watch_priceMin != null and watch_priceMin!=0 and watch_priceMax != null and watch_priceMax!=0">
+             and w.`watch_price` &gt;=#{watch_priceMin} AND w.`watch_price` &lt;=#{watch_priceMax}
+        </if>
+        <if test="condition == 0">
+            ORDER BY w.`watch_id` asc
+        </if>
+        <if test="condition ==1" >
+            ORDER BY w.`watch_id` asc
+        </if>
+        <if test="condition ==2">
+            ORDER BY w.`watch_price` asc
+        </if>
+        <if test="condition ==5">
+            ORDER BY w.`watch_price` DESC
+        </if>
+        <if test="condition ==3">
+            ORDER BY w.`watch_sellCount` DESC
+        </if>
+        <if test="condition ==4">
+            ORDER BY w.`watch_date` DESC
+        </if>
+    </select>
+
+    <select id="findWatchByVolume" resultMap="tbwatchs">
+        <include refid="Tb_Watchs_list_2"></include>
+        <if test="grade_id != null">
+             and w.`watch_grade_id` = #{grade_id}
+        </if>
+            ORDER BY w.`watch_sellCount` DESC
+    </select>
+
+    <!--获取手表详情图片-->
+    <select id="findImagesById" resultType="WatchImages">
+        SELECT `id`,`w_id`,`images`,`images_type` FROM w_images WHERE w_id = #{w_id}
+    </select>
+    <!--<resultMap id="" type="">
+        <id></id>
+        <result/>
+&lt;!&ndash;        映射对象&ndash;&gt;
+        <association notNullColumn="id" property=""></association>
+&lt;!&ndash;        映射集合，oftype：集合内类型&ndash;&gt;
+        <collection notNullColumn="id" property="" ofType="">
+            <id/>
+            <result/>
+        </collection>
+    </resultMap>-->
+</mapper>

@@ -1,0 +1,22 @@
+package com.xfkj.mapper.seckill;
+
+import com.xfkj.pojo.seckill.Seckill;
+
+import java.util.List;
+
+/**
+ * 秒杀商品接口
+ */
+public interface SecKillMapper {
+
+    /**
+     * 查询所有秒杀商品
+     */
+    List<Seckill> findSecKillAll();
+
+    /**
+     * 通过秒杀主键查询秒杀信息
+     * @param s_id:秒杀主键
+     */
+    Seckill findSecById(Integer s_id);
+}

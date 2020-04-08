@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xfkj.mapper.user.UserCommentMapper">
+    <sql id="currenty">
+        SELECT u.`id` uid,u.`user_id` UUID,u.`watch_id` uwid,u.`content` ucont,
+        u.`star` ustr,u.`video` uv, u.`browse_status` ub,u.`reply_status` ur,
+        u.`reply_content` urc,u.`publish_date` upd,u.`reply_date` urd,
+        c.id cid,c.user_comment_id cuser_comment_id,c.image_url
+        cimage_url,w.`head_image`,w.`u_name`,v.`vip_name`
+        FROM user_comment u LEFT JOIN comment_images c
+        ON u.`id`=c.`user_comment_id` LEFT JOIN wuser w ON w.`u_id` = u.`user_id`
+        LEFT JOIN watch_vip v ON v.`id`=w.`vip_id` WHERE  1=1
+    </sql>
+    <select id="findCommentByName" resultMap="ima">
+        <include refid="currenty"></include>
+        <if test=" whether_image ==0">
+          AND c.`image_url`is not NULL
+        </if>
+        <if test="comment_date!=null and comment_date!=''">
+            AND u.comment_date=#{comment_date}
+        </if>
+        limit #{current_no},#{page_size}
+    </select>
+    <resultMap id="ima" type="UserComment">
+        <id column="uid" property="id"></id>
+        <result column="uuid" property="user_id"></result>
+        <result column="uwid" property="watch_id"></result>
+        <result column="ucont" property="content"></result>
+        <result column="ustr" property="star"></result>
+        <result column="uv" property="video"></result>
+        <result column="ub" property="browse_status"></result>
+        <result column="ur" property="reply_status"></result>
+        <result column="urc" property="reply_content"></result>
+        <result column="urd" property="replyDate"></result>
+        <result column="upd" property="publish_date"></result>
+        <association property="wuser" javaType="Wuser" >
+            <id column="u_id" property="u_id"/>
+            <result column="u_name" property="u_name"/>
+            <result column="u_pwd" property="u_pwd"/>
+            <result column="u_email" property="u_email"/>
+            <result column="u_phone" property="u_phone"/>
+            <result column="vip_id" property="vip_id"/>
+            <result column="browsevolume" property="browsevolume"/>
+            <result column="integral" property="integral"/>
+            <result column="head_image" property="head_image"/>
+            <result column="create_date" property="create_date"/>
+        </association>
+        <association property="watch_vip" javaType="Watch_vip" >
+            <id column="id" property="id"/>
+            <result column="vip_name" property="vip_name"/>
+            <result column="vip_discount" property="vip_discount"/>
+        </association>
+        <collection notNullColumn="cid" property="comment_Images" ofType="CommentImages" >
+                <id column="cid" property="id"></id>
+                <result property="user_comment_id" column="cuser_comment_id"></result>
+                <result property="image_url" column="cimage_url"></result>
+        </collection>
+    </resultMap>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(1) FROM `user_comment`
+    </select>
+    <delete id="deleteComment">
+        DELETE FROM `user_comment` WHERE id=#{Comment_id}
+    </delete>
+</mapper>

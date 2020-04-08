@@ -1,0 +1,341 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Cache-Control" content="no-transform"/>
+    <title>好利时手表网【官网】：中国最大的正品名表商城！买手表，上好利时手表！</title>
+    <meta name="keywords" content="手表,买手表,好利时手表网,好利时手表网官网,名表商城,正品手表，瑞士手表"/>
+    <meta name="description"
+          content="【好利时手表网官网】：买原装正品世界名表：浪琴、天梭、欧米茄、劳力士等瑞士手表品牌，信用卡分期付款，正品保证，全国联保，终身售后保障！"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+    <link rel="stylesheet" type="text/css" href="/css/haolishi/search.css">
+    <link rel="stylesheet" type="text/css" href="/css/haolishi/common-min.css">
+    <link rel="stylesheet" href="/css/list.css">
+    <link rel="stylesheet" href="/css/sxg.css">
+    <link  rel="stylesheet"  href="/css/toastr.css">
+    <link rel="stylesheet" href="/css/haolishi/shop.css">
+</head>
+<body>
+<script type="text/javascript" src="/js/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="/js/toastr.js"></script>
+
+<div class="position">
+    <span>当前位置：</span> <a href="/index/doIndex.xf" rel="nofollow">首页</a> <i>&gt;</i>
+    <h1>
+        <a href="os.html ">商品中心</a>
+    </h1>
+</div>
+<div class="clearfix"></div>
+<div class="W_pt_head">
+    <div class="head_wrap clearfix">
+        <div class="head_left fl">
+            <h1 class="wb_logo fl">
+                <a href="" title="正品名表 终身服务">
+                    <img width="120px" height="80px" th:src="${watchBrandName.b_logo}" th:alt="${watchBrandName.b_dect}">
+                </a>
+            </h1>
+            <a href="" class="wb_shop_msg fl" id="service-code" shop-code="13"
+                    service-code="wx_1000_1515726307656">
+                    <span class="sp_logo fl h">
+                        <img src="" alt="">
+                    </span>
+                <div class="sp_txt fl">
+                    <p class="sp_name" th:text="${watchBrandName.brand_name}"></p>
+                    <i class="shop_add">自营</i>
+                    <p class="sp_sales" >销量<em class="shop_sales" th:text="${Number}"></em>&nbsp;&nbsp;粉丝<em
+                            class="shop_fans">84579</em>
+                    </p>
+                </div>
+            </a>
+        </div>
+        <div class="head_right fl">
+            <div class="head_shop_search fl">
+                <div class="searchForm"><label class="srh_lab"><span class="srh_ipt_txt"></span> <input
+                        type="text" class="srh_ipt_new" value="" maxlength="30"></label>
+                    <button class="srh_btn srh_wbiao" id="srh_wbiao">搜全站</button>
+                    <button class="srh_btn srh_shop" id="srh_shop">搜本店</button>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<!--导航栏开始-->
+<style> .pt-shop_nav a {
+    color: #f1f7f8;
+}
+
+.pt-shop_nav a .on, .pt-shop_nav a:hover {
+    color: #f8f7ed;
+}
+
+.pt-shop_nav a .on:after, .pt-shop_nav a:hover:after {
+    background: #f8f7ed;
+}</style>
+<a target="_blank" href="" >
+    <div class="pt-shop_sign"
+         ></div>
+
+</a>
+<div class="pt-shop_nav" style="background-color: #303030;">
+    <ul >
+
+        <li><a target="_Self" href="" class="on">商品</a></li>
+        <li><a target="_Self" href="">热销推荐</a></li>
+        <li >
+            <a target="_Self"   th:href="'/brand/doShop.xf/'+${watchBrandName.brand_id}+'/1/0/0/20/0'" >
+            </a>男士腕表<span class="grandid" type="hidden" ></span>
+        </li>
+        <li >
+            <a target="_Self" th:href="'/brand/doShop.xf/'+${watchBrandName.brand_id}+'/2/0/0/20/0'">
+            </a>女士腕表<span class="grandid" type="hidden" ></span>
+        </li>
+        <li  th:each = "watchSeries : ${watchSeriesName.get('list')}">
+            <a target="_Self" th:text="${watchSeries.series_name}+'&nbsp;&nbsp;&nbsp;&nbsp;'"
+               th:href="'/brand/doShop.xf/'+${watchSeries.series_brand_id}+'/0/'+${watchSeries.id}+'/0/20/0'">
+            </a>
+        </li>
+        <div class="consult CUSTOMER-SERVICE fr">
+            <span class="ico fl icon-d-kefu"></span>
+            <span th:name="${watchBrandName.brand_id}" class="fl cnm">联系商家</span>
+        </div>
+    </ul>
+</div>
+<div style="clear:both">&nbsp
+    <input type="hidden" id="docx" value=""/>
+</div>
+<!-- Main Begin -->
+<div id="main2">
+
+
+    <!--banner结束-->
+    <div class="rightArea w995 W_main">
+
+        <div class="show_area" id="show_area">
+            <div class="sa_top">
+                <dl class="order_by" id="jiages">
+                    <dt>排序：</dt>
+                    <dd>
+                        <a rel="nofollow" title="点击排序" >综合排序<i class=""></i>
+                        </a>
+                    </dd>
+                    <dd>
+                        <a rel="nofollow" title="点击排序" >价格<i class="p_all"></i>
+                        </a>
+                    </dd>
+                    <dd>
+                        <a class="down" rel="nofollow" style="cursor:default" >热销</a>
+                    </dd>
+                    <dd>
+                        <a rel="nofollow" title="点击排序">最新<i class=""></i>
+                        </a>
+                    </dd>
+                </dl>
+            </div>
+            <!--商品展示开始-->
+            <ul id="goods_list" class="goods_list w930" >
+                <li th:each="watchsName : ${watchsName.list}">
+                    <a target="_blank" th:href="@{'/watch/doWatch.xf/'+${watchsName.watch_id}}" class="s_goods_img">
+                    <img class=" lazy-load" th:src="@{${watchsName.watch_image}}" alt="">
+                </a>
+                    <div class="goods_txt">
+                        <p style="text-align: center;" class="red f14 bold">
+                            <del class="c666" th:text="'原价:'+${watchsName.watch_price}"></del>
+                            <span th:text="'好利时价:'+${watchsName.so_price}"></span></p>
+                        <a target="_blank" href="" class="s_goods_name elps2" >
+                            <p th:text="${watchsName.watch_name}"></p>
+                        </a>
+                        <div class="goods_sale">
+                            <span th:text="'销量：'+${watchsName.watch_sellcount}" class="s_sale_num" ></span>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <a  th:href="@{'/shopcart/doShop.xf/'+watchBrandName.brand_id}"
+                                class="s_shop" th:text="${watchBrandName.country.c_name}+' '+${watchBrandName.brand_name}+'官方旗舰店'"></a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <!--商品展示结束-->
+            <div style="clear: both"></div>
+            <!--导入分页插件-->
+            <div style="text-align: center">
+                <div class="page_nav">
+                    <span  class="pre">上一页</span>&nbsp;
+                    <div style=" display: inline;" class="page_count">
+                    </div>
+                    <a   class="next" >下一页</a>&nbsp;
+                </div>
+                <!-- 翻页 End -->
+                <div class="record">
+                    共有&nbsp;<span class="pageTotal thred">[[${watchsName.pages}]]</span> 页,
+                    当前页:【&nbsp;<span class="current_no">[[${watchsName.pageNum}]]</span>&nbsp;】
+                    ，跳到第&nbsp;
+                    <input id="pp" type="text" class="txt" maxlength="4"  value="" />&nbsp;页&nbsp;
+                    <a class="btnJtp btn" name="trend" href="javascript:void(0);">确定</a>
+                </div>
+            </div>
+            <div class="sa_share w930">
+                <span class="share"> </span>
+                <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+
+                    <!-- 将此,标记放在您希望显示like按钮的位置 -->
+                    <div class="bdlikebutton"></div>
+
+                    <!-- 将此代码放在适当的位置，建议在body结束前 -->
+                    <script id="bdlike_shell"></script>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="hot_display_position"></div>
+    <div class="leftArea w210">
+        <div class="left_store_floor fl">
+            <div class="store_line"><h2>店内搜索</h2>
+<!--                <form action="/brand" method="Post">-->
+                <div class="search_condition"><p class="input_txt clearfix"><span>关键字</span>
+                    <input type="text" class="key_word" id="key_word"></p>
+                    <p class="input_txt clearfix"><span>价格区间</span> <input type="text" class="price_range" id="minprice"
+                                                                           onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');">
+                        <em>-</em> <input type="text" class="price_range" id="maxprice"
+                                          onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');"></p>
+                    <a  class="search_btn" id="search_btn">搜索</a>
+<!--                    <input class="search_btn" id="search_btn" type="submit" value="搜索"/>-->
+                </div>
+<!--                </form>-->
+            </div>
+            <div class="store_line"><h2>商品分类</h2>
+                <div class="store_goods_sort">
+                    <div class="goods_sort_list"><h3><span class="show_hide"><em class="icon-a-list-show"></em><em
+                            class="icon-a-list-hide h"></em> </span> <a target="_blank"
+                                                                        href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1812">男女表</a>
+                    </h3>
+                        <div class="second_menu h"><a data-index="1813" target="_blank"
+                                                      href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1813"><i></i>
+                            男表</a> <a data-index="1814" target="_blank"
+                                      href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1814"><i></i> 女表</a>
+                            <a data-index="1815" target="_blank"
+                               href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1815"><i></i> 情侣表</a> <a
+                                    data-index="1816" target="_blank"
+                                    href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1816"><i></i> 中性</a>
+                        </div>
+                    </div>
+                    <div class="goods_sort_list"><h3><span class="show_hide"><em class="icon-a-list-show"></em><em
+                            class="icon-a-list-hide h"></em> </span>
+                        <a target="_blank" href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1817">表款系列</a>
+                    </h3>
+                        <div class="second_menu h">
+                            <a th:each = "watchSeries : ${watchSeriesName.get('list')}" target="_blank"
+                               th:href="'/brand/doShop.xf/'+${watchSeries.series_brand_id}+'/0/'+${watchSeries.id}+'/0/20/0'">
+                                <i></i>[[${watchSeries.series_name}]]
+                            </a>
+                        </div>
+                    </div>
+                    <div class="goods_sort_list"><h3><span class="show_hide"><em class="icon-a-list-show"></em><em
+                            class="icon-a-list-hide h"></em> </span> <a target="_blank"
+                                                                        href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1837">表带材质</a>
+                    </h3>
+                        <div class="second_menu h"><a data-index="1838" target="_blank"
+                                                      href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1838"><i></i>
+                            钢带</a> <a data-index="1839" target="_blank"
+                                      href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1839"><i></i> 皮带</a>
+                            <a data-index="1840" target="_blank"
+                               href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1840"><i></i> 橡胶带</a> <a
+                                    data-index="1841" target="_blank"
+                                    href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1841"><i></i> 其他</a>
+                        </div>
+                    </div>
+                    <div class="goods_sort_list"><h3><span class="show_hide"><em class="icon-a-list-show"></em><em
+                            class="icon-a-list-hide h"></em> </span> <a target="_blank"
+                                                                        href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1842">透底</a>
+                    </h3>
+                        <div class="second_menu h"><a data-index="1843" target="_blank"
+                                                      href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1843"><i></i>
+                            透底</a> <a data-index="1844" target="_blank"
+                                      href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1844"><i></i> 不透底</a>
+                        </div>
+                    </div>
+                    <div class="goods_sort_list"><h3><span class="show_hide"><em class="icon-a-list-show"></em><em
+                            class="icon-a-list-hide h"></em> </span> <a target="_blank"
+                                                                        href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1845">机芯</a>
+                    </h3>
+                        <div class="second_menu h"><a data-index="1846" target="_blank"
+                                                      href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1846"><i></i>
+                            自动机械</a> <a data-index="1847" target="_blank"
+                                        href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1847"><i></i> 手动机械</a>
+                            <a data-index="1849" target="_blank"
+                               href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1849"><i></i> 石英表</a></div>
+                    </div>
+                    <div class="goods_sort_list"><h3><span class="show_hide"><em class="icon-a-list-show"></em><em
+                            class="icon-a-list-hide h"></em> </span> <a target="_blank"
+                                                                        href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1850">价位区间</a>
+                    </h3>
+                        <div class="second_menu h"><a data-index="2182" target="_blank"
+                                                      href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=2182"><i></i>
+                            1000-3000</a> <a data-index="1851" target="_blank"
+                                             href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1851"><i></i>
+                            3000-5000</a> <a data-index="1852" target="_blank"
+                                             href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1852"><i></i>
+                            5000-10,000</a> <a data-index="1853" target="_blank"
+                                               href="https://www.wbiao.cn/shop/product/41/?kc=sc:41&amp;spc=1853"><i></i>
+                            10,000-30,000</a></div>
+                    </div>
+                    <div class="goods_sort_list"><h3><span class="show_hide"></span>
+                        <a target="_blank" href="">情侣表</a>
+                    </h3>
+                        <div class="second_menu h"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 上新推荐 Begin -->
+        <div class="hot">
+            <div class="h_top">
+                <div class="h_tit">上新推荐</div>
+            </div>
+            <div class="h_mid">
+                <ul class="h_link" th:each="hotWatchsName : ${hotWatchsName.get('list')}">
+
+                    <li class="h_link_li">
+                        <div style="margin-top:10px;">
+                            <img alt="" class="lazy" th:src="@{${hotWatchsName.watch_image}}">
+                        </div>
+                        <ul>
+                            <li style="margin-top:15px;" class="red f14 bold">
+                                <del class="c666" th:text="'市场价：￥'+ ${hotWatchsName.watch_price}"></del>
+                                <p th:text="'好利时价：￥'+${hotWatchsName.so_price}"></p>
+                            </li>
+                            <li style="margin-top:15px;" th:text="'销量：'+${hotWatchsName.watch_sellcount}"></li>
+                            <li th:text="${hotWatchsName.watch_name}"></li>
+                            <!--<li>日历机械腕表 2018新品</li>
+                            <li><b>【豪利时Oris官方旗舰店】</b></li>-->
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <!-- 上新推荐结束 -->
+    </div>
+
+
+</div>
+<!-- Main End -->
+
+
+<!-- 导入底部 -->
+<div th:insert="~{common/footer :: foot}"></div>
+<div id="floatBox">
+    <div id="return">
+        <a href="javascript:void(0);" class="c__gotop" title="返回顶部"
+           style="display:none;" rel="nofollow"></a>
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery-3.4.1.js"></script>
+<script src="/js/shop.js"></script>
+</html>

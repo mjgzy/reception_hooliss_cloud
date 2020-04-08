@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html xmlns:aw="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>好利时名表首页</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my common/page">
+	<link rel="stylesheet" href="/css/index.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/sxg.css">
+	<link rel="stylesheet" type="text/css" href="/css/haolishi/search.css">
+	<link rel="stylesheet" type="text/css" href="/css/haolishi/common-min.css">
+	<link rel="stylesheet" type="text/css" href="/css/haolishi/rotary_button.css">
+	<!--引入头部css样式等文件-->
+	<head th:insert="~{common/header :: header-head}"></head>
+</head>
+
+<body>
+<!-- 导入头部 内容-->
+<body th:insert="~{common/header :: header-body}"></body>
+<div class="banner" id="banner">
+	<a  class="d1" style="background:url(/Images/1a7300bbbb8d459a8e7b62eae9e6e733.jpg) center no-repeat;"></a>
+	<a class="d1" style="background:url(/Images/f86466e9be2d47ee8fcc57694fb2ec5b.jpg) center no-repeat;"></a>
+	<a class="d1" style="background:url(/Images/index/111.jpg) center no-repeat;"></a>
+	<a class="d1" style="background:url(/Images/index/222.jpg) center no-repeat;"></a>
+	<a class="d1" style="background:url(/Images/index/444.jpg) center no-repeat;"></a>
+	<a class="d1" style="background:url(/Images/index/1234.jpg) center no-repeat;"></a>
+	<div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide">
+		<i class="icon-d-h-ctrl01-2">下一页</i>
+		<i class="icon-d-h-ctrl01-22">下一页</i>
+	</div>
+	<div class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide">
+		<i class="icon-d-h-ctrl01-1">上一页</i>
+		<i class="icon-d-h-ctrl01-11">上一页</i>
+	</div>
+	<div class="d2" id="banner_id">
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+</div>
+<!--index banner end----------------------------------------------------------------------------------------------------->
+
+<div class="idxBnd">
+	<div class="tCnt w1225">
+		<a href="http:"  style="margin-right: 1px;_margin-right: 0px;">
+		</a>
+		<a href=""  style="margin-right: 1px;_margin-right: 0px;">
+		</a>
+		<a href=""  style="margin-right: 1px;_margin-right: 0px;">
+		</a>
+		<a href="http:"  style="margin-right: 1px;_margin-right: 0px;">
+			<img src="/Images/index/banimg1.jpg" alt="" width="296" height="175" />
+		</a>
+		<a href="" style="margin-right: 1px;_margin-right: 0px;">
+			<img width=298 height="175" src="/Images/index/banimg2.jpg" alt="" />
+		</a>
+		<a href="" style="margin-right: 1px;_margin-right: 0px;">
+			<img width=300 height="175" src="/Images/index/banimg5.jpg" alt="" />
+		</a>
+		<a href="">
+			<img width=300 height="175" src="/Images/index/banimg4.jpg" alt="" />
+		</a>
+        <a href="">
+            <img width=300 height="175" src="/Images/index/123.jpg" alt="" />
+        </a>
+	</div>
+</div>
+
+<!--热销 start-->
+<div id="hot_display_position"></div>
+<div class="idxSet hotSet">
+
+	<div class="tTit w1225">
+		<span class="tNm"  about="1">[排行榜]</span>
+		<!--显示数据库表分类-->
+		<ul id="hotTit" class="tGud" >
+			<li th:each="g :${gradelist}" th:text="${g.grade_name}"></li>
+		</ul>
+
+	</div>
+	<div class="rotary_button_p">
+		<a class="rotary_button_a" href="">
+			<img src="/Images/index/e0acea6662ac80a08e6feb26cb40425.png" />
+
+		</a>
+
+		<!--导入轮播图按钮-->
+		<!--<div th:insert="~{common/rotary_button :: rotary_button}"></div>-->
+	</div>
+	<div class="tBdy w1225 hotCon" >
+		<div class="tPdtLst">
+			<div class="tLnk"></div>
+			<!--排行榜显示信息-->
+			<ul id="w_info" class="nanrankTit">
+				<!--商品展示开始-->
+
+				<li class="watchLi" th:each="d,index: ${watchManName.get('list')}" th:onclick="'javascript:li_click(\''+${d.watch_id}+'\');'" data-is-boutique="0" >
+					<div class="phb_01">
+						<i class="icon-d-phb-bg"></i>
+						<em>NO.[[${index.count}]]</em>
+					</div>
+					<a target="_blank" th:href="@{/watch/doWatch.xf/${d.watch_id}}" class="s_goods_img">
+						<img class=" lazy-load"  th:src="${d.watch_image}" alt="">
+					</a>
+					<div class="goodss">
+						<p style="text-align: center;" class="red f14 bold">
+							<del class="c666">市场价:￥<span th:text="${d.watch_price}"></span></del>
+							好利时价:￥<span th:text="${d.so_price}"></span>
+						</p>
+						<a target="_blank" href="https://www.wbiao.cn/goods/42471.html" class="s_goods_name elps2" th:text="${d.watch_name}">
+						</a>
+						<div class="goods_sale">
+							<em class="s_sale_num">销量<span th:text="${d.watch_sellcount}"></span></em>
+							<a target="_blank"  th:href="@{'/brand/doShop.xf/'+${d.brand_id}}" class="s_shop">
+								<span>
+									[[${d.watchBrand.country.c_name}]][[${d.watchBrand.brand_name}]]官方旗舰店
+								</span>
+								</a>
+						</div>
+					</div>
+				</li>
+
+				<!--商品展示结束-->
+			</ul>
+			<div class="mLnk"></div>
+		</div>
+		<div class="mLnk"></div>
+	</div>
+	<div class="afwa"><input  type="hidden" value="0"></div>
+</div>
+
+<!--<p align="center">&nbsp;</p>-->
+
+<!--排行榜 end-->
+
+
+
+<div id="rank_display_position"></div>
+<div class="idxSet rankSet">
+
+	<div class="tTit w1225">
+		<span class="tNm" about="2">[新品推荐]</span>
+		<ul name="1" id="idxz" class="tGud">
+			<li th:each="g :${gradelist}" th:text="${g.grade_name}"></li>
+		</ul>
+
+	</div>
+	<p class="rotary_button_p">
+		<img src="/Images/index/139632507725908.jpg" />
+	</p>
+
+	<div class="tBdy w1225 hotCon" >
+		<div class="tPdtLst">
+			<div class="tLnk"></div>
+			<ul  id="nanrankTit" class="nanrankTit">
+				<li class="watchLi" data-is-boutique="0"  th:each="d,index: ${products.get('list')}" th:onclick="'javascript:li_click(\''+${d.watch_id}+'\');'">
+					<div class="phb_01">
+					</div>
+					<a target="_blank" th:href="@{'/watch/doWatch.xf/'+${d.watch_id}}" class="s_goods_img">
+						<img class=" lazy-load" th:src="${d.watch_image}" alt="">
+					</a>
+					<div class="goods_txt">
+						<p style="text-align: center;" class="red f14 bold">
+							<del class="c666">市场价:￥<span th:text="${d.watch_price}"></span></del>
+							好利时价:￥<span th:text="${d.watch_price}"></span>
+						</p>
+						<a target="_blank" href="" class="s_goods_name" th:text="${d.watch_name}">
+						</a>
+						<div class="goods_sale">
+							<em class="s_sale">销量<span th:text="${d.watch_sellcount}"></span></em>
+							<a target="_blank"  th:href="@{'/brand/doShop.xf/'+${d.brand_id}}" class="s_shop">
+									<span>
+									[[${d.watchBrand.country.c_name}]][[${d.watchBrand.brand_name}]]官方旗舰店
+								</span>
+							</a>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="mLnk"></div>
+		</div>
+		<div class="mLnk"></div>
+	</div>
+	<!--导入分页插件-->
+	<div style="text-align: center">
+		<div class="page_nav">
+			<span class="pre" name="new">上一页</span>&nbsp;
+			<div style=" display: inline;" class="page_size">
+			</div>
+			<a  class="next" name="new">下一页</a>&nbsp;
+		</div>
+		<!-- 翻页 End -->
+		<div class="record">
+			共有&nbsp;<span class="pageTotal hnh" >[[${products.pages}]]</span> 页，
+			当前页:【&nbsp;<span class="current_no">[[${products.pageNum}]]</span>&nbsp;】
+			跳到第&nbsp;
+			<input id="jtp" type="text" class="txt" maxlength="4" maxpage="774" value="" />
+			&nbsp;页&nbsp;
+			<a class="btnJtp btn" name="new" href="javascript:void(0);">确定</a>
+		</div>
+	</div>
+</div>
+
+<!--销售排行榜 end-->
+
+<div class="idxSet rankSet">
+
+	<div class="tTit w1225">
+		<span class="tNm" about="3">[时尚腕表]</span>
+		<ul name="2" id="rankTit" class="tGud">
+			<li th:each="g :${gradelist}" th:text="${g.grade_name}"></li>
+		</ul>
+
+	</div>
+	<p  class="rotary_button_p">
+		<img src="/Images/index/135789226426016.jpg" />
+	</p>
+	<div class="tBdy w1225 hotCon" >
+		<div class="tPdtLst">
+			<div class="tLnk"></div>
+			<ul id="nvrankTit" class="nanrankTit">
+				<li class="watchLi" th:each="d,index: ${grade.get('list')}" th:onclick="'javascript:li_click(\''+${d.watch_id}+'\');'" data-is-boutique="0"  >
+					<div class="phb_01">
+					</div>
+					<a target="_blank" th:href="@{/watch/doWatch.xf/${d.watch_id}}" class="s_goods_img">
+						<img class=" lazy-load"  th:src="${d.watch_image}" alt="">
+					</a>
+					<div class="goods_txt">
+						<p style="text-align: center;" class="red f14 bold">
+							<del class="c666">市场价:￥<span th:text="${d.watch_price}"></span></del>
+							好利时价:￥<span th:text="${d.watch_price}"></span>
+						</p>
+						<a target="_blank"  class="s_goods_name" th:text="${d.watch_name}">
+						</a>
+						<div class="goods_sale">
+							<em class="s_sale">销量<span th:text="${d.watch_sellcount}"></span></em>
+							<a target="_blank"  th:href="@{'/brand/doShop.xf/'+${d.brand_id}}" class="s_shop">
+									<span>
+									[[${d.watchBrand.country.c_name}]][[${d.watchBrand.brand_name}]]官方旗舰店
+								</span>
+							</a>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="mLnk"></div>
+		</div>
+		<div class="mLnk"></div>
+	</div>
+	<!--导入分页插件-->
+	<div style="text-align: center">
+		<div class="page_nav">
+			<span class="pre" name="trend">上一页</span>&nbsp;
+			<div style=" display: inline;" class="page_count">
+			</div>
+			<a   class="next" name="trend">下一页</a>&nbsp;
+		</div>
+		<!-- 翻页 End -->
+		<div class="record">
+			共有&nbsp;<span class="pageTotal thred">[[${grade.pages}]]</span> 页,
+			当前页:【&nbsp;<span class="current_no">[[${products.pageNum}]]</span>&nbsp;】
+			，跳到第&nbsp;
+			<input id="pp" type="text" class="txt" maxlength="4" maxpage="774" value="" />&nbsp;页&nbsp;
+			<a class="btnJtp btn" name="trend" href="javascript:void(0);">确定</a>
+		</div>
+	</div>
+</div>
+
+<!-- 导入底部 -->
+<div th:insert="~{common/footer :: foot}"></div>
+<!--back top ---------------------------------------------------------------------------------------------->
+<div id="top_item">
+	<a id="back_top" onclick="return false;" title="回到顶部"></a>
+</div>
+<script type="text/javascript" src="/Script/banner.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+</body>
+
+</html>

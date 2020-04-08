@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xfkj.mapper.order.ShoppingCartMapper" >
+
+<sql id="currency_sql">
+    select * from shopping_cart
+</sql>
+    <!--通过用户id和手表获取购物车信息-->
+    <select id="findShoppingCartByIdAndW_Id" resultMap="currency_map">
+        <include refid="currency_sql"></include>
+        WHERE  u_id = #{u_id}  and w_id = #{w_id}
+    </select>
+    <!--通过用户id和手表获取购物车信息-->
+    <select id="findShoppingCartsByIdAndW_Id" resultMap="currency_map">
+        <include refid="currency_sql"></include>   WHERE  u_id = #{u_id}
+    </select>
+
+    <select id="existenceCart" resultType="Integer">
+        select count(id) from shopping_cart where u_id = #{u_id} AND w_id = #{w_id}
+    </select>
+    <resultMap id="currency_map" type="ShoppingCart">
+        <id column="id" property="id"/>
+        <result column="u_id" property="u_id"/>
+        <result column="w_id" property="w_id"/>
+        <result column="add_count" property="add_count"/>
+        <result column="add_date" property="add_date"/>
+<!--        <association property="tb_watchs" javaType="TbWatchs">-->
+<!--            <result column="scwid" property="watch_id"/>-->
+<!--            <result column="watch_name" property="watch_name"/>-->
+<!--            <result column="watch_grade_id" property="watch_grade_id"/>-->
+<!--            <result column="watch_price" property="watch_price"/>-->
+<!--            <result column="so_price" property="so_price"/>-->
+<!--            <result column="watch_image" property="watch_image"/>-->
+<!--            <result column="watch_date" property="watch_date"/>-->
+<!--            <result column="watch_type_id" property="watch_type_id"/>-->
+<!--            <association property="watchBrand" javaType="WatchBrand">-->
+<!--                <id column="wbid" property="brand_id"/>-->
+<!--                <result column="brand_name" property="brand_name"/>-->
+<!--            </association>-->
+<!--        </association>-->
+    </resultMap>
+
+    <!--查询该用户是否有此条购物车信息-->
+    <select id="queryWatchContains" resultType="Integer">
+        SELECT COUNT(id) FROM shopping_cart WHERE u_id = #{u_id} AND w_id = #{w_id}
+    </select>
+
+
+    <!--删除购物车信息通过手表主键id-->
+    <delete id="deleteShopInfoByWId">
+         delete from shopping_cart where  w_id  = #{_parameter }
+    </delete>
+    <!--删除购物车信息-->
+    <delete id="deleteShopInfoById">
+            delete from shopping_cart where  u_id  = #{u_id } and w_id = #{w_id}
+
+    </delete>
+
+    <!--添加购物车信息-->
+    <insert id="addShopInfo" >
+        INSERT shopping_cart(`u_id`,`w_id`,`add_count`,`add_date`)
+        VALUES(#{u_id},#{w_id},#{add_count},NOW() )
+    </insert>
+
+    <!--添加购物车数量-->
+    <update id="addCountBuy">
+        update shopping_cart  set add_count = add_count+#{count}
+        where u_id = #{u_id} and w_id = #{w_id}
+
+    </update>
+
+    <!--添加购物车数量-->
+    <update id="addCount">
+        update shopping_cart
+        <if test="count==0">
+            set add_count = add_count-1
+        </if>
+        <if test="count==1">
+            set add_count = add_count+1
+        </if>
+        where u_id = #{u_id} and w_id = #{w_id}
+
+    </update>
+</mapper>
