@@ -21,13 +21,13 @@ public class TbWatchs implements Serializable {
 
 	@Id
 	private Integer watch_id;
-	@Field(type = FieldType.text, analyzer = "ik_max_word")
+	@Field(type = FieldType.Text, analyzer = "ik_max_word")
 	private String watch_name;		//手表名
 
 	private String watch_descript;		//手表介绍
 	@Field(type = FieldType.Double)
 	private BigDecimal watch_price;		//手表价格
-	@Field(index = false, type = FieldType.keyword)
+	@Field(index = false, type = FieldType.Keyword)
 	private String watch_image;			//手表图片
 
 	@Field(type = FieldType.Date,

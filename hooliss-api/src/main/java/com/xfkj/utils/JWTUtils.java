@@ -36,4 +36,7 @@ public class JWTUtils {
         }
         return DigestUtils.md5DigestAsHex(aLong.toString().getBytes());
     }
+    public static void init(){
+        System.setProperty("jasypt.encryptor.password", "retail_salt");
+    }
 }

@@ -1,10 +1,12 @@
 package com.xfkj.exceptionHandling;
 
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.xfkj.tools.ResultBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +25,14 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = XFException.class)
     @ResponseBody
-    public ResultBody bizExceptionHandler(HttpServletRequest req, XFException e){
+    public static ResultBody bizExceptionHandler(HttpServletRequest req, XFException e, BlockException e2){
         logger.error("发生业务异常！原因是：{}",e.getErrorMsg());
+        logger.error("发生Sentinel业务异常！原因是：{}",e2.getMessage());
         return ResultBody.error(e.getErrorCode(),e.getErrorMsg());
     }
-
+   public static ResultBody findByIdException(@RequestParam("w_id") Integer w_id){
+        return ResultBody.error("500","请稍后再试!");
+    };
     /**
      * 处理空指针的异常
      * @param req
