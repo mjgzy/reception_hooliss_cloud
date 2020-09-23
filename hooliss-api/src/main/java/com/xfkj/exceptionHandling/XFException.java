@@ -13,7 +13,7 @@ public class XFException extends RuntimeException {
     /**
      * 错误码
      */
-    protected String errorCode;
+    protected Integer errorCode;
     /**
      * 错误信息
      */
@@ -24,13 +24,13 @@ public class XFException extends RuntimeException {
     }
 
     public XFException(BaseErrorInfoInterface errorInfoInterface) {
-        super(errorInfoInterface.getResultCode());
+        super(errorInfoInterface.getResultCode().toString());
         this.errorCode = errorInfoInterface.getResultCode();
         this.errorMsg = errorInfoInterface.getResultMsg();
     }
 
     public XFException(BaseErrorInfoInterface errorInfoInterface, Throwable cause) {
-        super(errorInfoInterface.getResultCode(), cause);
+        super(errorInfoInterface.getResultCode().toString(), cause);
         this.errorCode = errorInfoInterface.getResultCode();
         this.errorMsg = errorInfoInterface.getResultMsg();
     }
@@ -40,14 +40,14 @@ public class XFException extends RuntimeException {
         this.errorMsg = errorMsg;
     }
 
-    public XFException(String errorCode, String errorMsg) {
-        super(errorCode);
+    public XFException(Integer errorCode, String errorMsg) {
+        super(errorCode.toString());
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
     }
 
-    public XFException(String errorCode, String errorMsg, Throwable cause) {
-        super(errorCode, cause);
+    public XFException(Integer errorCode, String errorMsg, Throwable cause) {
+        super(errorCode.toString(), cause);
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
     }

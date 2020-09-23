@@ -8,24 +8,26 @@
     </sql>
     <select id="validateLogin" resultMap="currency">
         <include refid="currency_sql"></include>
-          AND `u_name`=#{u_name} AND `u_pwd`=#{u_pwd}
+          AND `u_name`=#{uName} AND `u_pwd`=#{uPwd}
     </select>
     <!--增加用户积分-->
     <update id="addUserIntegral">
-        UPDATE wuser SET integral = integral+#{integral} WHERE u_id=#{u_id}
+        UPDATE wuser SET integral = integral+#{integral} WHERE u_id=#{uId}
     </update>
     <insert id="register" >
         INSERT INTO`wuser`(`u_name`,`u_pwd`,`u_email`,`u_phone`,`vip_id`,`browsevolume`,`integral`,`head_image`,`create_date`)
-        VALUE (#{u_name},#{u_pwd},#{u_email},#{u_phone},#{vip_id},#{browsevolume},#{integral},#{head_image},NOW())
+        VALUE (#{uName},#{uPwd},#{uEmail},#{uPhone},#{vipId},#{browseVolume},#{integral},#{headImage},NOW())
     </insert>
     <select id="findIdByName" resultType="java.lang.Integer">
-        SELECT `u_id` FROM `wuser` WHERE `u_name`=#{u_name}
+        SELECT `u_id` FROM `wuser` WHERE `u_name`=#{uName}
     </select>
     <select id="contains" resultType="java.lang.Integer">
-         SELECT COUNT(`u_name`) FROM `wuser` WHERE `u_name`=#{u_name}
+         SELECT COUNT(`u_name`) FROM `wuser` WHERE `u_name`=#{uName}
     </select>
     <update id="modify">
-        UPDATE `wuser` SET `u_name`=#{u_name},`u_pwd`=#{u_pwd},`u_email`=#{u_email},`u_phone`=#{u_phone},`vip_id`=#{vip_id},`browsevolume`=#{browsevolume},`integral`=#{integral},`head_image`=#{head_image},`create_date`=#{create_date} WHERE `u_id`=#{u_id}
+        UPDATE `wuser` SET `u_name`=#{uName},`u_pwd`=#{uPwd},`u_email`=#{uEmail},`u_phone`=#{uPhone},`vip_id`=#{vipId},
+        `browsevolume`=#{browseVolume},`integral`=#{integral},`head_image`=#{headImage},`create_date`=#{createDate}
+        WHERE `u_id`=#{uId}
     </update>
 
     <select id="findUserByPhone" resultMap="currency">
@@ -33,31 +35,31 @@
           AND u_phone = #{phone};
     </select>
 
-    <select id="findById" resultType="WUser">
+    <select id="findById" resultType="com.xfkj.entity.user.Wuser">
         <include refid="currency_sql"/>
-        AND u_id=#{u_id}
+        AND u_id=#{uId}
     </select>
 
     <select id="count" resultType="java.lang.Integer">
-        SELECT COUNT(u_name) FROM `wuser` WHERE `u_name`=#{u_name}
+        SELECT COUNT(u_name) FROM `wuser` WHERE `u_name`=#{uName}
     </select>
     <select id="phoneOnlyVa" resultType="java.lang.Integer">
         SELECT COUNT(u_phone) FROM `wuser` WHERE `u_phone` = #{phone}
     </select>
-    <resultMap id="currency" type="WUser">
-        <id property="u_id" column="u_id"/>
-        <result property="u_name" column="u_name"/>
-        <result property="u_pwd" column="u_pwd"/>
-        <result property="u_phone" column="u_phone"/>
-        <result property="vip_id" column="vip_id"/>
-        <result property="browsevolume" column="browsevolume"/>
+    <resultMap id="currency" type="com.xfkj.entity.user.Wuser">
+        <id property="uId" column="u_id"/>
+        <result property="uName" column="u_name"/>
+        <result property="uPwd" column="u_pwd"/>
+        <result property="uPhone" column="u_phone"/>
+        <result property="vipId" column="vip_id"/>
+        <result property="browseVolume" column="browsevolume"/>
         <result property="integral" column="integral"/>
-        <result property="head_image" column="head_image"/>
-        <result property="create_date" column="create_date"/>
-        <association property="watch_vip" javaType="Watch_vip">
+        <result property="headImage" column="head_image"/>
+        <result property="createDate" column="create_date"/>
+        <association property="watchVip" javaType="com.xfkj.entity.user.WatchVip">
             <id property="id" column="vip_id"/>
-            <result property="vip_name" column="vip_name"/>
-            <result property="vip_discount" column="vip_discount"/>
+            <result property="vipName" column="vip_name"/>
+            <result property="vipDiscount" column="vip_discount"/>
         </association>
     </resultMap>
 </mapper>

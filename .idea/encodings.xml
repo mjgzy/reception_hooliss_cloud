@@ -4,19 +4,15 @@
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hooliss-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hooliss-api/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hooliss-api/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hooliss-commodity" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hooliss-commodity/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hooliss-commodity/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hooliss-consumer-one" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hooliss-consumer-one/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hooliss-consumer-one/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hooliss-consumer-two" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hooliss-consumer-two/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hooliss-consumer-two/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hooliss-eureka" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hooliss-eureka/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hooliss-eureka/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hooliss-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hooliss-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hooliss-nacos/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hooliss-order" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hooliss-order/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hooliss-order/src/main/resources" charset="UTF-8" />

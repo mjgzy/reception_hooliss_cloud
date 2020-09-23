@@ -2,7 +2,7 @@ package com.xfkj.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.xfkj.pojo.user.Wuser;
+import com.xfkj.entity.user.Wuser;
 import org.springframework.util.DigestUtils;
 
 import java.util.Date;
@@ -18,8 +18,8 @@ public class JWTUtils {
      */
     public static String getToken(Wuser user) {
         String token="";
-        token= JWT.create().withAudience(user.getU_id().toString())
-                .sign(Algorithm.HMAC256(user.getU_pwd()));
+        token= JWT.create().withAudience(user.getUId().toString())
+                .sign(Algorithm.HMAC256(user.getUPwd()));
         return token;
     }
 

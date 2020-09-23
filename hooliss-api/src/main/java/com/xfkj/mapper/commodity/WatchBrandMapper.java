@@ -1,6 +1,8 @@
 package com.xfkj.mapper.commodity;
 
-import com.xfkj.pojo.brand.WatchBrand;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xfkj.entity.brand.WatchBrand;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,13 +12,13 @@ import java.util.List;
  * @author Administrator
  *
  */
-public interface WatchBrandMapper {
+public interface WatchBrandMapper extends BaseMapper<WatchBrand> {
 	/**
 	 * 通过档次id寻找品牌
 	 * @param t_id
 	 * @return
 	 */
-	List<WatchBrand> findWatchBrandByTid(@Param("t_id") Integer t_id);
+	List<WatchBrand> findWatchBrandByTid(@Param("tId") Integer t_id);
 
 	/**
 	 * 查出所有品牌

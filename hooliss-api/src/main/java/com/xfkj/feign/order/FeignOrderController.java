@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Administrator
  *
  */
-@FeignClient("hooliss-order-provider")
-@RequestMapping("order-provider")
+@FeignClient(value = "hooliss-order-provider",contextId = "foc")
+//@RequestMapping("order-provider")
 public interface FeignOrderController {
 	/**
 	 * 查找订单
@@ -22,7 +22,7 @@ public interface FeignOrderController {
 	 * @param order_id:订单号
 	 * @param user_id:用户id
 	 */
-	@RequestMapping("/orderFind.xf/{date_type}/{order_status_id}/{order_id}/{user_id}/{current_no}/{page_size}")
+	@RequestMapping("order-provider/orderFind.xf/{date_type}/{order_status_id}/{order_id}/{user_id}/{current_no}/{page_size}")
 	public ResultBody orderFind(@PathVariable("date_type")String date_type,
 							@PathVariable("order_status_id") String order_status_id,
 							@PathVariable("order_id")String order_id,
@@ -36,35 +36,35 @@ public interface FeignOrderController {
 	/**
 	 * 跳转到成功页面
 	 */
-	@RequestMapping("/doChengGong.xf")
+	@RequestMapping("order-provider/doChengGong.xf")
 	public ResultBody doChengGong();
 	/**
 	 * 生成库存信息
 	 */
-	@RequestMapping("/ostockGanrte")
+	@RequestMapping("order-provider/ostockGanrte")
 	public ResultBody stockGante();
 	/**
 	 * 通过订单号删除订单
 	 * @param order_id:订单号
 	 */
-	@RequestMapping("delOrderById")
+	@RequestMapping("order-provider/delOrderById")
 	public ResultBody delOrder(@RequestParam("order_id") String order_id);
 	/**
 	 * 生成订单
 	 */
-	@RequestMapping(value = "/gengateOrder.xf")
+	@RequestMapping(value = "order-provider/gengateOrder.xf")
 	public ResultBody gengateOrder(
 			@RequestParam("watch_info") String str_WatchOrder,
 			@RequestParam("buy_type_token")String buy_type_token,
 			@RequestParam("wuser") String wuser,	@RequestParam("w_receinfo_id")Integer w_receinfo_id);
 
-	@RequestMapping("updateOrderStatus")
+	@RequestMapping("order-provider/updateOrderStatus")
 	public ResultBody updateOrderStatus();
 
 	/**
 	 * 查找订单
 	 * @param order_id:订单号
 	 */
-	@RequestMapping("findOrderById")
+	@RequestMapping("order-provider/findOrderById")
 	public ResultBody findOrderById(@RequestParam("order_id")String order_id);
 }

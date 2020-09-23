@@ -3,23 +3,17 @@ package com.xfkj.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
-import com.xfkj.pojo.order.WatchOrder;
-import com.xfkj.pojo.user.Wuser;
+import com.xfkj.entity.order.WatchOrder;
+import com.xfkj.entity.user.Wuser;
+import com.xfkj.enums.CommonEnum;
 import com.xfkj.service.order.AlipayService;
 import com.xfkj.tools.ResultBody;
-import com.xfkj.utils.OrderUtils;
 import com.xfkj.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 
 /**
  * 支付宝
@@ -41,16 +35,16 @@ public class AlipayController {
      * web 订单支付
      */
     @RequestMapping("getPagePay")
-    public ResultBody getPagePay(@RequestParam("wuser") String str_user) throws Exception {
+    public ResultBody<?> getPagePay(@RequestParam("wuser") String str_user) throws Exception {
         Wuser wuser = JSON.parseObject(str_user, Wuser.class);
-        String s = DigestUtils.md5DigestAsHex((wuser.getU_id() + wuser.getU_phone()).getBytes());
+        String s = DigestUtils.md5DigestAsHex((wuser.getUId() + wuser.getUPhone()).getBytes());
         WatchOrder watchOrder= (WatchOrder) redisUtils.get(s);
         if(watchOrder==null){
-            return ResultBody.error("500","未查询到订单对象");
+            return new ResultBody<>(500,"未查询到订单对象");
         }
         log.info("查找订单>>>>>>>>>>>>>");
-        String pay = alipayService.webPagePay(watchOrder.getOrder_id(), watchOrder.getOrder_price().doubleValue(), watchOrder.getLt().getWatch_name());
-        return ResultBody.success(pay);
+        String pay = alipayService.webPagePay(watchOrder.getOrderId(), watchOrder.getOrderPrice().doubleValue(), watchOrder.getLt().getWatchName());
+        return new ResultBody<>(CommonEnum.SUCCESS,pay);
     }
     /**
      * app 订单支付
@@ -99,11 +93,7 @@ public class AlipayController {
             String refundReason = "用户不想购买";
             //refundAmount = 1;
             //outRequestNo = "22";
-
             String refund = alipayService.refund(outTradeNo, refundReason, refundAmount, outRequestNo);
-
-            System.out.println(refund);
-
             return refund;
         }
 

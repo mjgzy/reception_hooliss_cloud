@@ -1,6 +1,7 @@
 package com.xfkj.mapper.order;
 
-import com.xfkj.pojo.order.WatchOrder;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xfkj.entity.order.WatchOrder;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author Administrator
  *
  */
-public interface WatchOrderMapper {
+public interface WatchOrderMapper extends BaseMapper<WatchOrder> {
 
 
 	/**
@@ -21,10 +22,10 @@ public interface WatchOrderMapper {
 	 * @param order_id:订单id,模糊查询,可选参数
 	 */
 	List<WatchOrder> findWatchByCondition(
-            @Param("user_id") Integer u_id,
-            @Param("date_type") Integer date_type,
-            @Param("order_status_id") Integer order_status_id,
-            @Param("order_id") String order_id);
+            @Param("userId") Integer u_id,
+            @Param("dateType") Integer date_type,
+            @Param("orderStatusId") Integer order_status_id,
+            @Param("orderId") String order_id);
 
 	/**
 	 * 通过订单id查询订单
@@ -47,5 +48,5 @@ public interface WatchOrderMapper {
 	 * @param order_id:订单主键id
 	 * @param status_id:状态id
 	 */
-	Integer updateOrderStatus(@Param("order_id") String order_id, @Param("status_id") Integer status_id);
+	Integer updateOrderStatus(@Param("orderId") String order_id, @Param("statusId") Integer status_id);
 }

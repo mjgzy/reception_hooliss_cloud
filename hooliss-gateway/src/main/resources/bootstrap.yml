@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: hooliss-gateway
+  profiles:
+    active: dev     #开发环境
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 139.186.71.175:8847
+      config:
+        server-addr: 139.186.71.175:8847
+        file-extension: yaml
+        namespace: 0c4ed8b9-9a0e-4fcb-904c-e963f782c949
+        group: DEFAULT_GROUP

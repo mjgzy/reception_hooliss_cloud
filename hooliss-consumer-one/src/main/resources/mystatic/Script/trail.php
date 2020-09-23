@@ -1,1 +1,0 @@
-var ntkf_trail_data = {"pagelevel":1,"info":" |session updated"};

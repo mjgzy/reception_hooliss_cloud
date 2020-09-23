@@ -3,7 +3,7 @@
 <mapper namespace="com.xfkj.mapper.commodity.WatchSeriesMapper">
 
     <select id="findSeriesByBrand_brandId" resultType="WatchSeries">
-        SELECT `id`,`watch_id`,`series_name`,`series_brand_id` FROM `watch_series` WHERE `series_brand_id` = #{series_brand_id}
+        SELECT `id`,`watch_id`,`seriesName`,`series_brand_id` FROM `watch_series` WHERE `series_brand_id` = #{series_brand_id}
     </select>
 
     <!-- 根据品牌id查询所有系列手表 -->
@@ -40,7 +40,7 @@
     </select>
 
     <!--根据id查询款式-->
-    <select id="findStyleById" resultType="Style">
+    <select id="findStyleById" resultMap="currency">
       SELECT ws.id series_id,tb.watch_id watch_id,tb.watch_image watch_image,wp.parameter_name watch_style
         FROM watch_series ws
         LEFT JOIN tb_watchs tb ON ws.id = tb.series_id
@@ -52,4 +52,10 @@
     <select id="findSeriesById" resultType="WatchSeries">
         SELECT `id`,`watch_id`,`series_name`,`series_brand_id` FROM watch_series WHERE id = #{series_id}
     </select>
+    <resultMap id="currency" type="com.xfkj.entity.commodity.Style">
+        <id property="seriesId" column="series_id"/>
+        <result property="watchId" column="watch_id"/>
+        <result property="watchStyle" column="watch_style"/>
+        <result property="watchImage" column="watch_image"/>
+    </resultMap>
 </mapper>

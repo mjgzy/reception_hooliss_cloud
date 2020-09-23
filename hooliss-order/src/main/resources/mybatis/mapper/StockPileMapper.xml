@@ -6,7 +6,7 @@
     <sql id="currency_sql">
          SELECT sk.`id` sid,`seckill_id`,`number`,`start_time`,`end_time`,`create_time`,`discount`,`present_price`
         `watch_id`,`watch_name`,`series_id`,`SpecialOffer`,`watch_grade_id`,`watch_descript`,`watch_price`,
-        `so_price`,`watch_image`,`watch_date`,`watch_sellCount`,`brand_id`,`watch_type_id`,`wp_Id`,`examine_status`,`status`
+        `so_price`,`watch_image`,`watch_date`,`watchSellCount`,`brand_id`,`watch_type_id`,`wp_Id`,`examine_status`,`status`
         FROM seckill sk LEFT JOIN tb_watchs ON seckill_id = watch_id
     </sql>
     <!--查询库存为加入的信息-->
@@ -16,12 +16,12 @@
 
     <!--插入库存信息-->
     <insert id="stockGante">
-        INSERT stock_pile(`watch_id`,`quantity`,`first_date`) VALUES(#{watch_id},(SELECT RAND() * 1000),NOW())
+        INSERT stock_pile(`watch_id`,`quantity`,`first_date`) VALUES(#{watchId},(SELECT RAND() * 1000),NOW())
     </insert>
     <!--更新库存-->
    <update id="update">
-      <if test="watch_id!=null and watch_id!=0">
-          UPDATE `stock_pile` SET `quantity` = quantity-#{count} where watch_id = #{watch_id}
+      <if test="watchId!=null and watchId!=0">
+          UPDATE `stock_pile` SET `quantity` = quantity-#{count} where watch_id = #{watchId}
       </if>
 
 

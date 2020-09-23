@@ -1,11 +1,9 @@
 package com.xfkj.mapper.order;
 
 
-import com.xfkj.pojo.order.ShoppingCart;
-import com.xfkj.tools.ResultBody;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xfkj.entity.order.ShoppingCart;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -15,7 +13,7 @@ import java.util.List;
  * @author Administrator
  *
  */
-public interface ShoppingCartMapper {
+public interface ShoppingCartMapper extends BaseMapper<ShoppingCart> {
 
 
 	/**
@@ -23,19 +21,19 @@ public interface ShoppingCartMapper {
 	 * @param u_id:用户id
 	 * @param w_id:手表id
 	 */
-		Integer queryWatchContains(@Param("u_id") Integer u_id, @Param("w_id") Integer w_id);
+		Integer queryWatchContains(@Param("uId") Integer u_id, @Param("wId") Integer w_id);
 		/**
 		 * 通过用户id和手表获取购物车信息
 		 * @param u_id :用户id,必选
 		 * @param w_id :手表编号,可选参数
 		 */
-		ShoppingCart findShoppingCartByIdAndW_Id(@Param("u_id") Integer u_id, @Param("w_id") Integer w_id);
+		ShoppingCart findShoppingCartByIdAndW_Id(@Param("uId") Integer u_id, @Param("wId") Integer w_id);
 		/**
 		 * 通过用户id和手表获取购物车信息
 		 * @param u_id :用户id,必选
 		 * @param w_id :手表编号,可选参数
 		 */
-		List<ShoppingCart> findShoppingCartsByIdAndW_Id(@Param("u_id") Integer u_id, @Param("w_id") Integer w_id);
+		List<ShoppingCart> findShoppingCartsByIdAndW_Id(@Param("uId") Integer u_id, @Param("wId") Integer w_id);
 		/**
 		 * 添加购物车信息
 		 * @param sc:购物车对象
@@ -45,7 +43,7 @@ public interface ShoppingCartMapper {
 		 * 删除购物车信息
 		 * @param u_id:购物车id
 		 */
-		Integer deleteShopInfoById(@Param("u_id") Integer u_id, @Param("w_id") Integer w_id);
+		Integer deleteShopInfoById(@Param("uId") Integer u_id, @Param("wId") Integer w_id);
 	/**
 	 * 删除购物车信息
 	 * @param watch_id:手表主键id
@@ -55,16 +53,17 @@ public interface ShoppingCartMapper {
 		 * 添加物品数量
 		 * @param u_id:用户�?
 		 */
-		Integer addCount(@Param("u_id") Integer u_id, @Param("w_id") Integer w_id, @Param("count") Integer count);		/**
+		Integer addCount(@Param("uId") Integer u_id, @Param("wId") Integer w_id, @Param("count") Integer count);
+		/**
 		 * 添加物品数量
 		 * @param u_id:用户�?
 		 */
-		Integer addCountBuy(@Param("u_id") Integer u_id, @Param("w_id") Integer w_id, @Param("count") Integer count);
+		Integer addCountBuy(@Param("uId") Integer u_id, @Param("wId") Integer w_id, @Param("count") Integer count);
 
 	/**
 	 * 验证购物车是否有此条记录
 	 * @param u_id:用户id
 	 * @param w_id:手表id
 	 */
-	Integer existenceCart(@Param("u_id")Integer u_id, @Param("w_id")Integer w_id);
+	Integer existenceCart(@Param("uId")Integer u_id, @Param("wId")Integer w_id);
 }

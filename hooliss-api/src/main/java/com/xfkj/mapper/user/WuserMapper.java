@@ -1,6 +1,7 @@
 package com.xfkj.mapper.user;
 
-import com.xfkj.pojo.user.Wuser;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xfkj.entity.user.Wuser;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -9,12 +10,12 @@ import org.apache.ibatis.annotations.Param;
  * @author Administrator
  *
  */
-public interface WuserMapper {
+public interface WuserMapper extends BaseMapper<Wuser> {
 	/**
 	 * 登录验证
 	 * @return 返回用户对象
 	 */
-	Wuser validateLogin(@Param("u_name") String name, @Param("u_pwd") String pwd);
+	Wuser validateLogin(@Param("uName") String name, @Param("uPwd") String pwd);
 	/**
 	 * 注册
 	 * @return 返回值必需为1,否则回滚
@@ -65,5 +66,5 @@ public interface WuserMapper {
 	 * 增加用户积分
 	 * @param integral:要增加的用户积分
 	 */
-	Integer addUserIntegral(@Param("u_id") Integer user_id, @Param("integral") Integer integral);
+	Integer addUserIntegral(@Param("uId") Integer user_id, @Param("integral") Integer integral);
 }

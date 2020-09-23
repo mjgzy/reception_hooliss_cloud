@@ -1,5 +1,7 @@
 package com.xfkj.mapper.order;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xfkj.entity.stock.StockPile;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 /**
  * 库存管理
  */
-public interface StockPileMapper {
+public interface StockPileMapper extends BaseMapper<StockPile> {
 
 
     /**

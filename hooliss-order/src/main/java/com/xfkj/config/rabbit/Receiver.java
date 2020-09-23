@@ -1,17 +1,13 @@
 package com.xfkj.config.rabbit;
 
 import com.rabbitmq.client.Channel;
-import com.xfkj.exceptionHandling.CommonEnum;
+import com.xfkj.enums.CommonEnum;
 import com.xfkj.exceptionHandling.XFException;
-import com.xfkj.feign.commodity.Commodity_Service_Feign;
-import com.xfkj.feign.commodity.WatchDetails_Service_Feign;
-import com.xfkj.pojo.order.OrderReserve;
-import com.xfkj.pojo.order.WatchOrder;
-import com.xfkj.service.commodity.TbWatchsService;
+import com.xfkj.entity.order.OrderReserve;
+import com.xfkj.entity.order.WatchOrder;
 import com.xfkj.service.order.OrderReserveService;
 import com.xfkj.service.order.OrderService;
 import com.xfkj.service.order.ShoppingCartService;
-import com.xfkj.tools.ResultBody;
 import com.xfkj.utils.RedisUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +15,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.messaging.converter.MessageConversionException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -68,9 +65,10 @@ public class Receiver {
 //                throw new XFException("redis同步到商品表异常！");
 //            }
         } catch (Exception e) {
+            e.printStackTrace();
             //消息必答,取消消息确认,未收到
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-            e.printStackTrace();
+            throw new MessageConversionException("消息消费失败，移出消息队列，不再试错");
         }
     }
     @RabbitListener(queues = QueueConfig.ORDER_QUEUE)
@@ -84,20 +82,20 @@ public class Receiver {
                 throw new XFException("redis同步到商品表异常！");
             }else{
                 Map<String,Object> mis = new HashMap<>();
-                mis.put(watchOrder.getOrder_id(), watchOrder.getId());
+                mis.put(watchOrder.getOrderId(), watchOrder.getId());
                 boolean order_ids = redisUtils.hmset("order_ids",mis ,60000);//将订单主键存入redis
                 log.info("购物车对象:"+watchOrder);
-                Boolean aBoolean = shoppingCartService.deleteShopInfoById(watchOrder.getO_uid(), watchOrder.getWatch_id());
+                Boolean aBoolean = shoppingCartService.deleteShopInfoById(watchOrder.getOUid(), watchOrder.getWatchId());
                 log.info("订单生成成功!删除购物车信息:"+aBoolean);
                 log.info("订单主键存入redis:"+order_ids);
                 //增加用户积分,减少库存等资源预留
                 OrderReserve orderReserve =new OrderReserve() ;
-                orderReserve.setOrder_id(watchOrder.getOrder_id());
-                orderReserve.setSpike_num(watchOrder.getWatch_count());
-                orderReserve.setUser_integral(watchOrder.getOrder_price().divide(BigDecimal.valueOf(10.0)).intValue());
-                redisUtils.set(orderReserve.getOrder_id(), orderReserve);//将订单资源预减放入redis
+                orderReserve.setOrderId(watchOrder.getOrderId());
+                orderReserve.setSpikeNum(watchOrder.getWatchCount());
+                orderReserve.setUserIntegral(watchOrder.getOrderPrice().divide(BigDecimal.valueOf(10.0)).intValue());
+                redisUtils.set(orderReserve.getOrderId(), orderReserve);//将订单资源预减放入redis
                 log.info(">>>>>>>>>>>>>>>>>>>>订单资源预减成功");
-                mqSender.sendDirectOrderOverTime(watchOrder.getOrder_id());     //发送订单超时处理消息
+                mqSender.sendDirectOrderOverTime(watchOrder.getOrderId());     //发送订单超时处理消息
             }
         } catch (Exception e) {
             e.printStackTrace();

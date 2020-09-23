@@ -1,6 +1,7 @@
 package com.xfkj.mapper.commodity;
 
-import com.xfkj.pojo.commodity.WatchType;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xfkj.entity.commodity.WatchType;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * @author Administrator
  *
  */
-public interface WatchTypeMapper {
+public interface WatchTypeMapper extends BaseMapper<WatchType> {
 	/**
 	 * 获得所有手表档次
 	 * @return

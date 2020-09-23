@@ -1,8 +1,7 @@
 package com.xfkj.rabbit;
 
-import com.xfkj.pojo.order.OrderReserve;
-import com.xfkj.pojo.order.WatchOrder;
-import com.xfkj.service.user.UserService;
+import com.xfkj.entity.order.OrderReserve;
+import com.xfkj.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ public class Receiver {
     @RabbitListener(queues = Receiver.USER_INTEGRAL_QUEUE)
     public void setUserIntegralQueue(OrderReserve orderReserve){
         log.info("接收到用户积分处理请求,开始处理>>>>>>>>>>>>>>");
-        Integer integer = userService.addUserIntegral(orderReserve.getUser_id(), orderReserve.getUser_integral());
+        Integer integer = userService.addUserIntegral(orderReserve.getUserId(), orderReserve.getUserIntegral());
         log.info("用户积分处理结果:"+(integer>0));
     }
 }

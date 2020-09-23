@@ -1,7 +1,7 @@
 package com.xfkj.config.rabbit;
 
-import com.xfkj.pojo.order.OrderReserve;
-import com.xfkj.pojo.order.WatchOrder;
+import com.xfkj.entity.order.OrderReserve;
+import com.xfkj.entity.order.WatchOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpException;
@@ -21,7 +21,7 @@ public class MqSender {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void sendDirectQueueOrder(WatchOrder order) throws AmqpException{
+    public void sendDirectQueueOrder(WatchOrder order){
         log.info(">>>>>>>>>>>>>>>>>>订单处理请求已发送");
         try {
             rabbitTemplate.convertAndSend( ExchangeConfig.ORDER_EXCHANGE,RabbitMQConfig.ORDER_KEY,order);

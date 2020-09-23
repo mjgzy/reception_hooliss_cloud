@@ -1,7 +1,8 @@
 package com.xfkj.mapper.user;
 
 
-import com.xfkj.pojo.user.WatchReceinfo;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xfkj.entity.user.WatchReceinfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  * @author Administrator
  *
  */
-public interface WReceinfoMapper {
+public interface WReceinfoMapper extends BaseMapper<WatchReceinfo> {
 	/**
 	 * 按用户id查找其下所有地址
 	 * @param user_id 用户id type:按用户id查找还是地址id查找

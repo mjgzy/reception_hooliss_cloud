@@ -1,7 +1,8 @@
 package com.xfkj.mapper.user;
 
-import com.xfkj.pojo.user.CommentImages;
-import com.xfkj.pojo.user.UserComment;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xfkj.entity.user.CommentImages;
+import com.xfkj.entity.user.UserComment;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * @author Administrator
  *
  */
-public interface UserCommentMapper {
+public interface UserCommentMapper extends BaseMapper<UserComment> {
 
 	/**
 	 * 根据用户id或者时间查找评论信息

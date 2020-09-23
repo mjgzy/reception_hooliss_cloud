@@ -1,7 +1,7 @@
 package com.xfkj.tools;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.xfkj.pojo.commodity.CookieTbWatchs;
+import com.xfkj.entity.commodity.CookieTbWatchs;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -72,8 +72,8 @@ public class CookieTools {
             String decode = URLDecoder.decode(carts.getValue(), "UTF-8");
             ltbs = JSON.parseArray(decode, CookieTbWatchs.class);
             for (CookieTbWatchs ctb :ltbs) {
-                if (ctb.getWatch_id().equals(cookieTbWatchs.getWatch_id())){
-                    ctb.setAdd_count(ctb.getAdd_count()+cookieTbWatchs.getAdd_count());   //将购物车商品数量相加
+                if (ctb.getWatchId().equals(cookieTbWatchs.getWatchId())){
+                    ctb.setAddCount(ctb.getAddCount()+cookieTbWatchs.getAddCount());   //将购物车商品数量相加
                     flag = true;    //表示已被修改
                 }
             }

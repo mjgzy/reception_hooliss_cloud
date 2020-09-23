@@ -8,23 +8,23 @@
     <!--通过用户id和手表获取购物车信息-->
     <select id="findShoppingCartByIdAndW_Id" resultMap="currency_map">
         <include refid="currency_sql"></include>
-        WHERE  u_id = #{u_id}  and w_id = #{w_id}
+        WHERE  u_id = #{uId}  and w_id = #{wId}
     </select>
     <!--通过用户id和手表获取购物车信息-->
     <select id="findShoppingCartsByIdAndW_Id" resultMap="currency_map">
-        <include refid="currency_sql"></include>   WHERE  u_id = #{u_id}
+        <include refid="currency_sql"></include>   WHERE  u_id = #{uId}
     </select>
 
     <select id="existenceCart" resultType="Integer">
-        select count(id) from shopping_cart where u_id = #{u_id} AND w_id = #{w_id}
+        select count(id) from shopping_cart where u_id = #{uId} AND w_id = #{wId}
     </select>
-    <resultMap id="currency_map" type="ShoppingCart">
+    <resultMap id="currency_map" type="com.xfkj.entity.order.ShoppingCart">
         <id column="id" property="id"/>
-        <result column="u_id" property="u_id"/>
-        <result column="w_id" property="w_id"/>
-        <result column="add_count" property="add_count"/>
-        <result column="add_date" property="add_date"/>
-<!--        <association property="tb_watchs" javaType="TbWatchs">-->
+        <result column="u_id" property="uId"/>
+        <result column="w_id" property="wId"/>
+        <result column="add_count" property="addCount"/>
+        <result column="add_date" property="addDate"/>
+<!--        <association property="tbWatchs" javaType="TbWatchs">-->
 <!--            <result column="scwid" property="watch_id"/>-->
 <!--            <result column="watch_name" property="watch_name"/>-->
 <!--            <result column="watch_grade_id" property="watch_grade_id"/>-->
@@ -34,15 +34,15 @@
 <!--            <result column="watch_date" property="watch_date"/>-->
 <!--            <result column="watch_type_id" property="watch_type_id"/>-->
 <!--            <association property="watchBrand" javaType="WatchBrand">-->
-<!--                <id column="wbid" property="brand_id"/>-->
-<!--                <result column="brand_name" property="brand_name"/>-->
+<!--                <id column="wbid" property="brandId"/>-->
+<!--                <result column="brandName" property="brand_name"/>-->
 <!--            </association>-->
 <!--        </association>-->
     </resultMap>
 
     <!--查询该用户是否有此条购物车信息-->
     <select id="queryWatchContains" resultType="Integer">
-        SELECT COUNT(id) FROM shopping_cart WHERE u_id = #{u_id} AND w_id = #{w_id}
+        SELECT COUNT(id) FROM shopping_cart WHERE u_id = #{uId} AND w_id = #{wId}
     </select>
 
 
@@ -52,20 +52,20 @@
     </delete>
     <!--删除购物车信息-->
     <delete id="deleteShopInfoById">
-            delete from shopping_cart where  u_id  = #{u_id } and w_id = #{w_id}
+            delete from shopping_cart where  u_id  = #{uId } and w_id = #{wId}
 
     </delete>
 
     <!--添加购物车信息-->
     <insert id="addShopInfo" >
         INSERT shopping_cart(`u_id`,`w_id`,`add_count`,`add_date`)
-        VALUES(#{u_id},#{w_id},#{add_count},NOW() )
+        VALUES(#{uId},#{wId},#{addCount},NOW() )
     </insert>
 
     <!--添加购物车数量-->
     <update id="addCountBuy">
         update shopping_cart  set add_count = add_count+#{count}
-        where u_id = #{u_id} and w_id = #{w_id}
+        where u_id = #{uId} and w_id = #{wId}
 
     </update>
 
@@ -78,7 +78,7 @@
         <if test="count==1">
             set add_count = add_count+1
         </if>
-        where u_id = #{u_id} and w_id = #{w_id}
+        where u_id = #{uId} and w_id = #{wId}
 
     </update>
 </mapper>

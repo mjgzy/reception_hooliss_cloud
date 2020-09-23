@@ -1,24 +1,19 @@
 package com.xfkj.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.xfkj.config.SaticScheduleTask;
-import com.xfkj.mapper.commodity.EsTbWatchsRepository;
+import com.xfkj.enums.CommonEnum;
 import com.xfkj.mapper.commodity.TbWatchsMapper;
-import com.xfkj.pojo.brand.WatchBrand;
-import com.xfkj.pojo.commodity.TbWatchs;
-import com.xfkj.service.commodity.EsTbWatchsService;
-import com.xfkj.service.commodity.TbWatchsService;
-import com.xfkj.service.commodity.WatchBrandService;
+import com.xfkj.entity.brand.WatchBrand;
+import com.xfkj.entity.commodity.TbWatchs;
+import com.xfkj.service.EsTbWatchsService;
+import com.xfkj.service.WatchBrandService;
 import com.xfkj.tools.Constants;
 import com.xfkj.tools.ResultBody;
 import com.xfkj.utils.PriceUtil;
 import com.xfkj.utils.RedisUtils;
-import org.elasticsearch.client.transport.NoNodeAvailableException;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,12 +24,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("es-provider")
+@RequestMapping("es")
 public class EsController {
 
 
     @Autowired
-    private ElasticsearchTemplate esTemplate;
+    private ElasticsearchRestTemplate esTemplate;
 
     @Autowired
     private EsTbWatchsService esTbWatchsService;
@@ -50,6 +45,14 @@ public class EsController {
 
 
     /**
+     * 同步数据
+     */
+    @RequestMapping("saveAll")
+    public void saveall(){
+        List<TbWatchs> watchByGradeAndType = tbWatchsMapper.findWatchByGradeAndType(null, null);
+        esTbWatchsService.saveAll(watchByGradeAndType);
+    }
+    /**
      * 创建索引
      * @return:
      */
@@ -63,8 +66,8 @@ public class EsController {
         System.err.println("定时任务执行");
         PageInfo<WatchBrand> watchBrand = watchBrandService.findWatchBrand();
         watchBrand.getList().forEach(item->{
-            List<TbWatchs> sellWellTbWatchsByBrandId = tbWatchsMapper.findSellWellTbWatchsByBrandId(item.getBrand_id());
-            redisUtils.hset(Constants.SELL_WELL_TBWATCHS_NAME, item.getBrand_id().toString(), sellWellTbWatchsByBrandId);
+            List<TbWatchs> sellWellTbWatchsByBrandId = tbWatchsMapper.findSellWellTbWatchsByBrandId(item.getBrandId());
+            redisUtils.hset(Constants.SELL_WELL_TBWATCHS_NAME, item.getBrandId().toString(), sellWellTbWatchsByBrandId);
         });
     }
     @RequestMapping("queryTbwatchs")
@@ -82,12 +85,11 @@ public class EsController {
                                           @PathVariable("condition")Integer condition){
         Integer[] price = PriceUtil.priceformat(str_type_id);//拆分价格
         //获取检索结果
-        Page<TbWatchs> tbWatchs = esTbWatchsService.queryWatchByinfo(grade_id, brand_id,
+        return esTbWatchsService.queryWatchByinfo(grade_id, brand_id,
                 key_word, price[0], price[1], condition, current_no, page_size);
-        return tbWatchs;
     }
     @RequestMapping("findWatchById")
-    public ResultBody findWatchById(@RequestParam("watch_id")Integer watch_id){
-            return ResultBody.success(esTbWatchsService.queryWatchById(watch_id));
+    public ResultBody<Optional<TbWatchs>> findWatchById(@RequestParam("watch_id")Integer watch_id){
+            return new ResultBody<>(CommonEnum.SUCCESS,esTbWatchsService.queryWatchById(watch_id));
     }
 }

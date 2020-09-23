@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient("hooliss-order-provider")
+@FeignClient(value = "hooliss-order-provider",contextId = "alipay")
 @RequestMapping("alipay")
 public interface FeignAlipayController {
     /**

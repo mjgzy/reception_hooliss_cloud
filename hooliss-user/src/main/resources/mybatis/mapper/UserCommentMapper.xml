@@ -21,39 +21,39 @@
         </if>
         limit #{current_no},#{page_size}
     </select>
-    <resultMap id="ima" type="UserComment">
+    <resultMap id="ima" type="com.xfkj.entity.user.UserComment">
         <id column="uid" property="id"></id>
-        <result column="uuid" property="user_id"></result>
-        <result column="uwid" property="watch_id"></result>
+        <result column="uuid" property="userId"></result>
+        <result column="uwid" property="watchId"></result>
         <result column="ucont" property="content"></result>
         <result column="ustr" property="star"></result>
         <result column="uv" property="video"></result>
-        <result column="ub" property="browse_status"></result>
-        <result column="ur" property="reply_status"></result>
-        <result column="urc" property="reply_content"></result>
+        <result column="ub" property="browseStatus"></result>
+        <result column="ur" property="replyStatus"></result>
+        <result column="urc" property="replyContent"></result>
         <result column="urd" property="replyDate"></result>
-        <result column="upd" property="publish_date"></result>
-        <association property="wuser" javaType="Wuser" >
-            <id column="u_id" property="u_id"/>
-            <result column="u_name" property="u_name"/>
-            <result column="u_pwd" property="u_pwd"/>
-            <result column="u_email" property="u_email"/>
-            <result column="u_phone" property="u_phone"/>
-            <result column="vip_id" property="vip_id"/>
-            <result column="browsevolume" property="browsevolume"/>
+        <result column="upd" property="publishDate"></result>
+        <association property="wuser" javaType="com.xfkj.entity.user.Wuser" >
+            <id column="u_id" property="uId"/>
+            <result column="u_name" property="uName"/>
+            <result column="u_pwd" property="uPwd"/>
+            <result column="u_email" property="uEmail"/>
+            <result column="u_phone" property="uPhone"/>
+            <result column="vip_id" property="vipId"/>
+            <result column="browsevolume" property="browseVolume"/>
             <result column="integral" property="integral"/>
-            <result column="head_image" property="head_image"/>
-            <result column="create_date" property="create_date"/>
+            <result column="head_image" property="headImage"/>
+            <result column="create_date" property="createDate"/>
         </association>
-        <association property="watch_vip" javaType="Watch_vip" >
+        <association property="watchVip" javaType="com.xfkj.entity.user.WatchVip" >
             <id column="id" property="id"/>
-            <result column="vip_name" property="vip_name"/>
-            <result column="vip_discount" property="vip_discount"/>
+            <result column="vip_name" property="vipName"/>
+            <result column="vip_discount" property="vipDiscount"/>
         </association>
-        <collection notNullColumn="cid" property="comment_Images" ofType="CommentImages" >
+        <collection notNullColumn="cid" property="commentImages" ofType="com.xfkj.entity.user.CommentImages" >
                 <id column="cid" property="id"></id>
-                <result property="user_comment_id" column="cuser_comment_id"></result>
-                <result property="image_url" column="cimage_url"></result>
+                <result property="userCommentId" column="cuser_commentId"></result>
+                <result property="imageUrl" column="cimage_url"></result>
         </collection>
     </resultMap>
 

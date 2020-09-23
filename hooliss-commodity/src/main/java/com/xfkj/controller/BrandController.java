@@ -1,20 +1,27 @@
 package com.xfkj.controller;
 
-import com.alibaba.fastjson.JSON;
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageInfo;
-import com.xfkj.pojo.brand.WatchBrand;
-import com.xfkj.pojo.brand.WatchSeries;
-import com.xfkj.pojo.commodity.TbWatchs;
-import com.xfkj.pojo.commodity.WatchType;
-import com.xfkj.service.commodity.TbWatchsService;
-import com.xfkj.service.commodity.WatchBrandService;
+import com.xfkj.entity.brand.WatchBrand;
+import com.xfkj.entity.brand.WatchSeries;
+import com.xfkj.entity.commodity.TbWatchs;
+import com.xfkj.entity.commodity.WatchType;
+import com.xfkj.enums.CommonEnum;
+import com.xfkj.pojo.vo.brand.WatchBrandVo;
+import com.xfkj.pojo.vo.commodity.WatchTypeVo;
+import com.xfkj.service.TbWatchsService;
+import com.xfkj.service.WatchBrandService;
+import com.xfkj.service.WatchTypeService;
 import com.xfkj.tools.Constants;
 import com.xfkj.tools.ResultBody;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +30,7 @@ import java.util.Map;
  * 品牌馆控制
  */
 @RestController
+@Slf4j
 @RequestMapping("brand-provider")
 public class BrandController {
 
@@ -30,72 +38,54 @@ public class BrandController {
     private WatchBrandService watchBrandService;
     @Autowired
     private TbWatchsService tbWatchsService;
-
+    @Autowired
+    private WatchTypeService watchTypeService;
     /**
      * 跳转到品牌馆选择页面
      */
     @RequestMapping("/doBrand.xf")
-    public ResultBody doBrandHtml() {
-        PageInfo<WatchBrand> pageinfo = watchBrandService.findWatchBrand();
-        if (pageinfo.getList()!=null){
-            return ResultBody.success(pageinfo);
+    public ResultBody<PageInfo<WatchBrand>> doBrandHtml() {
+        PageInfo<WatchBrand> pageInfo = watchBrandService.findWatchBrand();
+        if (pageInfo.getList()!=null){
+            return new ResultBody<>(CommonEnum.SUCCESS,pageInfo);
         }
-      return ResultBody.error("500","数据为空!");
+      return new ResultBody<>(CommonEnum.ERROR_EMPTY);
     }
 
-    @RequestMapping("/doBrandbyid.xf")
-    public ResultBody doBrandbyid(){
-        Map<String,Object> map = new HashMap<>();
+    @RequestMapping("/doBrandById.xf")
+    public ResultBody<List<WatchTypeVo>> doBrandById(){
         try {
-            List<WatchType> watchTypes = tbWatchsService.queryWatchTypeAll();
-
-            PageInfo<WatchBrand> brandsh = watchBrandService.findWatchBrandByTid(5,0,0);
-            List<WatchBrand> listsh = brandsh.getList();
-            System.err.println(listsh.size());
-
-            PageInfo<WatchBrand> brandgd = watchBrandService.findWatchBrandByTid(6,0,0);
-            List<WatchBrand> listgd = brandgd.getList();
-            System.err.println(listgd.size());
-
-            PageInfo<WatchBrand> brandzd = watchBrandService.findWatchBrandByTid(7,0,0);
-            List<WatchBrand> listzd = brandzd.getList();
-            System.err.println(listzd.size());
-
-            PageInfo<WatchBrand> brandss = watchBrandService.findWatchBrandByTid(8,0,0);
-            List<WatchBrand> listss = brandss.getList();
-            map.put("listsh",listsh);
-            map.put("listgd",listgd);
-            map.put("listzd",listzd);
-            map.put("listss",listss);
-            map.put("typedc",watchTypes);
-            String s = JSON.toJSONString(map);
+            List<WatchType> watchTypes = watchTypeService.list();
+            List<WatchTypeVo> typeVos = new ArrayList<>();
+            LambdaQueryWrapper<WatchBrand> wrapper = new LambdaQueryWrapper<>();
+            watchTypes.forEach(item->{
+                wrapper.clear();
+                WatchTypeVo watchTypeVo = BeanUtil.toBean(item, WatchTypeVo.class);
+                wrapper.eq(WatchBrand::getTId,item.getTypeId());
+                watchTypeVo.setWatchBrandVo(watchBrandService.list(wrapper));
+                typeVos.add(BeanUtil.toBean(watchTypeVo,WatchTypeVo.class));
+            });
+            return new ResultBody<>(CommonEnum.SUCCESS,typeVos);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResultBody.error("500",e.getMessage());
+            return new ResultBody<>(CommonEnum.INTERNAL_SERVER_ERROR);
         }
-        return ResultBody.success(map);
     }
 
     /**
      * 跳转到品牌馆详情页面
      */
     @RequestMapping("/doShop.xf/{brand_id}")
-    public ResultBody doShopHtml(@PathVariable("brand_id") String str_series_brand_id) {
+    public ResultBody<Object> doShopHtml(@PathVariable("brand_id") String str_series_brand_id) {
         Integer series_brand_id = null;     //品牌id
         Map<String,Object> result  = new HashMap<>();
+        //获取该品牌下的品牌名和logo
         try {
             series_brand_id = Integer.valueOf(str_series_brand_id);
-
-        } catch (Exception e) {
-            return ResultBody.error("500",e.getMessage());
-        }
-        //获取该品牌下的品牌名和logo
-
-        try {
-            WatchBrand brandlist =  watchBrandService.queryBrandById(series_brand_id);
-            System.err.println(brandlist.getCountry());
-            result.put(Constants.WATCH_BRAND_NAME,brandlist);
-
+            WatchBrand brand =  watchBrandService.queryBrandById(series_brand_id);
+            WatchBrandVo watchBrandVo = BeanUtil.toBean(brand, WatchBrandVo.class);
+            System.err.println(watchBrandVo.getCountry());
+            result.put(Constants.WATCH_BRAND_NAME,watchBrandVo);
             //获取该品牌下的总销量
             Integer Number = watchBrandService.countSalesVolume(series_brand_id);
             result.put("Number",Number);
@@ -111,13 +101,13 @@ public class BrandController {
             result.put(Constants.HOT_WATCHS_NAME, watchByBrandId);  //保存热销手表
         } catch (Exception e) {
             e.printStackTrace();
-            return ResultBody.error("500",e.getMessage());
+            return new ResultBody<>(CommonEnum.INTERNAL_SERVER_ERROR,e.getMessage());
         }
-        return ResultBody.success(result);
+        return new ResultBody<>(CommonEnum.SUCCESS,result);
     }
 
     @RequestMapping("/click.xf/{brand_id}/{grade_id}/{watch_name}/{watch_priceMin}/{watch_priceMax}/{current_no}/{page_size}/{condition}")
-    public ResultBody ajax4(
+    public ResultBody<PageInfo<TbWatchs>> ajax4(
             @PathVariable("brand_id") String str_series_brand_id,
             @PathVariable("grade_id") String str_grade_id,
             @PathVariable("watch_name") String str_watch_name,
@@ -167,9 +157,9 @@ public class BrandController {
             condition = Integer.valueOf(str_condition);
             pageinfo = tbWatchsService.queryWatchByinfo(grade_id, series_brand_id,tbseries_id,tbswatch_name,tbwatch_priceMin,tbwatch_priceMax, condition, current_no, page_size);
         } catch (Exception e) {
-            return ResultBody.error("500",e.getMessage());
+            return new ResultBody<>(CommonEnum.INTERNAL_SERVER_ERROR,e.getMessage());
         }
-        return ResultBody.success(pageinfo);
+        return new ResultBody<>(CommonEnum.SUCCESS,pageinfo);
     }
 
 

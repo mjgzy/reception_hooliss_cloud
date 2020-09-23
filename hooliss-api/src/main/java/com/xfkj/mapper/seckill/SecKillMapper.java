@@ -1,13 +1,14 @@
 package com.xfkj.mapper.seckill;
 
-import com.xfkj.pojo.seckill.Seckill;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xfkj.entity.seckill.Seckill;
 
 import java.util.List;
 
 /**
  * 秒杀商品接口
  */
-public interface SecKillMapper {
+public interface SecKillMapper extends BaseMapper<Seckill> {
 
     /**
      * 查询所有秒杀商品

@@ -4,11 +4,11 @@
 
     <!--新增记录-->
     <insert id="addReservce">
-      INSERT INTO order_reserve(`order_id`,`user_integral`,`spike_num`) VALUES(#{order_id},#{user_integral},#{spike_num})
+      INSERT INTO order_reserve(`order_id`,`user_integral`,`spike_num`) VALUES(#{orderId},#{userIntegral},#{spikeNum})
     </insert>
 
     <!--删除记录-->
     <delete id="delReservce">
-        DELETE FROM order_reserve WHERE order_id = #{order_id}
+        DELETE FROM order_reserve WHERE order_id = #{orderId}
     </delete>
 </mapper>

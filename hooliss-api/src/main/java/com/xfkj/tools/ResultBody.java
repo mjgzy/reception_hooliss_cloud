@@ -2,35 +2,61 @@ package com.xfkj.tools;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xfkj.exceptionHandling.BaseErrorInfoInterface;
-import com.xfkj.exceptionHandling.CommonEnum;
+import com.xfkj.enums.CommonEnum;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
-public class ResultBody {
+public class ResultBody<T> {
     /**
      * 响应代码
      */
-    private String code;
+    private Integer code;
 
     /**
      * 响应消息
      */
-    private String message;
+    private String msg;
 
     /**
      * 响应结果
      */
-    private Object result;
+    private T data;
 
     public ResultBody() {
+    }
 
+    /**
+     * 返回时间
+     */
+    private Date creatTime;
+    public ResultBody(CommonEnum apiEnum) {
+        this.code = apiEnum.getResultCode();
+        this.msg = apiEnum.getResultMsg();
+        this.creatTime=new Date();
     }
-    public ResultBody(String message) {
-        this.message = message;
+    public ResultBody(CommonEnum apiEnum,String msg) {
+        this.code = apiEnum.getResultCode();
+        this.msg = msg;
+        this.creatTime=new Date();
     }
-    public ResultBody(BaseErrorInfoInterface errorInfo) {
-        this.code = errorInfo.getResultCode();
-        this.message = errorInfo.getResultMsg();
+    public ResultBody(Integer resultCode,String msg) {
+        this.code = resultCode;
+        this.msg = msg;
+        this.creatTime=new Date();
+    }
+    public ResultBody(CommonEnum apiEnum, T data) {
+        this.code = apiEnum.getResultCode();
+        this.msg = apiEnum.getResultMsg();
+        this.data = data;
+        this.creatTime=new Date();
+    }
+    public ResultBody(CommonEnum apiEnum,String msg, T data) {
+        this.code = apiEnum.getResultCode();
+        this.msg = msg;
+        this.data=data;
+        this.creatTime=new Date();
     }
 
 
@@ -38,9 +64,8 @@ public class ResultBody {
     /**
      * 成功
      *
-     * @return
      */
-    public static ResultBody success() {
+    public ResultBody<T> success() {
         return success(null);
     }
 
@@ -49,44 +74,34 @@ public class ResultBody {
      * @param data
      * @return
      */
-    public static ResultBody success(Object data) {
-        ResultBody rb = new ResultBody();
+    public ResultBody<T> success(T data) {
+        ResultBody<T> rb = new ResultBody<>();
         rb.setCode(CommonEnum.SUCCESS.getResultCode());
-        rb.setMessage(CommonEnum.SUCCESS.getResultMsg());
-        rb.setResult(data);
+        rb.setMsg(CommonEnum.SUCCESS.getResultMsg());
+        rb.setData(data);
         return rb;
     }
 
     /**
      * 失败
      */
-    public static ResultBody error(BaseErrorInfoInterface errorInfo) {
-        ResultBody rb = new ResultBody();
+    public ResultBody<T> error(BaseErrorInfoInterface errorInfo) {
+        ResultBody<T> rb = new ResultBody<T>();
         rb.setCode(errorInfo.getResultCode());
-        rb.setMessage(errorInfo.getResultMsg());
-        rb.setResult(null);
+        rb.setMsg(errorInfo.getResultMsg());
+        rb.setData(null);
         return rb;
     }
+
 
     /**
      * 失败
      */
-    public static ResultBody error(String code, String message) {
-        ResultBody rb = new ResultBody();
-        rb.setCode(code);
-        rb.setMessage(message);
-        rb.setResult(null);
-        return rb;
-    }
-
-    /**
-     * 失败
-     */
-    public static ResultBody error(String message) {
-        ResultBody rb = new ResultBody();
-        rb.setCode("-1");
-        rb.setMessage(message);
-        rb.setResult(null);
+    public ResultBody<T> error(String message) {
+        ResultBody<T> rb = new ResultBody<>();
+        rb.setCode(-1);
+        rb.setMsg(message);
+        rb.setData(null);
         return rb;
     }
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.xfkj.mapper.order.WatchOrderMapper" >
         <select id="findWatchByCondition"  resultMap="ddpojo">
             SELECT * FROM `watch_order` wo LEFT JOIN `order_status` os ON os.`status_id`=wo.`order_status_id`
-            WHERE o_uid=#{user_id}
+            WHERE o_uid=#{userId}
             <!--
              LEFT JOIN `tb_watchs` tw ON tw.`watch_id`=wo.`watch_id`
              LEFT JOIN `order_status` os ON os.`status_id`=wo.`order_status_id`
@@ -11,31 +11,31 @@
              LEFT JOIN `w_receinfo` wr ON wr.`info_id`=wo.`w_receinfo_id`
              WHERE wu.`u_id` = #{u_id}
             -->
-            <if test="order_status_id !=null and order_status_id!=0">
-                    AND wo.`order_status_id` =#{order_status_id}
+            <if test="orderStatusId !=null and orderStatusId!=0">
+                    AND wo.`order_status_id` =#{orderStatusId}
                 </if>
-                <if test="order_id !=null and order_id!=0">
-                    AND wo.`order_id` like  CONCAT('%',#{order_id},'%')
+                <if test="orderId !=null and orderId!=0">
+                    AND wo.`order_id` like  CONCAT('%',#{orderId},'%')
                 </if>
-                <if test="date_type==1">
+                <if test="dateType==1">
                     AND `order_date`>DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
                 </if>
-                <if test="date_type==2">
+                <if test="dateType==2">
                     AND `order_date`>DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
                 </if>
-                <if test="date_type==3">
+                <if test="dateType==3">
                     AND `order_date`>DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
                 </if>
             ORDER BY  wo.`order_date` DESC
         </select>
-        <resultMap id="ddpojo" type="WatchOrder">
+        <resultMap id="ddpojo" type="com.xfkj.entity.order.WatchOrder">
         <id column="id" property="id"/>
-        <result column="order_id" property="order_id"/>
-        <result column="o_uid" property="o_uid"/>
-        <result column="order_price" property="order_price"/>
-        <result column="watch_id" property="watch_id"/>
-        <result column="order_date" property="order_date"/>
-        <result column="watch_count" property="watch_count"/>
+        <result column="order_id" property="orderId"/>
+        <result column="o_uid" property="oUid"/>
+        <result column="order_price" property="orderPrice"/>
+        <result column="watch_id" property="watchId"/>
+        <result column="order_date" property="orderDate"/>
+        <result column="watch_count" property="watchCount"/>
 <!--        <association property="lt" javaType="TbWatchs">-->
 <!--            <id column="watch_id" property="watch_id"/>-->
 <!--            <result column="watch_name" property="watch_name"/>-->
@@ -63,18 +63,18 @@
 <!--            <result column="user_id" property="user_id"/>-->
 <!--            <result column="phone" property="phone"/>-->
 <!--        </association>-->
-        <association property="order_status" javaType="OrderStatus">
+        <association property="orderStatus" javaType="com.xfkj.entity.order.OrderStatus">
             <id column="status_id" property="statusId"/>
             <result column="statud_name" property="statudName"/>
         </association>
     </resultMap>
 
-            <select id="findById"  resultType="WatchOrder">
-                    SELECT * FROM `watch_order` WHERE `order_id` =#{order_id}
+            <select id="findById"  resultType="com.xfkj.entity.order.WatchOrder">
+                    SELECT * FROM `watch_order` WHERE `order_id` =#{orderId}
             </select>
 
     <delete id="delOrderById">
-        delete from watch_order where order_id=#{order_id}
+        delete from watch_order where order_id=#{orderId}
     </delete>
     <!--生成订单,自增主键返回-->
     <insert id="generateOrder" >
@@ -82,11 +82,11 @@
             SELECT LAST_INSERT_ID();
         </selectKey>
         INSERT watch_order(`order_id`,`order_status_id`,`o_uid`,`order_price`,`w_receinfo_id`,`order_date`,
-        `watch_count`,`discount`,watch_id) VALUES(#{order_id},#{order_status.statusId},#{o_uid},#{order_price},
-        #{w_receinfo_id},#{order_date},#{watch_count},#{discount},#{watch_id})
+        `watch_count`,`discount`,watch_id) VALUES(#{orderId},#{orderStatus.statusId},#{oUid},#{orderPrice},
+        #{wReceinfoId},#{orderDate},#{watchCount},#{discount},#{watchId})
     </insert>
 
     <update id="updateOrderStatus">
-        UPDATE watch_order SET order_status_id=#{status_id} WHERE order_id =#{order_id}
+        UPDATE watch_order SET order_status_id=#{statusId} WHERE order_id =#{orderId}
     </update>
 </mapper>

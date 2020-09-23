@@ -3,6 +3,13 @@ server:
 spring:
   application:
     name: hooliss-zookeeper
+  zipkin:
+    #zipkin监控中心地址
+    base-url: http://49.232.36.244:9411
+    sleuth:
+      sampler:
+      #采样率值介于0到1之间,1则表示全部采集
+      probability: 1
   cloud:
     zookeeper:
-      connect-string:
+      connect-string: 192.168.199.107:2181

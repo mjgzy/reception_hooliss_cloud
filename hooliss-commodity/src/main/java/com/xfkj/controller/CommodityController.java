@@ -1,10 +1,13 @@
 package com.xfkj.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.xfkj.pojo.brand.WatchBrand;
-import com.xfkj.pojo.commodity.TbWatchs;
-import com.xfkj.service.commodity.EsTbWatchsService;
-import com.xfkj.service.commodity.WatchBrandService;
+import com.xfkj.entity.brand.WatchBrand;
+import com.xfkj.entity.commodity.TbWatchs;
+import com.xfkj.enums.CommonEnum;
+import com.xfkj.service.EsTbWatchsService;
+import com.xfkj.service.WatchBrandService;
+import com.xfkj.service.EsTbWatchsService;
+import com.xfkj.service.WatchBrandService;
 import com.xfkj.tools.Constants;
 import com.xfkj.tools.ResultBody;
 import com.xfkj.utils.PriceUtil;
@@ -36,7 +39,6 @@ public class CommodityController {
 	private WatchBrandService watchBrandService;
 
 
-
     /**
      *
      * @param str_key_word:顶部搜索框
@@ -47,7 +49,7 @@ public class CommodityController {
      */
     @UserLoginToken
 	@RequestMapping("/doOs.xf/{key_word}/{grade_id}/{type_id}/{current_no}/{page_size}/{brand_id}/{condition}")
-	public ResultBody doOsHtml(
+	public ResultBody<Map<String,Object>> doOsHtml(
 			@PathVariable("key_word")String str_key_word,
 			@PathVariable("grade_id") String str_grade_id,
 			@PathVariable("current_no")String str_current_no,
@@ -106,7 +108,7 @@ public class CommodityController {
 			result.put("conditions",conditions );		//保存条件筛选
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			return ResultBody.error(e.getMessage());
+			return new ResultBody<>(CommonEnum.INTERNAL_SERVER_ERROR,e.getMessage());
 		}
 		//获取检索结果
 		Page<TbWatchs> tbWatchs = null;
@@ -115,16 +117,16 @@ public class CommodityController {
 					key_word, price[0], price[1], condition, current_no, page_size);
 		} catch (NoNodeAvailableException e) {
 			e.printStackTrace();
-			return ResultBody.error(e.getMessage());
+			return new ResultBody<>(CommonEnum.INTERNAL_SERVER_ERROR,e.getMessage());
 		}
 		result.put(Constants.WATCHS_NAME, tbWatchs);
 //		加载所有品牌信息
 		PageInfo<WatchBrand> watchBrand = watchBrandService.findWatchBrand();
 		result.put(Constants.WATCH_BRAND_NAME, watchBrand);
-		return ResultBody.success(result);
+		return new ResultBody<>(CommonEnum.SUCCESS,result);
 	}
 	@RequestMapping("doPaixu.xf/{key_word}/{grade_id}/{type_id}/{current_no}/{page_size}/{brand_id}/{condition}")
-	public ResultBody doPaixu(
+	public ResultBody<Page<TbWatchs>> doPaixu(
 			@PathVariable("key_word")String str_key_word,
 			@PathVariable("grade_id") String str_grade_id,
 			@PathVariable("current_no")String str_current_no,
@@ -149,17 +151,11 @@ public class CommodityController {
 			brand_id = Integer.valueOf(str_brand_id);
 			condition = Integer.valueOf(str_condition);
 		}catch (NumberFormatException e){
-			return ResultBody.error("500", e.getMessage());
+			return new ResultBody<>(CommonEnum.INTERNAL_SERVER_ERROR, e.getMessage());
 		}
-		System.err.println("grade_id"+grade_id);
-		System.err.println("key_word"+key_word);
-		System.err.println("brand_id"+brand_id);
-		System.err.println("current_no"+current_no);
-		System.err.println("page_size"+page_size);
-		System.err.println("condition"+condition);
 		//		加载手表信息
 				Page<TbWatchs> tbWatchs = esTbWatchsService.queryWatchByinfo(grade_id, brand_id,
 						key_word, price[0], price[1], condition, current_no, page_size);
-		return ResultBody.success(tbWatchs);
+		return new ResultBody<>(CommonEnum.SUCCESS,tbWatchs);
 	}
 }

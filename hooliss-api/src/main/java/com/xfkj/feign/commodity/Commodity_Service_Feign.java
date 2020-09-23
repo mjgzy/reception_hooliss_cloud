@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("commodity-provider")
-@FeignClient(value = "hooliss-commodity-provider")
+@FeignClient(value = "hooliss-commodity-provider",contextId = "cs")
 public interface Commodity_Service_Feign {
 
 
@@ -21,7 +21,7 @@ public interface Commodity_Service_Feign {
      * @param str_type_id:价格区间
      */
     @UserLoginToken
-    @RequestMapping("/doOs.xf/{key_word}/{grade_id}/{type_id}/{current_no}/{page_size}/{brand_id}/{condition}")
+    @RequestMapping("commodity-provider/doOs.xf/{key_word}/{grade_id}/{type_id}/{current_no}/{page_size}/{brand_id}/{condition}")
     public ResultBody doOsHtml(
             @PathVariable("key_word")String str_key_word,
             @PathVariable("grade_id") String str_grade_id,
@@ -30,7 +30,7 @@ public interface Commodity_Service_Feign {
             @PathVariable("type_id")String str_type_id,
             @PathVariable("brand_id")String str_brand_id,
             @PathVariable("condition")String str_condition);
-    @RequestMapping("doPaixu.xf/{key_word}/{grade_id}/{type_id}/{current_no}/{page_size}/{brand_id}/{condition}")
+    @RequestMapping("commodity-provider/doPaixu.xf/{key_word}/{grade_id}/{type_id}/{current_no}/{page_size}/{brand_id}/{condition}")
     public ResultBody doPaixu(
             @PathVariable("key_word")String str_key_word,
             @PathVariable("grade_id") String str_grade_id,

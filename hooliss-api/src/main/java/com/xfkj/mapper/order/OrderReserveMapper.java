@@ -1,12 +1,13 @@
 package com.xfkj.mapper.order;
 
-import com.xfkj.pojo.order.OrderReserve;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xfkj.entity.order.OrderReserve;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * 订单资源预减
  */
-public interface OrderReserveMapper {
+public interface OrderReserveMapper extends BaseMapper<OrderReserve> {
 
     /**
      * 新增记录
@@ -16,5 +17,5 @@ public interface OrderReserveMapper {
     /**
      * 删除记录
      */
-    Integer delReservce(@Param("order_id") String order_id);
+    Integer delReservce(@Param("orderId") String orderId);
 }

@@ -1,8 +1,7 @@
 package com.xfkj.mapper.commodity;
 
-import com.xfkj.pojo.commodity.WatchGrade;
-
-import java.util.List;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xfkj.entity.commodity.WatchGrade;
 
 
 /**
@@ -10,10 +9,6 @@ import java.util.List;
  * @author Administrator
  *
  */
-public interface WatchGradeMapper {
-	/**
-	 * 获得所有分类数据
-	 * @return 
-	 */
-	List<WatchGrade> getAll();
+public interface WatchGradeMapper extends BaseMapper<WatchGrade> {
+
 }

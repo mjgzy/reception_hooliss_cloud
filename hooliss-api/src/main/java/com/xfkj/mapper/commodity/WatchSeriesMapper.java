@@ -1,7 +1,8 @@
 package com.xfkj.mapper.commodity;
 
-import com.xfkj.pojo.brand.WatchSeries;
-import com.xfkj.pojo.commodity.Style;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xfkj.entity.brand.WatchSeries;
+import com.xfkj.entity.commodity.Style;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * @author Administrator
  *
  */
-public interface WatchSeriesMapper {
+public interface WatchSeriesMapper extends BaseMapper<WatchSeries> {
 	/**
 	 * 根据品牌名显示所有系列
 	 * @param series_brand_id

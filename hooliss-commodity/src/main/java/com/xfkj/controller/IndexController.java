@@ -1,13 +1,15 @@
 package com.xfkj.controller;
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
-import com.xfkj.pojo.commodity.TbWatchs;
-import com.xfkj.pojo.commodity.WatchGrade;
-import com.xfkj.service.commodity.TbWatchsService;
+import com.xfkj.entity.commodity.TbWatchs;
+import com.xfkj.entity.commodity.WatchGrade;
+import com.xfkj.enums.CommonEnum;
+import com.xfkj.pojo.vo.brand.WatchBrandVo;
+import com.xfkj.service.TbWatchsService;
+import com.xfkj.service.WatchGradeService;
 import com.xfkj.tools.Constants;
 import com.xfkj.tools.ResultBody;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,38 +27,45 @@ public class IndexController {
 
 	@Autowired
 	private TbWatchsService tbWatchsService;
+	@Autowired
+	private WatchGradeService gradeService;
 
+	@Value("${server.port}")
+	private String port;
+
+	@RequestMapping("getPort")
+	public String getPort(){
+		return port;
+	}
 	/**
 	 * 跳转到首页
 	 *
 	 */
 	@RequestMapping("/doIndex.xf")
-	public ResultBody forIndex() {
-		String watch_name = null;
-		Map result = new HashMap();
+	public ResultBody<?> forIndex() {
+		Map<String,Object> result = new HashMap<>();
 		//初始化分类
 		try {
-			List<WatchGrade> gradelist = tbWatchsService.queryWatchGradeAll();
-			result.put("gradelist", gradelist);
+			List<WatchGrade> gradelist = gradeService.list();
+			result.put("gradeList", gradelist);
 			//初始化男士(排行榜)
 			PageInfo<TbWatchs> dd = tbWatchsService.queryWatchByVolume(1, 10, 1, 10);
 			result.put(Constants.WATCHS_MAN_NAME,dd);
 			//初始化最新（新品推荐）
-			PageInfo<TbWatchs> products = tbWatchsService.queryWatchByinfo(1,0,0, watch_name, 0,0,4,1,10);
-			System.err.println(products.getPages());
+			PageInfo<TbWatchs> products = tbWatchsService.queryWatchByinfo(1,0,0, null, 0,0,4,1,10);
 			result.put("products", products);
 			//初始化款式(时尚)
 			PageInfo<TbWatchs> grade = tbWatchsService.findWatchByGradeAndType(1, 8, 1, 10);
 			result.put("grade", grade);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResultBody.error("500",e.getMessage());
+			return new ResultBody<>(CommonEnum.INTERNAL_SERVER_ERROR,e.getMessage());
 		}
-		return ResultBody.success(result);
+		return new ResultBody<>(CommonEnum.SUCCESS,result);
 	}
 
 	@RequestMapping("/products.xf")
-	public ResultBody products(@RequestParam("currentno")Integer fotindex,
+	public ResultBody<?> products(@RequestParam("currentno")Integer fotindex,
 							   @RequestParam("proindex")Integer proindex,
 							   @RequestParam("current_no")Integer current_no,
 							   @RequestParam("page_size")Integer page_size) {
@@ -75,8 +84,8 @@ public class IndexController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResultBody.error(e.getMessage());
+			return new ResultBody<>(CommonEnum.INTERNAL_SERVER_ERROR,e.getMessage());
 		}
-		return ResultBody.success(pro);
+		return new ResultBody<>(CommonEnum.SUCCESS,pro);
 	}
 }
