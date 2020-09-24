@@ -1,0 +1,17 @@
+server:
+  port: 9001
+
+spring:
+  profiles:
+    active: dev
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+
+

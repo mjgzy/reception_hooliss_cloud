@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: hooliss-user-provider
+  datasource:
+    url: ENC(U98RxoDveEVolaEZ3ZRQkQxKb2hxKhOTvxVlZdI9h7x3kbX5RgnLEqc3bvgNY5cDb5zponj8fCAktWCKK56TvFjR6aRwpDg85yxxAc/37Y6sLBPCpV/uJQuHMBhSx+xe6dE94YV2gRsRVd9AafEk6rufMq8+LeBiFDWyC7UEssZKZOKf2Hdb4BaHvAaxRr0MsvLMJvhA8lg=)
+    username: ENC(ehyCy/WGIKTevwge8catfg==)
+    password: ENC(LImG3qctICBZremlr92ez8fa/0He6DSM)
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 10
+      max-lifetime: 28700000
+      connection-test-query: SELECT 1
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 139.186.71.175:8847 #服务注册中心地址
+      config:
+        server-addr: 139.186.71.175:8847 #配置中心地址
+        file-extension: yaml #指定yaml格式的配置
+        namespace: 0c4ed8b9-9a0e-4fcb-904c-e963f782c949
+        group: DEFAULT_GROUP
+  profiles:
+    active: dev
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+
