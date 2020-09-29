@@ -1,6 +1,6 @@
-package com.xfkj.config;
+package com.xfkj.disable;
 import com.google.gson.JsonObject;
-import com.xfkj.tools.CommonEnum;
+import com.xfkj.enums.CommonEnum;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-@Component
+//@Component
 public class CustomHttpBasicServerAuthenticationEntryPoint extends HttpBasicServerAuthenticationEntryPoint /* implements ServerAuthenticationEntryPoint */{
 
 

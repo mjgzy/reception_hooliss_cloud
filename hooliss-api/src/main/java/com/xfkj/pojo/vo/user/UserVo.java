@@ -15,4 +15,5 @@ import java.io.Serializable;
 @Data
 public class UserVo extends Wuser {
 
+    private String roleName;
 }

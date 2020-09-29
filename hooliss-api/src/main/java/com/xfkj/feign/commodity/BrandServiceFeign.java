@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 //@RequestMapping("brand-provider")
 @FeignClient(value = "hooliss-commodity-provider",contextId = "bs")
-public interface Brand_Service_Feign {
+public interface BrandServiceFeign {
     /**
      * 跳转到品牌馆选择页面
      */

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 //@RequestMapping("watch-provider")
 @FeignClient(value = "hooliss-commodity-provider",contextId = "ws")
-public interface WatchDetails_Service_Feign {
+public interface WatchDetailsServiceFeign {
 
     @RequestMapping("watch-provider/findById")
     ResultBody findById(@RequestParam("w_id") Integer w_id);

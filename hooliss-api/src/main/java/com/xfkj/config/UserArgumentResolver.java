@@ -1,6 +1,7 @@
 package com.xfkj.config;
 
 import com.xfkj.annotations.UserAttribute;
+import com.xfkj.entity.user.Wuser;
 import com.xfkj.tools.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;

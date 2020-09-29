@@ -1,8 +1,8 @@
-package com.xfkj.config;
+package com.xfkj.disable;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
-import com.xfkj.tools.CommonEnum;
+import com.xfkj.enums.CommonEnum;
 import com.xfkj.tools.ResultBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -20,7 +20,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 
-@Component
+//@Component
 public class AuthenticationSuccessHandler extends WebFilterChainServerAuthenticationSuccessHandler   {
     @Autowired
     private RedisTemplate redisTemplate;

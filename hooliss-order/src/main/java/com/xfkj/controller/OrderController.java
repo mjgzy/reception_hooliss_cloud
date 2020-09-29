@@ -6,10 +6,11 @@ import com.github.pagehelper.PageInfo;
 import com.xfkj.config.rabbit.MqSender;
 import com.xfkj.enums.CommonEnum;
 import com.xfkj.exceptionHandling.XFException;
-import com.xfkj.feign.commodity.WatchDetails_Service_Feign;
+import com.xfkj.feign.commodity.WatchDetailsServiceFeign;
 import com.xfkj.entity.commodity.TbWatchs;
 import com.xfkj.entity.order.WatchOrder;
 import com.xfkj.entity.user.Wuser;
+import com.xfkj.feign.user.FeignUserService;
 import com.xfkj.service.OrderService;
 import com.xfkj.service.ShoppingCartService;
 import com.xfkj.tools.Constants;
@@ -44,7 +45,7 @@ public class OrderController {
 	private ObjectMapper objectMapper;
 
 	@Autowired
-	private WatchDetails_Service_Feign watchDetails_service_feign;
+	private WatchDetailsServiceFeign watchDetailsServiceFeign;
 
 	@Autowired
 	private MqSender mqSender;
@@ -110,7 +111,7 @@ public class OrderController {
 		String key=(wuser.getUId()+wuser.getUPwd());
 		WatchOrder watchOrder= (WatchOrder) redisUtils.get(DigestUtils.md5DigestAsHex(key.getBytes()));
 			if(watchOrder!=null){
-				ResultBody<?> byId = watchDetails_service_feign.findById(watchOrder.getWatchId());
+				ResultBody<?> byId = watchDetailsServiceFeign.findById(watchOrder.getWatchId());
 				if(byId.getCode().equals(200)){
 					TbWatchs tbWatchs = objectMapper.convertValue(byId.getData(),TbWatchs.class);
 					watchOrder.setLt(tbWatchs);
@@ -179,7 +180,7 @@ public class OrderController {
 						}
 					}
 					item = new WatchOrder();
-					ResultBody<?> byId1 = watchDetails_service_feign.findById(entry.getWatchId());
+					ResultBody<?> byId1 = watchDetailsServiceFeign.findById(entry.getWatchId());
 					if (!byId1.getCode().equals(200)) {
 						throw new XFException(500, "无法查询商品信息,请稍后再试!");
 					}

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 //@RequestMapping("index-provider")
 @FeignClient(value = "hooliss-commodity-provider",contextId = "is")
-public interface Index_Service_Feign {
+public interface IndexServiceFeign {
     /**
      * 跳转到首页
      *

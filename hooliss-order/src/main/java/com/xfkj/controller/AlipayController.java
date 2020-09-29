@@ -6,7 +6,7 @@ import com.alipay.api.AlipayApiException;
 import com.xfkj.entity.order.WatchOrder;
 import com.xfkj.entity.user.Wuser;
 import com.xfkj.enums.CommonEnum;
-import com.xfkj.service.order.AlipayService;
+import com.xfkj.service.AlipayService;
 import com.xfkj.tools.ResultBody;
 import com.xfkj.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;

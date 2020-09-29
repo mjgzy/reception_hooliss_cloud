@@ -1,6 +1,7 @@
 package com.xfkj.feign.user;
 
 import com.xfkj.entity.user.Wuser;
+import com.xfkj.pojo.vo.user.UserVo;
 import com.xfkj.tools.ResultBody;
 import com.xfkj.annotations.PassToken;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,8 +12,9 @@ import org.springframework.web.bind.annotation.*;
  * @author Administrator
  *
  */
-@FeignClient("hooliss-user-provider")
+
 //@RequestMapping("user-provider")
+@FeignClient("hooliss-user-provider")
 public interface FeignUserService {
 
 	/**

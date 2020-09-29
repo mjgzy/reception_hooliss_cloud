@@ -1,7 +1,7 @@
-package com.xfkj.config;
+package com.xfkj.disable;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xfkj.tools.CommonEnum;
+import com.xfkj.enums.CommonEnum;
 import com.xfkj.tools.ResultBody;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-@Component
+//@Component
 public class AuthenticationFaillHandler  implements ServerAuthenticationFailureHandler {
 
     @Override

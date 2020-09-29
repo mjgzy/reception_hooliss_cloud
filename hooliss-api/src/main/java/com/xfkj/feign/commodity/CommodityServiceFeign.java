@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("commodity-provider")
 @FeignClient(value = "hooliss-commodity-provider",contextId = "cs")
-public interface Commodity_Service_Feign {
+public interface CommodityServiceFeign {
 
 
     /**

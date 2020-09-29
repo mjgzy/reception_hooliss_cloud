@@ -36,7 +36,7 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <!-- <version>${spring-boot.version}</version>-->
+                     <version>${springboot.version}</version>
                     <executions>
                         <execution>
                             <goals>
@@ -47,4 +47,11 @@
                 </plugin>
         </plugins>
     </build>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>alimaven spring plugin</id>
+            <name>alimaven spring plugin</name>
+            <url>https://maven.aliyun.com/repository/spring-plugin</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>
