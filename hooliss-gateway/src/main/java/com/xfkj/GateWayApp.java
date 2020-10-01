@@ -13,7 +13,7 @@ import org.springframework.security.config.crypto.RsaKeyConversionServicePostPro
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.xfkj.feign.user")
+@EnableFeignClients(basePackages = "com.xfkj.service")
 public class GateWayApp {
 
     public static void main(String[] args) {

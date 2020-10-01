@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient("hooliss-user-provider")
+@FeignClient(value = "hooliss-user-provider",contextId = "userReceInfo")
 //@RequestMapping("userAddress-provider")
 public interface FeignUserReceInfoService {
 

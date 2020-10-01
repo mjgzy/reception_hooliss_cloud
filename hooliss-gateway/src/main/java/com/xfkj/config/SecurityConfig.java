@@ -1,69 +1,57 @@
 package com.xfkj.config;
 
-import com.alibaba.fastjson.JSON;
-import com.xfkj.enums.CommonEnum;
-import com.xfkj.tools.ResultBody;
+import com.xfkj.handler.AuthenticationFaillHandler;
+import com.xfkj.handler.AuthenticationSuccessHandler;
+import com.xfkj.handler.CustomHttpBasicServerAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableWebFluxSecurity
+public class SecurityConfig {
 
     @Autowired
-    private SuccessHandler appLoginInSuccessHandler;
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
     @Autowired
-    private MyAuthenticationProvider myAuthenticationProvider;
+    private AuthenticationFaillHandler authenticationFaillHandler;
+    @Autowired
+    private CustomHttpBasicServerAuthenticationEntryPoint customHttpBasicServerAuthenticationEntryPoint;
+    //security的鉴权排除的url列表
+    private static final String[] excludedAuthPages = {
+            "/auth/login",
+            "/auth/logout",
+            "/health",
+            "/api/socket/**"
+    };
+
     @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-    }
-    /**
-     * 配置用户权限组和接口路径的关系
-     * 和一些其他配置
-     *
-     * @param http
-     * @throws Exception
-     */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()     // 对请求进行验证
-                .antMatchers("/user/login").permitAll() //所有人都能访问用户登录接口
-                .antMatchers("/index-provider/**","/es/**","/brand-provider/**","/watch-provider/**/*").permitAll()
-                .antMatchers("/admin/**").hasRole("ROLE_ADMIN")     // 必须有ADMIN权限
-                .antMatchers("/hoolissArea/**","/user-provider/**","/userAddress-provider/**").hasRole("ROLE_USER")     // 必须有ADMIN权限
-//                .antMatchers("/user-provider/**").hasAnyRole("ROLE_USER", "ROLE_ADMIN")       //有任意一种权限
-                .anyRequest()     //任意请求（这里主要指方法）
-                .authenticated()   //// 需要身份认证
-                .and()   //表示一个配置的结束
-                .formLogin().loginProcessingUrl("/user/login").permitAll()  //开启SpringSecurity内置的表单登录，会提供一个/login接口
+    SecurityWebFilterChain webFluxSecurityFilterChain(ServerHttpSecurity http) throws Exception {
+        http
+                .authorizeExchange()
+                .pathMatchers(excludedAuthPages).permitAll()  //无需进行权限过滤的请求路径
+                .pathMatchers(HttpMethod.OPTIONS).permitAll() //option 请求默认放行
+                .anyExchange().authenticated()
                 .and()
-                .logout().permitAll()  //开启SpringSecurity内置的退出登录，会为我们提供一个/logout接口
+                .httpBasic()
                 .and()
-                .csrf().disable().
-                authenticationProvider(myAuthenticationProvider);    //关闭csrf跨站伪造请求
+                .formLogin().loginPage("/auth/login")
+                .authenticationSuccessHandler(authenticationSuccessHandler) //认证成功
+                .authenticationFailureHandler(authenticationFaillHandler) //登陆验证失败
+                .and().exceptionHandling().authenticationEntryPoint(customHttpBasicServerAuthenticationEntryPoint)  //基于http的接口请求鉴权失败
+                .and() .csrf().disable()//必须支持跨域
+                .logout().disable();
+
+        return http.build();
     }
+
+
     @Bean
-    LoginFromFilter myAuthenticationFilter() throws Exception {
-        LoginFromFilter filter = new LoginFromFilter();
-        filter.setAuthenticationManager(authenticationManagerBean());
-        filter.setAuthenticationSuccessHandler(appLoginInSuccessHandler);
-        filter.setAuthenticationFailureHandler((httpServletRequest, httpServletResponse, e) -> {
-            httpServletResponse.setContentType("application/json;charset=utf-8");
-            httpServletResponse.getWriter().write(JSON.toJSONString(new ResultBody<>(CommonEnum.INTERNAL_SERVER_ERROR)));
-        });
-        return filter;
+    public PasswordEncoder passwordEncoder() {
+        return  NoOpPasswordEncoder.getInstance(); //默认不加密
     }
 }

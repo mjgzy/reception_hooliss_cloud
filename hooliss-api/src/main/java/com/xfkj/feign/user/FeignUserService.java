@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 //@RequestMapping("user-provider")
-@FeignClient("hooliss-user-provider")
+@FeignClient(value = "hooliss-user-provider",contextId = "user")
 public interface FeignUserService {
 
 	/**

@@ -14,3 +14,5 @@ spring:
         file-extension: yaml
         namespace: 0c4ed8b9-9a0e-4fcb-904c-e963f782c949
         group: DEFAULT_GROUP
+
+

@@ -1,24 +1,26 @@
-package com.xfkj.disable;
+package com.xfkj.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xfkj.enums.CommonEnum;
-import com.xfkj.tools.ResultBody;
+import com.xfkj.utils.ResultBody;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.server.WebFilterExchange;
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-//@Component
+/**
+ * 認證失敗處理類
+ */
+@Component
 public class AuthenticationFaillHandler  implements ServerAuthenticationFailureHandler {
 
+
     @Override
-    public Mono<Void> onAuthenticationFailure(WebFilterExchange webFilterExchange, AuthenticationException e) {
-        System.out.println("fail");
+    public Mono<Void> onAuthenticationFailure(WebFilterExchange webFilterExchange, org.springframework.security.core.AuthenticationException e) {
         ServerWebExchange exchange = webFilterExchange.getExchange();
         ServerHttpResponse response = exchange.getResponse();
         //设置headers
@@ -35,8 +37,7 @@ public class AuthenticationFaillHandler  implements ServerAuthenticationFailureH
         catch (Exception ex){
             ex.printStackTrace();
         }
-        DataBuffer wrap = response.bufferFactory().wrap(dataBytes);
-        return response.writeWith(Mono.just(wrap));
+        DataBuffer bodyDataBuffer = response.bufferFactory().wrap(dataBytes);
+        return response.writeWith(Mono.just(bodyDataBuffer));
     }
 }
-
