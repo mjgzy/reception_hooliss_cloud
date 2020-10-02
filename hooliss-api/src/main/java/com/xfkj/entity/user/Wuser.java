@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 用户表
  */
 @Data
-@TableName("w_user")
+@TableName("wuser")
 public class Wuser  implements Serializable {
 
     private Integer uId;

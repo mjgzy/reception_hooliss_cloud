@@ -53,7 +53,7 @@ public class CustomHttpBasicServerAuthenticationEntryPoint extends HttpBasicServ
         response.getHeaders().set(HttpHeaders.AUTHORIZATION, this.headerValue);
         JsonObject result = new JsonObject();
         result.addProperty("status", CommonEnum.INTERNAL_SERVER_ERROR.getResultCode());
-        result.addProperty("message", CommonEnum.INTERNAL_SERVER_ERROR.getResultCode());
+        result.addProperty("message", e.getMessage());
         byte[] dataBytes=result.toString().getBytes();
         DataBuffer bodyDataBuffer = response.bufferFactory().wrap(dataBytes);
         return response.writeWith(Mono.just(bodyDataBuffer));

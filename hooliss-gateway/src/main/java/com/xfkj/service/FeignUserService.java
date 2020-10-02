@@ -3,6 +3,7 @@ package com.xfkj.service;
 import com.xfkj.entity.Wuser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 
-//@RequestMapping("user-provider")
+@RequestMapping("user-provider")
 @FeignClient(value = "hooliss-user-provider",contextId = "user")
 public interface FeignUserService {
 

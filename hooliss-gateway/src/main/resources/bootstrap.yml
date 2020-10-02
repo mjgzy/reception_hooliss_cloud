@@ -14,5 +14,7 @@ spring:
         file-extension: yaml
         namespace: 0c4ed8b9-9a0e-4fcb-904c-e963f782c949
         group: DEFAULT_GROUP
-
+ribbon:
+  ReadTimeOut: 3000       #建立与客户端的链接所需时间
+  ConnentTimeOut: 3000    #链接到服务器所需的最大超时时间
 

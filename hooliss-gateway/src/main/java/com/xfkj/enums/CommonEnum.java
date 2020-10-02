@@ -13,7 +13,8 @@ public enum CommonEnum implements BaseErrorInfoInterface {
     SERVER_BUSY(503,"服务器正忙，请稍后再试!"),
     WATCH_INVENTORY_IS_NULL(500,"产品库存为空!"),
     SECKILL_FEILD(200,"秒杀失败"),
-    SECKILL_NULL(500,"未找到此手表信息!");
+    SECKILL_NULL(500,"未找到此手表信息!"),
+    PASSWORD_FAILD(500,"用户名或者密码有误!");
 
     /** 错误码 */
     private Integer resultCode;

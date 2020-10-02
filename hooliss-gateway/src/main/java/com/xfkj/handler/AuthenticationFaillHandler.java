@@ -28,7 +28,7 @@ public class AuthenticationFaillHandler  implements ServerAuthenticationFailureH
         httpHeaders.add("Content-Type", "application/json; charset=UTF-8");
         httpHeaders.add("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
         //设置body
-        ResultBody<String> wsResponse = new ResultBody<>(CommonEnum.INTERNAL_SERVER_ERROR);
+        ResultBody<String> wsResponse = new ResultBody<>(CommonEnum.PASSWORD_FAILD);
         byte[]   dataBytes={};
         try {
             ObjectMapper mapper = new ObjectMapper();

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -21,9 +22,11 @@ public class SecurityConfig {
     private AuthenticationFaillHandler authenticationFaillHandler;
     @Autowired
     private CustomHttpBasicServerAuthenticationEntryPoint customHttpBasicServerAuthenticationEntryPoint;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     //security的鉴权排除的url列表
     private static final String[] excludedAuthPages = {
-            "/auth/login",
+            "/index-provider/**","/es/**","/brand-provider/**","/watch-provider/**/*",
             "/auth/logout",
             "/health",
             "/api/socket/**"
@@ -49,9 +52,12 @@ public class SecurityConfig {
         return http.build();
     }
 
-
+//    public static void main(String[] args) {
+//        System.err.println(new BCryptPasswordEncoder().encode("hooliss-123456"));
+//    }
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return  NoOpPasswordEncoder.getInstance(); //默认不加密
+//        return  NoOpPasswordEncoder.getInstance(); //默认不加密
+        return new BCryptPasswordEncoder(14); //指定4-31位的长度
     }
 }
