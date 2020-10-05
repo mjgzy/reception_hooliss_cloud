@@ -7,14 +7,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="hooliss-api" />
         <module name="hooliss-nacos" />
-        <module name="hooliss-zookeeper" />
         <module name="hooliss-user" />
+        <module name="hooliss-commodity" />
+        <module name="hooliss-eureka" />
         <module name="hooliss-security" />
         <module name="hooliss-gateway" />
-        <module name="hooliss-eureka" />
-        <module name="hooliss-commodity" />
+        <module name="hooliss-zookeeper" />
+        <module name="hooliss-api" />
         <module name="hooliss-order" />
         <module name="hooliss-nacos-config" />
       </profile>

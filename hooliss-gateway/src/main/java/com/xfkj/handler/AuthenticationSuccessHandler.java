@@ -2,14 +2,13 @@ package com.xfkj.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
-import com.xfkj.entity.AuthUserDetails;
+import com.xfkj.entity.Wuser;
 import com.xfkj.enums.CommonEnum;
 import com.xfkj.utils.ResultBody;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.server.WebFilterExchange;
 import org.springframework.security.web.server.authentication.WebFilterChainServerAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -30,14 +29,13 @@ public class AuthenticationSuccessHandler extends WebFilterChainServerAuthentica
         httpHeaders.add("Content-Type", "application/json; charset=UTF-8");
         httpHeaders.add("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
         //设置body
-        ResultBody<AuthUserDetails> wsResponse = new ResultBody<>(CommonEnum.SUCCESS);
+        ResultBody<Wuser> wsResponse = new ResultBody<>(CommonEnum.SUCCESS);
         byte[] dataBytes = {};
         ObjectMapper mapper = new ObjectMapper();
         try {
-            User user = (User) authentication.getPrincipal();
-            AuthUserDetails userDetails = buildUser(user);
+            Wuser userDetails = (Wuser) authentication.getPrincipal();  //获取userDetails返回的用户对象
             byte[] authorization = (userDetails.getUsername() + ":" + userDetails.getPassword()).getBytes();
-            String token = Base64.getEncoder().encodeToString(authorization);
+            String token = Base64.getEncoder().encodeToString(authorization);       //生成token
             httpHeaders.add(HttpHeaders.AUTHORIZATION, token);
             wsResponse.setData(userDetails);
             dataBytes = mapper.writeValueAsBytes(wsResponse);
@@ -50,13 +48,5 @@ public class AuthenticationSuccessHandler extends WebFilterChainServerAuthentica
         }
         DataBuffer wrap = response.bufferFactory().wrap(dataBytes);
         return response.writeWith(Mono.just(wrap));
-    }
-
-
-    private AuthUserDetails buildUser(User user) {
-        AuthUserDetails userDetails = new AuthUserDetails();
-        userDetails.setUsername(user.getUsername());
-        userDetails.setPassword(user.getPassword().substring(user.getPassword().lastIndexOf("}") + 1, user.getPassword().length()));
-        return userDetails;
     }
 }
