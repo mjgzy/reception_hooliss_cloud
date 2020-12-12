@@ -14,7 +14,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class Commodity_Provider_APP {
 
     public static void main(String[] args) {
-        JWTUtils.init();
+//        JWTUtils.init();
         BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
         //加密所需的salt(盐),自定义
         textEncryptor.setPassword("retail_salt");

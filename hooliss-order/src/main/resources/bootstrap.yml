@@ -4,16 +4,22 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 139.186.71.175:8847 #服务注册中心地址
+        #        server-addr: 139.186.71.175:8847
+        #        server-addr: 192.168.199.151:8848  #公司
+        server-addr: 192.168.31.156:8848  #家里
+        namespace: 1768ebf9-ae2c-492b-9d4a-e322b945820c
       config:
-        server-addr: 139.186.71.175:8847 #配置中心地址
-        file-extension: yaml #指定yaml格式的配置
-        namespace: 0c4ed8b9-9a0e-4fcb-904c-e963f782c949
+        #        server-addr: 139.186.71.175:8847
+        #        server-addr: 192.168.199.151:8848  #公司
+        server-addr: 192.168.31.156:8848  #家里
+        file-extension: yaml
+        namespace: 1768ebf9-ae2c-492b-9d4a-e322b945820c
         group: DEFAULT_GROUP
   datasource:
-    url: ENC(ydSXiooAGjgysTmPU+bScbNdfuHsP3zKctCCjq8KAJCkmgF4Xgs5N2Y8evC69aUi7/D+TDKNy0mvdw2vrEKbxTuB1/2zPneUVeIAKs3NAyCDTURi/ExRLSJqYI+i3rRmyckpuSUPiwxTOmuG92YhxnnyR53Wp634IlWWXOkpJRuuD0UpsZR/AdS7IYZ+/X7T7YTszvQe5Xw=)
-    username: ENC(/EttQu/+FlZOeMRoUE0qvA==)
-    password: ENC(l7Msodn9aG3r5GtJOlnlHg==)
+    url: jdbc:mysql://192.168.31.156/t184watchitems?Unicode=true&characterEncoding=UTF-8&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
+#    url: jdbc:mysql://192.168.199.151/t184watchitems?Unicode=true&characterEncoding=UTF-8&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
+    username: portal
+    password: ilovelerx
     hikari:
       minimum-idle: 3
       maximum-pool-size: 10

@@ -18,10 +18,16 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
-import java.util.HashMap;
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -198,6 +204,70 @@ public class UserController {
 			return new ResultBody<>(CommonEnum.SUCCESS,result);
 		}
 		return  new ResultBody<>(500,result.get("error") );
+	}
+
+	/**
+	 * 生成图形验证码
+	 * @throws IOException
+	 */
+	@RequestMapping({"/verify"})
+	public void verify(HttpServletRequest request, HttpServletResponse response, String name,HttpSession session) throws IOException {
+		response.setContentType("image/jpeg");
+		response.setHeader("Pragma", "No-cache");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expires", 0L);
+//		HttpSession session = request.getSession(false);
+
+		int width = 73;
+		int height = 27;
+		BufferedImage image = new BufferedImage(width, height,
+				1);
+
+		Graphics g = image.getGraphics();
+
+		Random random = new Random();
+
+		Random rd = new Random();
+		int r = rd.nextInt(50);
+		int g1 = rd.nextInt(50);
+		int b = rd.nextInt(50);
+		g.setColor(new Color(r,g1,b));
+		g.fillRect(0, 0, width, height);
+		g.setFont(new Font("Times New Roman", 0, 24));
+		r = rd.nextInt(50);
+		g1 = rd.nextInt(50);
+		b = rd.nextInt(50);
+		g.setColor(new Color(r,g1,b));
+		for (int i = 0; i < 155; i++) {
+			int x = random.nextInt(width);
+			int y = random.nextInt(height);
+			int xl = random.nextInt(12);
+			int yl = random.nextInt(12);
+			g.drawLine(x, y, x + xl, y + yl);
+		}
+
+		String sRand = "";
+		for (int i = 0; i < 4; i++) {
+			String rand = Objects.requireNonNull(CommUtil.randomInt(1)).toUpperCase();
+			sRand = sRand + rand;
+			g.setColor(
+					new Color(20 + random.nextInt(110), 20 + random
+							.nextInt(110), 20 + random.nextInt(110)));
+			g.drawString(rand, 13 * i + 6, 24);
+		}
+
+		if ("".equals(CommUtil.null2String(name))) {
+			session.setAttribute("verify_code", sRand);
+		} else {
+			session.setAttribute(name, sRand);
+		}
+		g.dispose();
+		ServletOutputStream responseOutputStream = response.getOutputStream();
+
+		ImageIO.write(image, "JPEG", responseOutputStream);
+
+		responseOutputStream.flush();
+		responseOutputStream.close();
 	}
 	/**
 	 * 通过用户id查找用户

@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 @MapperScan("com.xfkj.mapper.user")
 public class User_APP {
     public static void main(String[] args) {
-        JWTUtils.init();
+//        JWTUtils.init();
         SpringApplication.run(User_APP.class,args);
     }
 }

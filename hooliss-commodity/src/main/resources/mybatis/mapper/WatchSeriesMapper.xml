@@ -26,7 +26,6 @@
             <!--<result column="so_price" property="so_price"/>-->
             <!--<result column="examine_status" property="examine_status"/>-->
             <!--<result column="status" property="status"/>-->
-            <!--<result column="wp_Id" property="wp_Id"/>-->
             <!--<result column="series_id" property="series_id"/>-->
             <!--<result column="brand_id" property="brand_id"/>-->
             <!--<result column="watch_grade_id" property="watch_grade_id"/>-->
@@ -44,7 +43,7 @@
       SELECT ws.id series_id,tb.watch_id watch_id,tb.watch_image watch_image,wp.parameter_name watch_style
         FROM watch_series ws
         LEFT JOIN tb_watchs tb ON ws.id = tb.series_id
-        LEFT JOIN watch_parameter wp ON tb.wp_Id = wp.parameter_id
+        LEFT JOIN watch_parameter wp ON tb.watch_id = wp.watch_id
         WHERE ws.id=#{_parameter}
     </select>
 

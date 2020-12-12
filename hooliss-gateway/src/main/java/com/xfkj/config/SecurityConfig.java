@@ -1,8 +1,6 @@
 package com.xfkj.config;
 
-import com.xfkj.handler.AuthenticationFaillHandler;
-import com.xfkj.handler.AuthenticationSuccessHandler;
-import com.xfkj.handler.CustomHttpBasicServerAuthenticationEntryPoint;
+import com.xfkj.handler.*;
 import com.xfkj.provider.UserAuthenticationProvider;
 import com.xfkj.service.SecurityUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
+
+import java.net.URI;
 
 @EnableWebFluxSecurity
 public class SecurityConfig {
@@ -25,6 +26,7 @@ public class SecurityConfig {
     @Autowired
     private AuthenticationFaillHandler authenticationFaillHandler;
     @Autowired
+    private MyLogoutSuccessHandler myLogoutSuccessHandler;
     private CustomHttpBasicServerAuthenticationEntryPoint customHttpBasicServerAuthenticationEntryPoint;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -55,7 +57,7 @@ public class SecurityConfig {
                 .authenticationFailureHandler(authenticationFaillHandler) //登陆验证失败
                 .and().exceptionHandling().authenticationEntryPoint(customHttpBasicServerAuthenticationEntryPoint)  //基于http的接口请求鉴权失败
                 .and() .csrf().disable()//必须支持跨域
-                .logout().disable();
+                .logout().logoutUrl("/auth/logout");        //登出逻辑
 
         return http.build();
     }
@@ -68,5 +70,4 @@ public class SecurityConfig {
 //        return  NoOpPasswordEncoder.getInstance(); //默认不加密
         return new BCryptPasswordEncoder(14); //指定4-31位的长度
     }
-
 }
