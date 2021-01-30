@@ -8,16 +8,14 @@ spring:
   cloud:
     nacos:
       discovery:
-#        server-addr: 139.186.71.175:8847
-#        server-addr: 192.168.199.151:8848  #公司
-        server-addr: 192.168.31.156:8848  #家里
-        namespace: 1768ebf9-ae2c-492b-9d4a-e322b945820c
+        #        server-addr: 139.186.71.175:8847
+        server-addr: 139.186.71.175:8848  #公司
+        namespace: d1dbb4e8-0a79-43dd-bcad-5c83607885ca
       config:
-#        server-addr: 139.186.71.175:8847
-#        server-addr: 192.168.199.151:8848  #公司
-        server-addr: 192.168.31.156:8848  #家里
+        #        server-addr: 139.186.71.175:8847
+        server-addr: 139.186.71.175:8848  #公司
         file-extension: yaml
-        namespace: 1768ebf9-ae2c-492b-9d4a-e322b945820c
+        namespace: d1dbb4e8-0a79-43dd-bcad-5c83607885ca
         group: DEFAULT_GROUP
 ribbon:
   ReadTimeOut: 3000       #建立与客户端的链接所需时间

@@ -2,11 +2,9 @@ spring:
   application:
     name: hooliss-user-provider
   datasource:
-    url: jdbc:mysql://192.168.31.156/t184watchitems?Unicode=true&characterEncoding=UTF-8&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
-    #    url: jdbc:mysql://192.168.110.132/t184watchitems?Unicode=true&characterEncoding=UTF-8&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
-    #    url: jdbc:mysql://192.168.199.151/t184watchitems?Unicode=true&characterEncoding=UTF-8&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
-    username: portal
-    password: ilovelerx
+    url: jdbc:mysql://139.186.71.175/t184watchitems?Unicode=true&characterEncoding=UTF-8&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
+    username: hdbxcx
+    password: hdb,.200428mysql
     hikari:
       minimum-idle: 3
       maximum-pool-size: 10
@@ -16,15 +14,13 @@ spring:
     nacos:
       discovery:
         #        server-addr: 139.186.71.175:8847
-        #        server-addr: 192.168.199.151:8848  #公司
-        server-addr: 192.168.31.156:8848  #家里
-        namespace: 1768ebf9-ae2c-492b-9d4a-e322b945820c
+        server-addr: 139.186.71.175:8848  #公司
+        namespace: d1dbb4e8-0a79-43dd-bcad-5c83607885ca
       config:
         #        server-addr: 139.186.71.175:8847
-        #        server-addr: 192.168.199.151:8848  #公司
-        server-addr: 192.168.31.156:8848  #家里
+        server-addr: 139.186.71.175:8848  #公司
         file-extension: yaml
-        namespace: 1768ebf9-ae2c-492b-9d4a-e322b945820c
+        namespace: d1dbb4e8-0a79-43dd-bcad-5c83607885ca
         group: DEFAULT_GROUP
   profiles:
     active: dev
