@@ -16,7 +16,6 @@
         <module>hooliss-zookeeper</module>
         <module>hooliss-gateway</module>
         <module>hooliss-nacos</module>
-        <module>hooliss-security</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
