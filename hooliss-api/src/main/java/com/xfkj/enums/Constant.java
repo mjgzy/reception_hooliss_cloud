@@ -19,6 +19,12 @@ public class Constant {
     public static final String FREEZEBLANCE="freeze_blance";
 //  平台积分
     public static final String INTEGRAL="integral";
+//新品
+    public static final String INDEX_NEW="index_new";
+//热销
+    public static final String INDEX_HOT="index_hot";
+//时尚商品
+    public static final String INDEX_FASHION="index_fashion";
 //  商家积分
     public static final String STOREINTEGRAL="store_integral";
     public static final String ADD="+";

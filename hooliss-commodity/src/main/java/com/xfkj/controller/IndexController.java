@@ -1,8 +1,11 @@
 package com.xfkj.controller;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
 import com.xfkj.entity.commodity.TbWatchs;
 import com.xfkj.entity.commodity.WatchGrade;
 import com.xfkj.enums.CommonEnum;
+import com.xfkj.enums.Constant;
 import com.xfkj.pojo.vo.brand.WatchBrandVo;
 import com.xfkj.service.TbWatchsService;
 import com.xfkj.service.WatchGradeService;
@@ -10,6 +13,7 @@ import com.xfkj.tools.Constants;
 import com.xfkj.tools.ResultBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,8 +50,8 @@ public class IndexController {
 		Map<String,Object> result = new HashMap<>();
 		//初始化分类
 		try {
-			List<WatchGrade> gradelist = gradeService.list();
-			result.put("gradeList", gradelist);
+			List<WatchGrade> gradeList = gradeService.list();
+			result.put("gradeList", gradeList);
 			//初始化男士(排行榜)
 			PageInfo<TbWatchs> dd = tbWatchsService.queryWatchByVolume(1, 10, 1, 10);
 			result.put(Constants.WATCHS_MAN_NAME,dd);
@@ -63,7 +67,21 @@ public class IndexController {
 		}
 		return new ResultBody<>(CommonEnum.SUCCESS,result);
 	}
+	@GetMapping("getWatchDataByType")
+	public ResultBody<PageInfo<TbWatchs>> getWatchDataByType(String type){
+		Page<TbWatchs> tbWatchsPage = new Page<>();
+		tbWatchsPage.setCurrent(1);
+		tbWatchsPage.setSize(10);
+		LambdaQueryWrapper<TbWatchs> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(TbWatchs::getWatchGradeId,1);
+		if(Constant.INDEX_NEW.equals(type)){
 
+		}else if(Constant.INDEX_FASHION.equals(type)){
+
+		}else if(Constant.INDEX_HOT.equals(type)) {
+
+		}
+	}
 	@RequestMapping("/products.xf")
 	public ResultBody<?> products(@RequestParam("currentno")Integer fotindex,
 							   @RequestParam("proindex")Integer proindex,

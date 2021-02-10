@@ -1,10 +1,12 @@
 package com.xfkj.mapper.commodity;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xfkj.entity.commodity.TbWatchs;
 import com.xfkj.entity.commodity.WatchImages;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -98,4 +100,8 @@ public interface TbWatchsMapper extends BaseMapper<TbWatchs> {
 	 */
 	List<TbWatchs> findSellWellTbWatchsByBrandId(Integer brand_id);
 
+	/**
+	 * 通过条件查询手表信息
+	 */
+	IPage<TbWatchs> findWatchByParam(IPage<TbWatchs> page, @Param("param")HashMap<String,Object> map);
 }

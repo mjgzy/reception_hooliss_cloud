@@ -1,5 +1,6 @@
 package com.xfkj.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 import com.xfkj.entity.commodity.TbWatchs;
@@ -8,6 +9,7 @@ import com.xfkj.entity.commodity.WatchParameter;
 import com.xfkj.entity.commodity.WatchType;
 import com.xfkj.exceptionHandling.XFException;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -111,4 +113,7 @@ public interface TbWatchsService extends IService<TbWatchs> {
 	 * @return:手表档次集合
 	 */
 	List<WatchType> queryWatchTypeAll() throws XFException;
+
+	IPage<TbWatchs> getWatchByParam(Integer size,
+									Integer current_no, HashMap<String,Object> param);
 }

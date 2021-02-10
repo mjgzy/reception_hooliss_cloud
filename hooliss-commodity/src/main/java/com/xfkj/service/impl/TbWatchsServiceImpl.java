@@ -1,5 +1,7 @@
 package com.xfkj.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -139,7 +142,12 @@ public class TbWatchsServiceImpl extends ServiceImpl<TbWatchsMapper,TbWatchs> im
         return true;
     }
 
-
+    @Override
+    public IPage<TbWatchs> getWatchByParam(Integer size, Integer current_no, HashMap<String, Object> param) {
+        IPage<TbWatchs> page = new Page<>(current_no,size);
+        tbWatchsMapper.findWatchByParam(size,current_no,param);
+        return null;
+    }
 
     @Override
     public List<WatchType> queryWatchTypeAll() {

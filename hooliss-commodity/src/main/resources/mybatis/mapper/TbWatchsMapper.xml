@@ -74,6 +74,19 @@
         </if>
         ORDER BY w.`watch_sell_count` DESC
     </select>
+    <select id="findWatchByParam" resultMap="tbwatchs">
+        <include refid="Tb_Watchs_list_2"></include>
+        <if test="param.brand_id!= null">
+            AND w.`brand_id`= #{param.brand_id}
+        </if>
+        <if test="param.watch_grade_id!= null">
+            AND w.`watch_grade_id`= #{param.watch_grade_id}
+        </if>
+        <if test="param.watch_type_id!= null">
+            AND w.`watch_type_id`= #{param.watch_type_id}
+        </if>
+        ORDER BY w.`watch_sell_count` DESC
+    </select>
 
     <select id="findWatchIdByParameterId" resultType="Integer">
         select watch_id from tb_watchs where wp_Id=#{parameterId}
