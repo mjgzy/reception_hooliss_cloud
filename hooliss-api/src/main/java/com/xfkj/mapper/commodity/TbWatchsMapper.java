@@ -1,7 +1,9 @@
 package com.xfkj.mapper.commodity;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.xfkj.entity.commodity.TbWatchs;
 import com.xfkj.entity.commodity.WatchImages;
 import org.apache.ibatis.annotations.Param;
@@ -101,7 +103,14 @@ public interface TbWatchsMapper extends BaseMapper<TbWatchs> {
 	List<TbWatchs> findSellWellTbWatchsByBrandId(Integer brand_id);
 
 	/**
-	 * 通过条件查询手表信息
+	 * 根据条件查询
+	 * 页面参照男士女士手表
+	 * @param map.grade_id: 性别id
+	 * @param map.brand_id :品牌id
+	 * @param map.watch_type_id :手表类别id
+	 * @param map.watch_name :手表名称,模糊查询
+	 * @param map.price_range_min :价格区间
+	 * @param map.condition:条件:1表示价格降序,2表示价格升序,3表示销量降序,4表示日期降序
 	 */
-	IPage<TbWatchs> findWatchByParam(IPage<TbWatchs> page, @Param("param")HashMap<String,Object> map);
+	IPage<TbWatchs> findWatchByParam(IPage<TbWatchs> page, @Param(Constants.WRAPPER) Wrapper<TbWatchs> wrapper);
 }

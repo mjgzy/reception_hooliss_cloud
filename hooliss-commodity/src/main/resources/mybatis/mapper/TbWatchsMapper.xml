@@ -11,7 +11,6 @@
 		LEFT JOIN `watch_type` t ON w.`watch_type_id` = t.`type_id`
 		LEFT JOIN `country` ct ON ct.`c_id` = b.`country_id`
 		LEFT JOIN watch_parameter wp ON wp.`watch_id`=w.`watch_id`
-		WHERE w.status = 1
     </sql>
     <resultMap id="tbwatchs" type="com.xfkj.entity.commodity.TbWatchs" >
         <id column="watch_id" property="watchId"/>
@@ -75,17 +74,40 @@
         ORDER BY w.`watch_sell_count` DESC
     </select>
     <select id="findWatchByParam" resultMap="tbwatchs">
-        <include refid="Tb_Watchs_list_2"></include>
-        <if test="param.brand_id!= null">
-            AND w.`brand_id`= #{param.brand_id}
-        </if>
-        <if test="param.watch_grade_id!= null">
-            AND w.`watch_grade_id`= #{param.watch_grade_id}
-        </if>
-        <if test="param.watch_type_id!= null">
-            AND w.`watch_type_id`= #{param.watch_type_id}
-        </if>
-        ORDER BY w.`watch_sell_count` DESC
+        <include refid="Tb_Watchs_list_2"></include> ${ew.customSqlSegment}
+<!--        <if test="param.brand_id!= null">-->
+<!--            AND w.`brand_id`= #{param.brand_id}-->
+<!--        </if>-->
+<!--        <if test="param.watch_grade_id!= null">-->
+<!--            AND w.`watch_grade_id`= #{param.watch_grade_id}-->
+<!--        </if>-->
+<!--        <if test="param.watch_type_id!= null">-->
+<!--            AND w.`watch_type_id`= #{param.watch_type_id}-->
+<!--        </if>-->
+<!--        <if test="param.watch_name!= null and param.watch_name!=''">-->
+<!--            AND w.`watch_name`like CONCAT('%',#{param.watch_name},'%');-->
+<!--        </if>-->
+<!--        <if test="param.price_range_min!=0 and param.price_range_max!=0">-->
+<!--            and w.`so_price` BETWEEN #{param.price_range_min} and #{param.price_range_max}-->
+<!--        </if>-->
+<!--        <if test="param.brand_id != null">-->
+<!--            and w.`brand_id` = #{param.brand_id}-->
+<!--        </if>-->
+<!--        <if test="param.watch_type_id!= null">-->
+<!--            AND w.`watch_type_id`= #{param.watch_type_id}-->
+<!--        </if>-->
+<!--        <if test="param.condition==1">-->
+<!--            order by w.`so_price` DESC-->
+<!--        </if>-->
+<!--        <if test="param.condition==2">-->
+<!--            order by w.`so_price` ASC-->
+<!--        </if>-->
+<!--        <if test="param.condition==3">-->
+<!--            order by w.watch_sell_count DESC-->
+<!--        </if>-->
+<!--        <if test="param.condition==4">-->
+<!--            order by w.watch_date DESC-->
+<!--        </if>-->
     </select>
 
     <select id="findWatchIdByParameterId" resultType="Integer">

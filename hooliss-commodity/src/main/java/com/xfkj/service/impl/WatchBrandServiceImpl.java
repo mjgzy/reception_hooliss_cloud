@@ -1,8 +1,6 @@
 package com.xfkj.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.xfkj.exceptionHandling.XFException;
 import com.xfkj.mapper.commodity.WatchBrandMapper;
 import com.xfkj.mapper.commodity.WatchSeriesMapper;
@@ -27,18 +25,6 @@ public class WatchBrandServiceImpl extends ServiceImpl<WatchBrandMapper,WatchBra
     @Resource
     private WatchSeriesMapper watchSeriesMapper;
 
-    @Override
-    public PageInfo<WatchBrand> findWatchBrandByTid(Integer t_id, Integer current_no, Integer page_size) {
-        PageHelper.startPage(current_no,page_size);
-        List<WatchBrand> list=watchBrandMapper.findWatchBrandByTid(t_id);
-        return new PageInfo<>(list);
-    }
-
-    @Override
-    public PageInfo<WatchBrand> findWatchBrand() {
-        List<WatchBrand> list = watchBrandMapper.findWatchBrand();
-        return new PageInfo<>(list);
-    }
 
     @Override
     public String queryNameById(Integer brand_id) {
@@ -48,29 +34,24 @@ public class WatchBrandServiceImpl extends ServiceImpl<WatchBrandMapper,WatchBra
         return null;
     }
 
-    @Override
-    public PageInfo<WatchSeries> findSeriesByBrand_brandId(Integer series_brand_id) {
-        List<WatchSeries> serieslist = watchSeriesMapper.findSeriesByBrand_brandId(series_brand_id);
-        return new PageInfo<>(serieslist);
-    }
 
-    //,结果为空时不使用缓存,使用参数性别id作为key存入缓存
-    @Cacheable(cacheNames = "seriesByBrandId",unless = "#result==null")
-    @Override
-    public PageInfo<WatchSeries> findSeriesByBrand_Id(Integer series_brand_id, Integer current_no, Integer page_size) {
-        System.err.println("findSeriesByBrand_Id进入业务层");
-        PageHelper.startPage(current_no,page_size);
-        List<WatchSeries> list=watchSeriesMapper.findSeriesByBrand_Id(series_brand_id);
-        System.err.println("findSeriesByBrand_Id进入持久层");
-        return new PageInfo<>(list);
-    }
+//    //,结果为空时不使用缓存,使用参数性别id作为key存入缓存
+//    @Cacheable(cacheNames = "seriesByBrandId",unless = "#result==null")
+//    @Override
+//    public PageInfo<WatchSeries> findSeriesByBrand_Id(Integer series_brand_id, Integer current_no, Integer page_size) {
+//        System.err.println("findSeriesByBrand_Id进入业务层");
+//        PageHelper.startPage(current_no,page_size);
+//        List<WatchSeries> list=watchSeriesMapper.findSeriesByBrand_Id(series_brand_id);
+//        System.err.println("findSeriesByBrand_Id进入持久层");
+//        return new PageInfo<>(list);
+//    }
 
-    @Override
-    public PageInfo<WatchSeries> findSeriesByName(String series_name, Integer current_no, Integer page_size) {
-        PageHelper.startPage(current_no,page_size);
-        List<WatchSeries> list=watchSeriesMapper.findSeriesByName(series_name);
-        return new PageInfo<>(list);
-    }
+//    @Override
+//    public PageInfo<WatchSeries> findSeriesByName(String series_name, Integer current_no, Integer page_size) {
+//        PageHelper.startPage(current_no,page_size);
+//        List<WatchSeries> list=watchSeriesMapper.findSeriesByName(series_name);
+//        return new PageInfo<>(list);
+//    }
 
     @Override
     public Integer countSalesVolume(Integer series_brand_id) {

@@ -1,11 +1,12 @@
 package com.xfkj.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.pagehelper.PageInfo;
+import com.xfkj.entity.commodity.TbWatchs;
 import com.xfkj.entity.order.WatchOrder;
 import com.xfkj.exceptionHandling.XFException;
-import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,10 +21,10 @@ public interface OrderService extends IService<WatchOrder> {
      * @param order_status_id:订单状态表主键id:筛选订单状态,全部状态则不要此条件,可选参数
      * @param order_id:订单id,模糊查询,可选参数
      */
-    PageInfo<WatchOrder> findWatchByCondition(
-            Integer u_id, Integer date_type,
-            Integer order_status_id,
-            String order_id, Integer current_no, Integer page_size) throws XFException;
+//    PageInfo<WatchOrder> findWatchByCondition(
+//            Integer u_id, Integer date_type,
+//            Integer order_status_id,
+//            String order_id, Integer current_no, Integer page_size) throws XFException;
 
     /**
      * 通过订单id查询订单
@@ -61,4 +62,13 @@ public interface OrderService extends IService<WatchOrder> {
      * @param order_id:订单号
      */
     Boolean delOrderById(String order_id);
+
+    /**
+     * 查询订单
+     * @param current_no:当前页
+     * @param size:页数大小
+     * @param param:参数
+     */
+    IPage<WatchOrder> getOrderByParam(Integer current_no,
+                                    Integer size, HashMap<String,Object> param) throws XFException;
 }

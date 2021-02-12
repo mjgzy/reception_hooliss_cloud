@@ -2,7 +2,6 @@ package com.xfkj.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.pagehelper.PageInfo;
 import com.xfkj.entity.commodity.TbWatchs;
 import com.xfkj.entity.commodity.WatchImages;
 import com.xfkj.entity.commodity.WatchParameter;
@@ -22,9 +21,6 @@ public interface TbWatchsService extends IService<TbWatchs> {
 	 * 上新推荐,根据grade_id,按照日期降序
 	 * @param brand_id:grade表性别id
 	 */
-	PageInfo<TbWatchs> queryWatchByDate(Integer brand_id,
-                                        Integer current_no,
-                                        Integer page_size) throws XFException;
 
 
 
@@ -32,27 +28,16 @@ public interface TbWatchsService extends IService<TbWatchs> {
 	 * 通过品牌id查询热销排行,以销量降序
 	 * @param brand_id:品牌名
 	 */
-	PageInfo<TbWatchs> findWatchByBrandId(Integer brand_id,
-                                          Integer current_no,
-                                          Integer page_size) throws XFException;
 	/**
 	 * 根据男女士和手表档次查询手表,即首页的男士女士推荐
 	 * @param grade_id:性别id
 	 * @param type_id:档次id
 	 */
-	PageInfo<TbWatchs> findWatchByGradeAndType(
-            Integer grade_id, Integer type_id, Integer current_no,
-            Integer page_size) throws XFException;
 	/**
 	 * 根据男女士和手表档次查询手表,即首页的男士女士推荐
 	 * @param grade_id:性别id
 	 * @param price_range_min:价格区间
 	 */
-	PageInfo<TbWatchs> findWatchByKeyWord(
-            String key_word, Integer grade_id, Integer price_range_min,
-            Integer price_range_max,
-            Integer brand_id, Integer condition, Integer current_no,
-            Integer page_size) throws XFException;
 	/**
 	 * 通过手表编号获得单个手表信息
 	 * @param w_id:手表编号
@@ -81,11 +66,6 @@ public interface TbWatchsService extends IService<TbWatchs> {
 	 * @param page_size		分页显示的数量
 	 * @return
 	 */
-	PageInfo<TbWatchs> queryWatchByinfo(Integer grade_id, Integer brand_id,
-                                        Integer series_id, String watch_name, Integer watch_priceMin,
-                                        Integer watch_priceMax,
-                                        Integer condition, Integer current_no,
-                                        Integer page_size) throws XFException;
 
 
 
@@ -94,10 +74,6 @@ public interface TbWatchsService extends IService<TbWatchs> {
 	 * @param grade_id:性别表主键
 	 * @param size:要显示的手表数量
 	 */
-	PageInfo<TbWatchs>  queryWatchByVolume(Integer grade_id,
-                                           Integer size,
-                                           Integer current_no,
-                                           Integer page_size) throws XFException;
 
 	/**
 	 * 通过手表id查询手表参数
@@ -114,6 +90,6 @@ public interface TbWatchsService extends IService<TbWatchs> {
 	 */
 	List<WatchType> queryWatchTypeAll() throws XFException;
 
-	IPage<TbWatchs> getWatchByParam(Integer size,
-									Integer current_no, HashMap<String,Object> param);
+	IPage<TbWatchs> getWatchByParam(Integer current_no,
+									Integer size, HashMap<String,Object> param) throws Exception;
 }

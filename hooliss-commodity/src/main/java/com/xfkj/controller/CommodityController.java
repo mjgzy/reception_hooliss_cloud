@@ -1,11 +1,8 @@
 package com.xfkj.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.xfkj.entity.brand.WatchBrand;
 import com.xfkj.entity.commodity.TbWatchs;
 import com.xfkj.enums.CommonEnum;
-import com.xfkj.service.EsTbWatchsService;
-import com.xfkj.service.WatchBrandService;
 import com.xfkj.service.EsTbWatchsService;
 import com.xfkj.service.WatchBrandService;
 import com.xfkj.tools.Constants;
@@ -18,8 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -121,7 +118,7 @@ public class CommodityController {
 		}
 		result.put(Constants.WATCHS_NAME, tbWatchs);
 //		加载所有品牌信息
-		PageInfo<WatchBrand> watchBrand = watchBrandService.findWatchBrand();
+		List<WatchBrand> watchBrand = watchBrandService.list();
 		result.put(Constants.WATCH_BRAND_NAME, watchBrand);
 		return new ResultBody<>(CommonEnum.SUCCESS,result);
 	}

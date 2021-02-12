@@ -1,8 +1,8 @@
 package com.xfkj.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.pagehelper.PageInfo;
 import com.xfkj.config.rabbit.MqSender;
 import com.xfkj.enums.CommonEnum;
 import com.xfkj.exceptionHandling.XFException;
@@ -10,7 +10,6 @@ import com.xfkj.feign.commodity.WatchDetailsServiceFeign;
 import com.xfkj.entity.commodity.TbWatchs;
 import com.xfkj.entity.order.WatchOrder;
 import com.xfkj.entity.user.Wuser;
-import com.xfkj.feign.user.FeignUserService;
 import com.xfkj.service.OrderService;
 import com.xfkj.service.ShoppingCartService;
 import com.xfkj.tools.Constants;
@@ -66,11 +65,16 @@ public class OrderController {
 							@PathVariable("user_id")Integer user_id,
 							@PathVariable("current_no")Integer current_no,
 							@PathVariable("page_size")Integer page_size){
+		HashMap<String,Object> param = new HashMap<>();
 		Integer date = Integer.valueOf(date_type);
 		Integer status_id =Integer.valueOf(order_status_id);
-		PageInfo<WatchOrder> info;
+		param.put("order_status_id",status_id);
+		param.put("order_id",order_id);
+		param.put("o_uid",user_id);
+		param.put("order_date",date);
+		IPage<WatchOrder> info;
 		try {
-			info = orderservice.findWatchByCondition(user_id,date,status_id,order_id,current_no,page_size);
+			info = orderservice.getOrderByParam(current_no,page_size,param);
 		} catch (XFException e) {
 			e.printStackTrace();
 			return new ResultBody<>(e.getErrorCode(),e.getMessage() );

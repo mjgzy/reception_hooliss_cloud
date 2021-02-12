@@ -1,10 +1,9 @@
 package com.xfkj.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.xfkj.exceptionHandling.XFException;
 import com.xfkj.mapper.commodity.TbWatchsMapper;
 import com.xfkj.mapper.commodity.WatchParameterMapper;
@@ -18,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TbWatchsServiceImpl extends ServiceImpl<TbWatchsMapper,TbWatchs> implements TbWatchsService {
@@ -37,48 +35,8 @@ public class TbWatchsServiceImpl extends ServiceImpl<TbWatchsMapper,TbWatchs> im
     //,结果为空时不使用缓存,使用参数性别id作为key存入缓存
 
 
-    /**
-     * store
-     *      watchsByDate
-     */
-    @Cacheable(cacheNames = "watchsByDate",unless = "#result==null")
-    @Override
-    public PageInfo<TbWatchs> queryWatchByDate(Integer grade_id, Integer current_no, Integer page_size) throws XFException {
-        if (ObjectUtils.isEmpty(grade_id)){
-            throw new XFException(400,grade_id+" is null!" );
-        }
-        PageHelper.startPage(current_no,page_size);
-        List<TbWatchs> list = tbWatchsMapper.findWatchByDate(grade_id);
-        return new PageInfo<TbWatchs>(list);
-    }
 
-    @Override
-    public PageInfo<TbWatchs> findWatchByBrandId(Integer brand_id, Integer current_no, Integer page_size) throws XFException  {
-        if (ObjectUtils.isEmpty(brand_id)){
-            throw new XFException(400,brand_id+" is null!" );
-        }
-        PageHelper.startPage(current_no,page_size);
-        List<TbWatchs> list = null;
-            list = tbWatchsMapper.findWatchByBrandId(brand_id);
-        return new PageInfo<>(list);
-    }
 
-    @Override
-    public PageInfo<TbWatchs> findWatchByGradeAndType(Integer grade_id, Integer type_id, Integer current_no, Integer page_size) throws  XFException {
-        PageHelper.startPage(current_no,page_size);
-        List<TbWatchs> list = tbWatchsMapper.findWatchByGradeAndType(grade_id,type_id);
-        return new PageInfo<>(list);
-    }
-
-    @Override
-    public PageInfo<TbWatchs> findWatchByKeyWord(
-            String key_word, Integer grade_id, Integer price_range_min, Integer price_range_max,
-            Integer brand_id, Integer condition, Integer current_no, Integer page_size) throws XFException{
-        PageHelper.startPage(current_no,page_size);
-        List<TbWatchs> list = tbWatchsMapper.findWatchByKeyWord(key_word, grade_id, price_range_min,price_range_max
-                ,brand_id  ,condition );
-        return new PageInfo<TbWatchs>(list);
-    }
 
     @Override
     public TbWatchs queryWatchById(Integer w_id) throws XFException {
@@ -99,26 +57,7 @@ public class TbWatchsServiceImpl extends ServiceImpl<TbWatchsMapper,TbWatchs> im
 
 
 
-    //,结果为空时不使用缓存,使用参数性别id作为key存入缓存
-    @Cacheable(cacheNames = "watchsByInfo",unless = "#result==null")
-    @Override
-    public PageInfo<TbWatchs> queryWatchByinfo(
-            Integer grade_id, Integer brand_id,Integer series_id,
-            String watch_name, Integer watch_priceMin,Integer watch_priceMax,
-            Integer condition, Integer current_no, Integer page_size) throws XFException {
-        PageHelper.startPage(current_no,page_size);
-        List<TbWatchs> list = tbWatchsMapper.findWatchByinfo(
-                grade_id,brand_id,series_id, watch_name, watch_priceMin, watch_priceMax,condition);
-        return new PageInfo<TbWatchs>(list);
-    }
 
-    @Override
-    @Cacheable(cacheNames = "watchByVolume",unless = "#result==null")
-    public PageInfo<TbWatchs> queryWatchByVolume(Integer grade_id, Integer size, Integer current_no, Integer page_size) {
-        PageHelper.startPage(current_no,page_size);
-        List<TbWatchs> list = tbWatchsMapper.findWatchByVolume(grade_id);
-        return new PageInfo<TbWatchs>(list);
-    }
 
     @Override
     public WatchParameter findWatchParameter(Integer watch_id) throws XFException{
@@ -143,10 +82,39 @@ public class TbWatchsServiceImpl extends ServiceImpl<TbWatchsMapper,TbWatchs> im
     }
 
     @Override
-    public IPage<TbWatchs> getWatchByParam(Integer size, Integer current_no, HashMap<String, Object> param) {
+    public IPage<TbWatchs> getWatchByParam(Integer current_no, Integer size, HashMap<String, Object> param) throws Exception{
+        param.put("status",1);
         IPage<TbWatchs> page = new Page<>(current_no,size);
-        tbWatchsMapper.findWatchByParam(size,current_no,param);
-        return null;
+        QueryWrapper<TbWatchs> wrapper = new QueryWrapper<>();
+        Set<Map.Entry<String, Object>> entries = param.entrySet();
+        Iterator<Map.Entry<String, Object>> iterator = entries.iterator();
+        while(iterator.hasNext()){
+            Map.Entry<String, Object> next = iterator.next();
+            if(next.getKey().equals("watch_name")){
+                wrapper.like("w.watch_name",next.getValue());
+            }else if(next.getKey().equals("price_range_min")){
+                wrapper.between("w.price_range_min",next.getValue(),param.get("price_range_max"));
+            }else if(next.getKey().equals("condition")){
+                  int condition = (int)next.getValue();
+                  if(condition==1){
+                      wrapper.orderByDesc("w.so_price");
+                  }else if(condition==2){
+                      wrapper.orderByAsc("w.so_price");
+                  }else if(condition==3){
+                      wrapper.orderByDesc("w.watch_sell_count");
+                  }else if(condition==4){
+                      wrapper.orderByDesc("w.watch_date");
+                  }else if(condition==5){
+                      wrapper.orderByDesc("w.watch_price");
+                  }else{
+                      wrapper.orderByDesc("w.watch_id");
+                  }
+            }
+            else{
+                wrapper.eq("w."+next.getKey(),next.getValue());
+            }
+        }
+        return tbWatchsMapper.findWatchByParam(page,wrapper);
     }
 
     @Override

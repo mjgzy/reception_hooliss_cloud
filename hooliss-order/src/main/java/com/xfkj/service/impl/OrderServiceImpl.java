@@ -1,8 +1,9 @@
 package com.xfkj.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.xfkj.exceptionHandling.XFException;
 import com.xfkj.mapper.order.StockPileMapper;
 import com.xfkj.mapper.order.WatchOrderMapper;
@@ -17,8 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Transactional(propagation=Propagation.REQUIRED)	//开启事务
 @Service
@@ -32,20 +32,18 @@ public class OrderServiceImpl extends ServiceImpl<WatchOrderMapper,WatchOrder> i
     private StockPileMapper stockPileMapper;
 
 
-    @Transactional(propagation = Propagation.NOT_SUPPORTED)  //查询不需要事物
-    public PageInfo<WatchOrder> findWatchByCondition(
-            Integer u_id, Integer date_type, Integer order_status_id, String order_id
-            ,Integer current_no,Integer page_size) {
-        if(u_id==null||u_id==0){
-            throw new XFException(400,"用户id不得为空!");
-        }
-        int pageNum=(current_no/10)+1;
-        System.err.println("pageNum:"+pageNum);
-        System.err.println("current_no:"+current_no);
-        PageHelper.startPage(pageNum,page_size);
-        List<WatchOrder> ww = watchOrderMapper.findWatchByCondition(u_id,date_type,order_status_id,order_id);
-        return new PageInfo<WatchOrder>(ww);
-    }
+//    @Transactional(propagation = Propagation.NOT_SUPPORTED)  //查询不需要事物
+//    public PageInfo<WatchOrder> findWatchByCondition(
+//            Integer u_id, Integer date_type, Integer order_status_id, String order_id
+//            ,Integer current_no,Integer page_size) {
+//        if(u_id==null||u_id==0){
+//            throw new XFException(400,"用户id不得为空!");
+//        }
+//        int pageNum=(current_no/10)+1;
+//        PageHelper.startPage(pageNum,page_size);
+//        List<WatchOrder> ww = watchOrderMapper.findWatchByCondition(u_id,date_type,order_status_id,order_id);
+//        return new PageInfo<WatchOrder>(ww);
+//    }
 
     @Override
     public boolean generateOrder(WatchOrder watchOrder) throws XFException {
@@ -101,5 +99,23 @@ public class OrderServiceImpl extends ServiceImpl<WatchOrderMapper,WatchOrder> i
     @Override
     public Boolean delOrderById(String order_id) {
         return watchOrderMapper.delOrderById(order_id);
+    }
+
+    @Override
+    public IPage<WatchOrder> getOrderByParam(Integer current_no, Integer size, HashMap<String, Object> param) throws XFException {
+        IPage<WatchOrder> page = new Page<>(current_no,size);
+        QueryWrapper<WatchOrder> wrapper = new QueryWrapper<>();
+        Set<Map.Entry<String, Object>> entries = param.entrySet();
+        Iterator<Map.Entry<String, Object>> iterator = entries.iterator();
+        while(iterator.hasNext()) {
+            Map.Entry<String, Object> next = iterator.next();
+            wrapper.eq(next.getKey(),next.getValue());
+        }
+        if(current_no!=-1){
+            return watchOrderMapper.selectPage(page,wrapper);
+        }else{
+            page.setRecords(watchOrderMapper.selectList(wrapper));
+            return page;
+        }
     }
 }

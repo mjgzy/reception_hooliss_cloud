@@ -1,6 +1,5 @@
 package com.xfkj.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.xfkj.enums.CommonEnum;
 import com.xfkj.mapper.commodity.TbWatchsMapper;
 import com.xfkj.entity.brand.WatchBrand;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
@@ -63,9 +61,8 @@ public class EsController {
     }
     @RequestMapping("updateSellWellTbWatchs")
     public void abc(){
-        System.err.println("定时任务执行");
-        PageInfo<WatchBrand> watchBrand = watchBrandService.findWatchBrand();
-        watchBrand.getList().forEach(item->{
+        List<WatchBrand> watchBrand = watchBrandService.list();
+        watchBrand.forEach(item->{
             List<TbWatchs> sellWellTbWatchsByBrandId = tbWatchsMapper.findSellWellTbWatchsByBrandId(item.getBrandId());
             redisUtils.hset(Constants.SELL_WELL_TBWATCHS_NAME, item.getBrandId().toString(), sellWellTbWatchsByBrandId);
         });
