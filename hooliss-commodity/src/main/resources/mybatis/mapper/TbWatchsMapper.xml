@@ -2,15 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xfkj.mapper.commodity.TbWatchsMapper">
     <sql id="Tb_Watchs_list_2">
-           SELECT w.`watch_id`,w.`watch_name`,w.series_id,w.`special_offer`,w.`so_price`,w.watch_grade_id,w.examine_status,w.status,
-		g.`grade_name`,w.`watch_descript`,w.`watch_price`,w.`watch_image`,date_format(w.`watch_date`,'%Y-%m-%d %H:%i:%s') watch_date,wp.`parameter_id` wp_Id,
-		w.`watch_sell_count`,w.brand_id wbrandId,w.watch_type_id,b.`brand_name`,t.`type_name`,ct.`c_name` ctname
+        SELECT
+        w.`watch_id`,w.`watch_name`,w.series_id,w.`special_offer`,w.`so_price`,w.watch_grade_id,w.examine_status,w.status,w.`watch_descript`
+		,w.`watch_price`,w.`watch_image`,date_format(w.`watch_date`,'%Y-%m-%d %H:%i:%s') watch_date,
+		w.`watch_sell_count`,w.brand_id wbrandId,w.watch_type_id,
+		g.`grade_name`,
+		b.`brand_name`,b.`b_logo`,b.`brand_code`,
+		t.`type_name`,
+		ct.`c_name` ctname,
+		wp.`watch_id` p_watch_id,
+		`parameter_id`,`w_case`,`shell_color`,`color`,`style`,`listing_date`,`movement_type_no`,`movement_type`,`thickness`,`crown`,`band_material`,`special_functions`,`parameter_name`,`width`,`watch_ear`,`specular_shading`,`waterproof`
 		FROM `tb_watchs` w
 		LEFT JOIN `watch_brand` b ON b.`brand_id` = w.`brand_id`
 		LEFT JOIN `watch_grade` g ON w.`watch_grade_id` = g.`grade_id`
 		LEFT JOIN `watch_type` t ON w.`watch_type_id` = t.`type_id`
 		LEFT JOIN `country` ct ON ct.`c_id` = b.`country_id`
 		LEFT JOIN watch_parameter wp ON wp.`watch_id`=w.`watch_id`
+		WHERE 1=1
     </sql>
     <resultMap id="tbwatchs" type="com.xfkj.entity.commodity.TbWatchs" >
         <id column="watch_id" property="watchId"/>
@@ -24,18 +32,16 @@
         <result column="so_price" property="soPrice"/>
         <result column="examine_status" property="examineStatus"/>
         <result column="status" property="status"/>
-        <result column="wp_Id" property="wpId"/>
         <result column="series_id" property="seriesId"/>
         <result column="wbrandId" property="brandId"/>
         <!--映射品牌表-->
         <association property="watchBrand" javaType="com.xfkj.pojo.vo.brand.WatchBrandVo">
             <id column="wbrandId" property="brandId"/>
             <result column="brand_name" property="brandName" />
-            <result column="brand_name" property="bLogo" />
-            <result column="brand_name" property="brandName" />
-            <!--映射城市表-->
+            <result column="b_logo" property="bLogo" />
+            <result column="brand_code" property="brandCode" />
             <association property="country" javaType="com.xfkj.pojo.vo.brand.CountryVo">
-                <result column="ctname" property="cName"/>
+                <result column="ctname" property="cName" />
             </association>
 
         </association>
@@ -48,6 +54,27 @@
         <association property="watchType" javaType="com.xfkj.entity.commodity.WatchType">
             <id column="watch_type_id" property="typeId"/>
             <result column="type_name" property="typeName"/>
+        </association>
+        <!--映射手表参数表-->
+        <association property="watchParameter" javaType="com.xfkj.entity.commodity.WatchParameter">
+            <id column="parameter_id" property="parameterId"/>
+            <result column="p_watch_id" property="watchId"/>
+            <result column="w_case" property="wCase"/>
+            <result column="shell_color" property="shellColor"/>
+            <result column="color" property="color"/>
+            <result column="style" property="style"/>
+            <result column="listing_date" property="listingDate"/>
+            <result column="movement_type_no" property="movementTypeNo"/>
+            <result column="movement_type" property="movementType"/>
+            <result column="thickness" property="thickness"/>
+            <result column="crown" property="crown"/>
+            <result column="band_material" property="bandMaterial"/>
+            <result column="special_functions" property="specialFunctions"/>
+            <result column="parameter_name" property="parameterName"/>
+            <result column="width" property="width"/>
+            <result column="watch_ear" property="watchEar"/>
+            <result column="specular_shading" property="specularShading"/>
+            <result column="waterproof" property="waterproof"/>
         </association>
 
     </resultMap>
@@ -155,9 +182,7 @@
 
     <select id="findWatchById" resultMap="tbwatchs">
         <include refid="Tb_Watchs_list_2"></include>
-        <if test="wId != null">
-            AND w.`watch_id` = #{wId}
-        </if>
+            AND w.`watch_id` = #{_parameter}
     </select>
 
     <select id="findWatchByinfo" resultMap="tbwatchs">

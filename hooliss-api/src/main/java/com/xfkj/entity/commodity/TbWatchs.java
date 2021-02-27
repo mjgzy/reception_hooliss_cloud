@@ -1,5 +1,8 @@
 package com.xfkj.entity.commodity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.xfkj.entity.brand.WatchBrand;
 import com.xfkj.entity.brand.WatchSeries;
@@ -19,6 +22,7 @@ import java.math.BigDecimal;
 public class TbWatchs implements Serializable {
 
 	@Id
+	@TableId(value = "watch_id",type = IdType.AUTO)
 	private Integer watchId;
 	@Field(type = FieldType.Text, analyzer = "ik_max_word")
 	private String watchName;		//手表名
@@ -44,9 +48,6 @@ public class TbWatchs implements Serializable {
 
 	private int status;			//启用状态
 
-	@Field(type = FieldType.Integer)
-	private Integer wpId;		//手表参数id
-
 	@Field(type = FieldType.Integer,store=true)
 	private Integer seriesId;		//手表系列id
 
@@ -60,17 +61,22 @@ public class TbWatchs implements Serializable {
 	private Integer watchTypeId;		//档次id
 
 	@Field(type = FieldType.Object)
+	@TableField(exist = false)
 	private WatchParameter watchParameter; //手表参数对象,通过方法获取,无需高级映射
 
 	@Field(type = FieldType.Object)
+	@TableField(exist = false)
 	private WatchSeries watchSeries;       //手表系列对象,通过方法获取,无需高级映射
 
 	@Field(type = FieldType.Object)
+	@TableField(exist = false)
 	private WatchBrand watchBrand;		//品牌对象,通过方法获取,无需高级映射
 
 	@Field(type = FieldType.Object)
+	@TableField(exist = false)
 	private WatchGrade watchGrade;		//手表性别对象
 
 	@Field(type = FieldType.Object)
+	@TableField(exist = false)
 	private WatchType watchType;		//手表档次对象
 }

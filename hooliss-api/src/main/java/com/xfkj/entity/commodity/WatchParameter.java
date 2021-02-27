@@ -1,5 +1,7 @@
 package com.xfkj.entity.commodity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -12,7 +14,10 @@ import java.io.Serializable;
 @TableName("watch_parameter")
 public class WatchParameter implements Serializable {
 
+    @TableId(value = "parameter_id",type = IdType.AUTO)
     private Integer parameterId;
+
+    private Integer watchId;  //手表主键id
 
     private String wCase;  	//外壳材质+
 

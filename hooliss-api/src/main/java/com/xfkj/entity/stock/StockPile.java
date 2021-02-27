@@ -1,5 +1,6 @@
 package com.xfkj.entity.stock;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ import java.util.Date;
 @Data
 @TableName("stock_pile")
 public class StockPile {
+    @TableId(value = "id")
     private Integer id; //主键
 
     private Integer watchId;   //手表id

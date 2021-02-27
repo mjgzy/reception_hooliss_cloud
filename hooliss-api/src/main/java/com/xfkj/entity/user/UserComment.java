@@ -1,6 +1,7 @@
 package com.xfkj.entity.user;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -21,6 +22,7 @@ public class UserComment implements Serializable  {
 	 */
 	private static final long serialVersionUID = 6390788460047678576L;
 
+	@TableId(value = "id")
 	private Integer id;
 	
 	private Integer userId;

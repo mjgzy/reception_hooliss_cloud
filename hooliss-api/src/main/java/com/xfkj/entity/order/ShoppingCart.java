@@ -1,6 +1,7 @@
 package com.xfkj.entity.order;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.xfkj.entity.commodity.TbWatchs;
 import com.xfkj.entity.user.Wuser;
@@ -15,6 +16,7 @@ import java.io.Serializable;
 @TableName("shopping_cart")
 public class ShoppingCart implements Serializable {
 
+	@TableId(value = "id")
 	 	private Integer id;
 
 	 	private Integer uId;

@@ -1,6 +1,7 @@
 package com.xfkj.entity.brand;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
 @TableName(value="watch_brand")
 public class WatchBrand implements Serializable {
 
+    @TableId(value = "brand_id")
     private Integer brandId;		//品牌id
 
     private String brandName;	//品牌名

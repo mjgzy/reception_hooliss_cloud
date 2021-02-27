@@ -1,6 +1,7 @@
 package com.xfkj.entity.brand;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -13,7 +14,7 @@ import java.io.Serializable;
 @TableName(value="country")
 public class Country implements Serializable {
 
-    @TableField(value = "c_id")
+    @TableId(value = "c_id")
     private Integer cId;
     @TableField(value = "c_name")
     private String cName;

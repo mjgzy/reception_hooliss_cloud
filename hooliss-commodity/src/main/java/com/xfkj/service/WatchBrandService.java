@@ -1,13 +1,16 @@
 package com.xfkj.service;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xfkj.entity.brand.WatchBrand;
 import com.xfkj.entity.brand.WatchSeries;
 import com.xfkj.entity.commodity.Style;
+import com.xfkj.entity.commodity.TbWatchs;
 import com.xfkj.exceptionHandling.XFException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -57,14 +60,11 @@ public interface WatchBrandService extends IService<WatchBrand> {
     String queryNameById(Integer brand_id) throws XFException;
 
     /**
-     * 通过品牌id查找品牌
-     * @param brand_id:
+     * 通过条件查询品牌
+     * @param current_no:当前页
+     * @param size:页数大小
+     * @param param:条件
      */
-    WatchBrand queryBrandById(Integer brand_id) throws XFException;
-
-    /**
-     * 通过系列id查询id
-     * @param series_id:
-     */
-    WatchSeries querySeriesById(Integer series_id) throws XFException;
+    IPage<WatchBrand> getWatchBrandByParam(Integer current_no,
+                                    Integer size, HashMap<String,Object> param) throws Exception;
 }

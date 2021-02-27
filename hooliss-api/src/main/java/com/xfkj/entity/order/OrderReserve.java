@@ -1,5 +1,6 @@
 package com.xfkj.entity.order;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @TableName("order_reserve")
 public class OrderReserve implements Serializable {
+
+    @TableId(value = "id")
     Integer id;
     String orderId;   //订单id
     Integer userIntegral;  //用户积分

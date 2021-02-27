@@ -87,7 +87,7 @@ public class BrandController {
         //获取该品牌下的品牌名和logo
         try {
             series_brand_id = Integer.valueOf(str_series_brand_id);
-            WatchBrand brand =  watchBrandService.queryBrandById(series_brand_id);
+            WatchBrand brand =  watchBrandService.getById(series_brand_id);
             WatchBrandVo watchBrandVo = BeanUtil.toBean(brand, WatchBrandVo.class);
             result.put(Constants.WATCH_BRAND_NAME,watchBrandVo);
             //获取该品牌下的总销量

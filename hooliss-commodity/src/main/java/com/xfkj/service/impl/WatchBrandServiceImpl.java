@@ -1,6 +1,10 @@
 package com.xfkj.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xfkj.entity.commodity.TbWatchs;
 import com.xfkj.exceptionHandling.XFException;
 import com.xfkj.mapper.commodity.WatchBrandMapper;
 import com.xfkj.mapper.commodity.WatchSeriesMapper;
@@ -14,7 +18,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 
 @Component
 @Transactional(propagation= Propagation.REQUIRED)
@@ -67,26 +71,23 @@ public class WatchBrandServiceImpl extends ServiceImpl<WatchBrandMapper,WatchBra
         }
         return null;
     }
-    @Cacheable(value = "brand",unless = "#result==null")
-    @Override
-    public WatchBrand queryBrandById(Integer brand_id) throws XFException {
-        WatchBrand brandById = watchBrandMapper.findBrandById(brand_id);
-        if (brandById==null||brand_id==0){
-            throw new XFException(400,brand_id+" is null!" );
-        }
-        return  brandById;
 
-    }
 
     @Override
-    public WatchSeries querySeriesById(Integer series_id)throws XFException {
-        if (series_id!=null && series_id!=0){
-            WatchSeries seriesById = watchSeriesMapper.findSeriesById(series_id);
-            if (seriesById==null){
-                throw new XFException(500,"手表系列信息为空!");
-            }
-            return seriesById;
+    public IPage<WatchBrand> getWatchBrandByParam(Integer current_no, Integer size, HashMap<String, Object> param) throws Exception {
+        IPage<WatchBrand> page = new Page<>(current_no,size);
+        QueryWrapper<WatchBrand> wrapper = new QueryWrapper<>();
+        Set<Map.Entry<String, Object>> entries = param.entrySet();
+        Iterator<Map.Entry<String, Object>> iterator = entries.iterator();
+        while(iterator.hasNext()){
+            Map.Entry<String, Object> next = iterator.next();
+            wrapper.eq(next.getKey(),next.getValue());
         }
-        return null;
+        if(current_no==-1){
+            page.setRecords(watchBrandMapper.selectList(wrapper));
+        }else{
+            page = watchBrandMapper.selectPage(page,wrapper);
+        }
+        return page;
     }
 }

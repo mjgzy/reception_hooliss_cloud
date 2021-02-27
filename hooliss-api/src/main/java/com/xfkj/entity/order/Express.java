@@ -1,5 +1,6 @@
 package com.xfkj.entity.order;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -19,6 +20,7 @@ public class Express implements Serializable  {
 	 */
 	private static final long serialVersionUID = 3478668479633620494L;
 
+	@TableId(value = "id")
 	private Integer id;
 
 	private Integer orderId;	//订单id

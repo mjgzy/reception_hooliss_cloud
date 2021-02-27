@@ -2,6 +2,7 @@ package com.xfkj.mapper.commodity;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xfkj.entity.commodity.WatchParameter;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

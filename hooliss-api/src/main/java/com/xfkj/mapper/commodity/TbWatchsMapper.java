@@ -64,7 +64,7 @@ public interface TbWatchsMapper extends BaseMapper<TbWatchs> {
 	 * 通过手表编号获得单个手表信息
 	 * @param w_id:手表编号
 	 */
-	TbWatchs findWatchById(@Param("wId") Integer w_id);
+	TbWatchs findWatchById(Integer w_id);
 
 	/**
 	 * e

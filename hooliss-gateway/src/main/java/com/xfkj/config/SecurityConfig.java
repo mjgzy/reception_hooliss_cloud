@@ -37,7 +37,7 @@ public class SecurityConfig {
     //security的鉴权排除的url列表
     private static final String[] excludedAuthPages = {
             "/index-provider/**","/es/**","/brand-provider/**","/watch-provider/**/*",
-            "/auth/logout",
+            "/auth/logout","/login/**","/user-provider/verify",
             "/health",
             "/api/socket/**"
     };

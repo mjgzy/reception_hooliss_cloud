@@ -1,8 +1,10 @@
 package com.xfkj.entity.user;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.Serializable;
 
@@ -13,6 +15,7 @@ import java.io.Serializable;
 @TableName("wuser")
 public class Wuser  implements Serializable {
 
+    @TableId(value = "u_id")
     private Integer uId;
 
     private String uName;
@@ -40,5 +43,9 @@ public class Wuser  implements Serializable {
     private String createDate;			//创建日期
     @TableField(exist = false)
     private WatchVip watchVip;        //用户会员对象
+
+    public static void main(String[] args) {
+        System.err.println(new BCryptPasswordEncoder().encode("mj296233"));
+    }
 
 }

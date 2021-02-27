@@ -1,5 +1,6 @@
 package com.xfkj.entity.seckill;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.xfkj.entity.commodity.TbWatchs;
 import lombok.Data;
@@ -14,6 +15,7 @@ import java.util.Date;
 @TableName("seckill")
 public class Seckill implements Serializable {
 
+    @TableId(value = "id")
     private Integer id;     //秒杀主键
 
     private Integer seckillId;     //手表主键id

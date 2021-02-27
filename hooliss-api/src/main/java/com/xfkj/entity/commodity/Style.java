@@ -1,5 +1,7 @@
 package com.xfkj.entity.commodity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
@@ -8,6 +10,7 @@ import lombok.Data;
 @Data
 public class Style {
 
+    @TableId(value = "series_id",type = IdType.AUTO)
     private Integer seriesId;
 
     private Integer watchId;

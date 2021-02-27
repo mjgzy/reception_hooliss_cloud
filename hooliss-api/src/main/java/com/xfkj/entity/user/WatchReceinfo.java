@@ -1,5 +1,6 @@
 package com.xfkj.entity.user;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -17,6 +18,7 @@ public class WatchReceinfo implements Serializable  {
      */
     private static final long serialVersionUID = 1791476128276087640L;
     @Id
+    @TableId(value = "info_id")
     private Integer infoId;
 
     private String raceName;

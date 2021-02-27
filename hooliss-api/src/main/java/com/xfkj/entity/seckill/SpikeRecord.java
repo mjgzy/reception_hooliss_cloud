@@ -1,5 +1,6 @@
 package com.xfkj.entity.seckill;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -14,6 +15,7 @@ import java.util.Date;
 @TableName("spike_record")
 public class SpikeRecord implements Serializable {
 
+    @TableId(value = "id")
     private Integer id; //主键
 
     private Integer seckill_id;//商品id

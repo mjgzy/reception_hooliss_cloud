@@ -1,6 +1,7 @@
 package com.xfkj.entity.order;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.xfkj.entity.commodity.TbWatchs;
 import com.xfkj.entity.user.WatchReceinfo;
@@ -25,6 +26,7 @@ public class WatchOrder implements Serializable {
 	 */
 	private static final long serialVersionUID = -832454167599115287L;
 
+	@TableId(value = "id")
 	private Integer id;	//主键id
 	
 	private String orderId;	//订单编号
